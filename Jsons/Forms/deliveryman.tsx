@@ -1,15 +1,10 @@
-import { TextField } from "@mui/material";
-import { WidgetProps } from "@rjsf/utils"
-import InputMask from "react-input-mask";
-
-
 export const deliveryman =
 {
     "schema": {
         "description": "Entregador",
         "type": "object",
         "required": [
-
+            "name", "cpf", "init_time", "end_time", "work_days"
         ],
         "properties": {
             "name": {
@@ -18,7 +13,7 @@ export const deliveryman =
             },
             "cpf": {
                 "type": "string",
-                "title": "Cpf",
+                "title": "CPF",
             },
             "init_time": {
                 "type": "string",
@@ -30,7 +25,7 @@ export const deliveryman =
                 "title": "Horário de término",
                 "format": "time"
             },
-            "days_work": {
+            "work_days": {
                 "title": "Dias de trabalho",
                 "type": "array",
                 "uniqueItems": true,
@@ -55,22 +50,7 @@ export const deliveryman =
         },
         "cpf": {
             "ui:placeholder": "Digite o cpf do entregador",
-            'ui:widget': (props: WidgetProps) => (
-                <InputMask
-                    mask={props.options.mask as string}
-                    type='text'
-                    className='custom'
-                    value={props.value}
-                    required={props.required}
-                    onChange={(event) => props.onChange(event.target.value)}
-                >
-                    <TextField
-                        id="outlined-basic"
-                        label={props.label}
-                        placeholder={props.placeholder}
-                    />
-                </InputMask>
-            ),
+            'ui:widget': "TextWidgetWithMask",
             'ui:options': {
                 mask: '999.999.999-99',
             },
@@ -81,7 +61,7 @@ export const deliveryman =
         "end_time": {
             "ui:placeholder": "Digite o horário de fim do expediente"
         },
-        "days_work": {
+        "work_days": {
             "ui:widget": "CheckboxesWidget"
         }
     }

@@ -17,6 +17,7 @@ function TextWidgetWithMask(props: WidgetProps) {
             <TextField
                 id="outlined-basic"
                 label={props.label}
+                placeholder={props.placeholder}
             />
         </InputMask>
     )

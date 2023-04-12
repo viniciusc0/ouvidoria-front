@@ -10,6 +10,9 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import Iconify from '../iconify';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +51,9 @@ export default function TableHeadCustom({
   onSelectAllRows,
   sx,
 }: Props) {
+
+  const router = useRouter();
+
   return (
     <TableHead sx={sx}>
       <TableRow>
@@ -92,7 +98,9 @@ export default function TableHeadCustom({
           </TableCell>
         ))}
         <TableCell>
-          <Iconify icon="material-symbols:add-circle-rounded" color={'green'} width={40} />
+          <Link href={router.pathname + '/cadastro'}>
+              <Iconify icon="material-symbols:add-circle-rounded" color={'green'} width={40} />
+          </Link>
         </TableCell>
       </TableRow>
     </TableHead>

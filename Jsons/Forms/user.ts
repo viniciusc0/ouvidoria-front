@@ -1,116 +1,186 @@
-import { CategoryGetProps } from "@/services/requests/Category/interfaces";
-
-export const subcategory = 
-    {
-        
-        "uiSchema" : {
-            "description": {
-                "ui:autofocus": true,
-                "ui:placeholder" : "Digite a descrição da subcategoria"
-            },
-            "imageUrl": {
-                "ui:placeholder" : "Digite a url da imagem"
-            },
-            "position": {
-                "ui:placeholder" : "Digite a posição"
-            },
-            "category": {
-                "ui:placeholder" : "Escolha a categoria"
-            },
-            "status": {
-                "ui:widget": "RadioWidget"
-            },
-            "showInTopHome": {
-                "ui:widget": "CheckboxWidget",
-            }
-        }
-    }
-
-export function subcategorySchema(categoriesArray: CategoryGetProps[], title: string){
-
-    const categoriesNames = [] as string[];
-    categoriesArray.forEach(category => {
-        categoriesNames.push(category.description);
-    });
-
-    return {
-        "title" : title,
-        "description": "Subcategoria",
+export const user =
+{
+    "schema": {
+        "description": "Usuário",
         "type": "object",
         "required": [
-            "description",
-            "imageUrl",
-            "category",
-            "status",
-            "position",
+            "name", "cpf", "status", "role"
         ],
         "properties": {
-            "description": {
+            "name": {
                 "type": "string",
-                "title": "Descrição",
+                "title": "Nome",
             },
-            "imageUrl": {
+            "cpf": {
                 "type": "string",
-                "title": "Url da imagem"
-            },
-            "category": {
-                "title": "Categoria",
-                "type": "string",
-                "examples": categoriesNames
-            },
-            "position": {
-                "type": "number",
-                "title": "Posição"
+                "title": "CPF",
             },
             "status": {
                 "type": "boolean",
-                "title" : "Status",
+                "title": "Status",
                 "oneOf": [
-                    {
-                        "const": true,
-                        "title": "Ativa"
-                    },
-                    {
-                        "const": false, 
-                        "title": "Inativa"
-                    }
+                    { "const": true, "title": "Ativo(a)" },
+                    { "const": false, "title": "Inativo(a)" }
                 ]
             },
-            "showInTopHome": {
-                "type": "boolean",
-                "title": "Mostrar no topo",
+            "role": {
+                "title": "Tipo de usuário",
+                "enumNames": [
+                    'Administrador', 'Comum'
+                ],
+                "enum": [
+                    {
+                        "name": "Administrador",
+                        "const": 'admin',
+                    },
+                    {
+                        "name": "Comum",
+                        "const": 'regular',
+                    }
+                ]
             }
+        }
+    },
+    "uiSchema": {
+        "name": {
+            "ui:autofocus": true,
+            "ui:placeholder": "Digite o nome do usuário"
         },
-    };
-}
-
-export const subcategoryFiltersJson = {
-    schema: {
-        properties: {
-            description: {
-                type: "string",
-                title: "Descrição",
-            },
-            limit: {
-                type: "number",
-                title: "Limite",
-            },
-            offset: {
-                type: "number",
-                title: "Offset",
-            },
-            status: {
-                type: "boolean",
-                title: "Ativa",
-                default: true
+        "cpf": {
+            "ui:placeholder": "Digite o cpf do usuário",
+            'ui:widget': "TextWidgetWithMask",
+            'ui:options': {
+                mask: '999.999.999-99',
             },
         },
-    },
-    formData: {
-    },
-    uiSchema: {
-        status: {
-            "ui:widget": "CheckboxWidget",
+        "role": {
+            "ui:widget": "RadioWidget"
+        },
+        "status": {
+            "ui:widget": "RadioWidget"
         }
     }
-};
+}
+
+// export const categoryFiltersJson = {
+//     schema: {
+//         properties: {
+//             description: {
+//                 type: "string",
+//                 title: "Descrição",
+//             },
+//             limit: {
+//                 type: "number",
+//                 title: "Limite",
+//             },
+//             offset: {
+//                 type: "number",
+//                 title: "Offset",
+//             },
+//             status: {
+//                 type: "boolean",
+//                 title: "Ativa",
+//                 default: true
+//             },
+//         },
+//     },
+//     formData: {
+//     },
+//     uiSchema: {
+//         status: {
+//             "ui:widget": "CheckboxWidget",
+//         }
+//     }
+// };
+
+
+
+
+// export function subcategorySchema(categoriesArray: CategoryGetProps[], title: string){
+
+//     const categoriesNames = [] as string[];
+//     categoriesArray.forEach(category => {
+//         categoriesNames.push(category.description);
+//     });
+
+//     return {
+//         "title" : title,
+//         "description": "Subcategoria",
+//         "type": "object",
+//         "required": [
+//             "description",
+//             "imageUrl",
+//             "category",
+//             "status",
+//             "position",
+//         ],
+//         "properties": {
+//             "description": {
+//                 "type": "string",
+//                 "title": "Descrição",
+//             },
+//             "imageUrl": {
+//                 "type": "string",
+//                 "title": "Url da imagem"
+//             },
+//             "category": {
+//                 "title": "Categoria",
+//                 "type": "string",
+//                 "examples": categoriesNames
+//             },
+//             "position": {
+//                 "type": "number",
+//                 "title": "Posição"
+//             },
+//             "status": {
+//                 "type": "boolean",
+//                 "title" : "Status",
+//                 "oneOf": [
+//                     {
+//                         "const": true,
+//                         "title": "Ativa"
+//                     },
+//                     {
+//                         "const": false, 
+//                         "title": "Inativa"
+//                     }
+//                 ]
+//             },
+//             "showInTopHome": {
+//                 "type": "boolean",
+//                 "title": "Mostrar no topo",
+//             }
+//         },
+//     };
+// }
+
+// export const subcategoryFiltersJson = {
+//     schema: {
+//         properties: {
+//             description: {
+//                 type: "string",
+//                 title: "Descrição",
+//             },
+//             limit: {
+//                 type: "number",
+//                 title: "Limite",
+//             },
+//             offset: {
+//                 type: "number",
+//                 title: "Offset",
+//             },
+//             status: {
+//                 type: "boolean",
+//                 title: "Ativa",
+//                 default: true
+//             },
+//         },
+//     },
+//     formData: {
+//     },
+//     uiSchema: {
+//         status: {
+//             "ui:widget": "CheckboxWidget",
+//         }
+//     }
+// };

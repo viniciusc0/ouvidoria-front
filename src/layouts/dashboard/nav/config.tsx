@@ -41,12 +41,10 @@ const navConfig = [
   {
     subheader: 'Cruds',
     items: [
-      { title: 'Minhas empresas', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
-      { title: 'Entregadores', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
-      { title: 'Usuários', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'Pedidos', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
-      // { title: 'booking', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking },
-      // { title: 'file', path: PATH_DASHBOARD.general.file, icon: ICONS.file },
+      { title: 'Minhas empresas', path: '/dashboard/minhasempresas', icon: ICONS.dashboard },
+      { title: 'Entregadores', path: '/dashboard/entregadores', icon: ICONS.ecommerce },
+      { title: 'Usuários', path: '/dashboard/usuarios', icon: ICONS.analytics },
+      { title: 'Pedidos', path: '/dashboard/pedidos', icon: ICONS.banking },
     ],
   },
 

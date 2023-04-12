@@ -1,19 +1,22 @@
 import validator from "@rjsf/validator-ajv8";
 import Form from '@rjsf/mui';
-import { BaseInputTemplateProps, RJSFSchema, UiSchema, getInputProps } from "@rjsf/utils";
-import { Container, FormWrapper, SubmitButton } from "./styles";
+import {  RJSFSchema, RegistryWidgetsType, UiSchema } from "@rjsf/utils";
+import { Container, FormWrapper } from "./styles";
 import { IChangeEvent } from "@rjsf/core";
-import { Alert, AlertColor, Snackbar } from "@mui/material";
+import { Alert, AlertColor, Button, Snackbar } from "@mui/material";
 import styles from '../../../styles/Form.module.css'
-import React, { ChangeEvent, FocusEvent } from "react";
+import React from "react";
+import TextWidgetWithMask from "../TextWidgetWithMask";
+import { UserCreationProps, UserGetProps } from "services/requests/user/interfaces";
 
 
 interface Props {
   schema: RJSFSchema;
   uiSchema: UiSchema;
-  // formData: JSONObject | CategoryCreationProps | ProductCreationProps | SubcategoryCreationProps;
-  formData: JSONObject;
-  onSubmit: (x: IChangeEvent) => void;
+  // formData: JSONObject | ProductCreationProps | SubcategoryCreationProps;
+  formData: JSONObject | UserCreationProps[];
+  // onSubmit: (x: IChangeEvent) => void;
+  onSubmit: () => void;
   openSnackbar: boolean;
   handleCloseSnackbar: () => void;
   alertMessage: { type: AlertColor, message: string };
@@ -49,7 +52,13 @@ export default function JsonForm({ schema, uiSchema, formData, setFormData, onSu
   }
 
 
+  const widgets: RegistryWidgetsType = {
+    TextWidgetWithMask: TextWidgetWithMask,
+  };
 
+  function onChange(formItems: any) {
+    setFormData(formItems.formData);
+  }
   
 
 
@@ -65,10 +74,12 @@ export default function JsonForm({ schema, uiSchema, formData, setFormData, onSu
           validator={validator}
           formData={formData}
           uiSchema={uiSchema}
-          onSubmit={onSubmit}
+          // onSubmit={onSubmit}
+          onChange={onChange}
           transformErrors={transformErrors} //customizar mensagem dos erros
+          widgets={widgets}
         >
-          <SubmitButton style={{ cursor: 'pointer' }}>Enviar</SubmitButton>
+          <Button variant="contained" onClick={onSubmit}>Enviar</Button>
         </Form>
       </FormWrapper>
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>

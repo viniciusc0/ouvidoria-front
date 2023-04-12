@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { sentenceCase } from 'change-case';
 // @mui
 import {
   Box,
@@ -17,27 +16,25 @@ import {
   TableContainer,
 } from '@mui/material';
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
 // components
 import Label from '../../../../components/label';
 import Iconify from '../../../../components/iconify';
 import Scrollbar from '../../../../components/scrollbar';
 import MenuPopover from '../../../../components/menu-popover';
 import { TableHeadCustom } from '../../../../components/table';
+import { UserGetProps } from 'services/requests/user/interfaces';
+import { getShowableItem } from 'src/utils/functions';
+import { DeliverymanGetProps } from 'services/requests/deliveryman/interfaces';
 
 // ----------------------------------------------------------------------
 
-type RowProps = {
-  id: string;
-  category: string;
-  price: number;
-  status: string;
-};
+type RowArrayTypes = UserGetProps[] | DeliverymanGetProps[];
+type RowTypes = UserGetProps | DeliverymanGetProps;
 
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  tableData: RowProps[];
+  tableData: RowArrayTypes;
   tableLabels: any;
 }
 
@@ -83,11 +80,11 @@ export default function CrudTable({
 
 // ----------------------------------------------------------------------
 
-type AppNewInvoiceRowProps = {
-  row: RowProps;
+type RowProps = {
+  row: RowTypes;
 };
 
-function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
+function AppNewInvoiceRow({ row }: RowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -112,24 +109,14 @@ function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
   return (
     <>
       <TableRow>
-        <TableCell>{`INV-${row.id}`}</TableCell>
+        {
+          Object.keys(row).map((key, index) => {
+            const res = getShowableItem(row, key);
+            if (res === '') return <TableCell key={index} style={{ display: 'none' }} />;
+            return <TableCell key={index}>{res}</TableCell>
+          })
 
-        <TableCell>{row.category}</TableCell>
-
-        <TableCell>{fCurrency(row.price)}</TableCell>
-
-        <TableCell>
-          <Label
-            variant="soft"
-            color={
-              (row.status === 'in_progress' && 'warning') ||
-              (row.status === 'out_of_date' && 'error') ||
-              'success'
-            }
-          >
-            {sentenceCase(row.status)}
-          </Label>
-        </TableCell>
+        }
 
         <TableCell align="right">
           <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>

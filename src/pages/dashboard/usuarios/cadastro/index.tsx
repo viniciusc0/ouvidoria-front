@@ -1,20 +1,19 @@
 // next
 import Head from 'next/head';
 // @mui
-import { AlertColor, Container, Typography } from '@mui/material';
+import { AlertColor, Container } from '@mui/material';
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
 // components
-import { useSettingsContext } from '../../components/settings';
 import { useRouter } from 'next/router';
-import { deliveryman } from 'Jsons/Forms/deliveryman';
 import { RJSFSchema, UiSchema } from '@rjsf/utils';
 import { IChangeEvent } from '@rjsf/core';
 import React from 'react';
 import BackButton from 'src/components/BackButton';
 import JsonForm from 'src/components/JsonForm';
-import { company } from 'Jsons/Forms/company';
 import { user } from 'Jsons/Forms/user';
+import DashboardLayout from 'src/layouts/dashboard';
+import { useSettingsContext } from 'src/components/settings';
+import { userInitialValue } from 'src/utils/initialValues';
 
 // ----------------------------------------------------------------------
 
@@ -30,13 +29,7 @@ export default function Cadastro() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState({
-    description: '',
-    status: true,
-    category: '',
-    position: 0,
-    imageUrl: ''
-  });
+  const [formData, setFormData] = React.useState([userInitialValue]);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
 
@@ -53,7 +46,9 @@ export default function Cadastro() {
   const uiSchema: UiSchema = user.uiSchema;
 
 
-  const onSubmit = async (formItems: IChangeEvent) => {
+//   const onSubmit = (formItems: IChangeEvent) => {
+  const onSubmit = () => {
+      console.log(formData)
     //   const data = formItems.formData as CategoryCreationProps;
     //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
     //     const res = await createCategory(data);
@@ -73,7 +68,7 @@ export default function Cadastro() {
   return (
     <>
       <Head>
-        <title> Cadastro de entregador</title> {/* titulo da pagina*/}
+        <title> Cadastro de usuário</title> {/* titulo da pagina*/}
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
