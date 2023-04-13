@@ -8,11 +8,12 @@ import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
 import { DeliverymanGetProps } from 'services/requests/deliveryman/interfaces';
 import { deliverymanInitialValue } from 'src/utils/initialValues';
+import Loading from 'src/components/Loading';
 
 
 // ----------------------------------------------------------------------
 
-GeneralAppPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+Entregadores.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
 
@@ -59,13 +60,17 @@ const teste = [
     }
 ] as DeliverymanGetProps[];
 
-export default function GeneralAppPage() {
+export default function Entregadores() {
 
     const { themeStretch } = useSettingsContext();
 
     // const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>([deliverymanInitialValue]);
     const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>(teste);
 
+    const [loading, setLoading] = React.useState(false);
+
+    if(loading)
+    return <Loading />
 
     return (
         <>

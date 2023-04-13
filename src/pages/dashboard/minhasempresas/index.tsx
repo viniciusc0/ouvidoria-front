@@ -8,11 +8,12 @@ import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
 import { companyInitialValue } from 'src/utils/initialValues';
 import { CompanyGetProps } from 'services/requests/company/interfaces';
+import Loading from 'src/components/Loading';
 
 
 // ----------------------------------------------------------------------
 
-GeneralAppPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+MinhasEmpresas.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
 
@@ -67,13 +68,17 @@ const teste = [
     }
 ] as CompanyGetProps[];
 
-export default function GeneralAppPage() {
+export default function MinhasEmpresas() {
 
     const { themeStretch } = useSettingsContext();
 
     const [companies, setCompanies] = React.useState<CompanyGetProps[]>(teste);
     // const [companies, setCompanies] = React.useState<CompanyGetProps[]>([companyInitialValue]);
 
+    const [loading, setLoading] = React.useState(false);
+
+    if(loading)
+    return <Loading />
 
     return (
         <>

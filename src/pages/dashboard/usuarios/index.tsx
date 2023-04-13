@@ -10,10 +10,11 @@ import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
 import { UserGetProps } from 'services/requests/user/interfaces';
 import { userInitialValue } from 'src/utils/initialValues';
+import Loading from 'src/components/Loading';
 
 // ----------------------------------------------------------------------
 
-GeneralAppPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+Usuarios.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +56,7 @@ const teste = [
     }
 ] as UserGetProps[];
 
-export default function GeneralAppPage() {
+export default function Usuarios() {
     const { user } = useAuthContext();
 
     const theme = useTheme();
@@ -65,6 +66,10 @@ export default function GeneralAppPage() {
     // const [users, setUsers] = React.useState<UserGetProps[]>([userInitialValue]);
     const [users, setUsers] = React.useState<UserGetProps[]>(teste);
 
+    const [loading, setLoading] = React.useState(false);
+
+    if(loading)
+    return <Loading />
 
     return (
         <>

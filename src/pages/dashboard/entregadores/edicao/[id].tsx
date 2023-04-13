@@ -1,7 +1,7 @@
 // next
 import Head from 'next/head';
 // @mui
-import { AlertColor, CircularProgress, Container, Grid } from '@mui/material';
+import { AlertColor, Container } from '@mui/material';
 // layouts
 // components
 import { useRouter } from 'next/router';
@@ -13,13 +13,14 @@ import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
 import { deliverymanInitialValue } from 'src/utils/initialValues';
 import { deliveryman } from 'Jsons/Forms/deliveryman';
+import Loading from 'src/components/Loading';
 
 // ----------------------------------------------------------------------
 
-Cadastro.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+Edicao.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
-export default function Cadastro() {
+export default function Edicao() {
     const { themeStretch } = useSettingsContext();
 
 
@@ -80,13 +81,7 @@ export default function Cadastro() {
     };
 
     if(loading)
-    return(
-        <Container sx={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'calc(100vh - 150px)'
-        }} maxWidth={themeStretch ? false : 'xl'}>
-            <CircularProgress color="success" />
-        </Container>
-    );
+        return <Loading />
 
     return (
         <>

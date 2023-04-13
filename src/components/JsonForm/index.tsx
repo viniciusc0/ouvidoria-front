@@ -9,13 +9,13 @@ import React from "react";
 import TextWidgetWithMask from "../TextWidgetWithMask";
 import { UserCreationProps, UserGetProps } from "services/requests/user/interfaces";
 import { DeliverymanCreationProps } from "services/requests/deliveryman/interfaces";
+import { CompanyCreationProps } from "services/requests/company/interfaces";
 
 
 interface Props {
   schema: RJSFSchema;
   uiSchema: UiSchema;
-  // formData: JSONObject | ProductCreationProps | SubcategoryCreationProps;
-  formData: JSONObject | UserCreationProps[] | DeliverymanCreationProps[];
+  formData: JSONObject | UserCreationProps[] | DeliverymanCreationProps[] | CompanyCreationProps[];
   // onSubmit: (x: IChangeEvent) => void;
   onSubmit: () => void;
   openSnackbar: boolean;

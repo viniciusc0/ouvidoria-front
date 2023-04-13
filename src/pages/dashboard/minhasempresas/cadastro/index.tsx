@@ -1,7 +1,7 @@
 // next
 import Head from 'next/head';
 // @mui
-import { AlertColor, CircularProgress, Container } from '@mui/material';
+import { AlertColor, Container } from '@mui/material';
 // layouts
 // components
 import { useRouter } from 'next/router';
@@ -9,18 +9,17 @@ import { RJSFSchema, UiSchema } from '@rjsf/utils';
 import React from 'react';
 import BackButton from 'src/components/BackButton';
 import JsonForm from 'src/components/JsonForm';
-import { user } from 'Jsons/Forms/user';
 import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
-import { userInitialValue } from 'src/utils/initialValues';
-import Loading from 'src/components/Loading';
+import { companyInitialValue } from 'src/utils/initialValues';
+import { company } from 'Jsons/Forms/company';
 
 // ----------------------------------------------------------------------
 
-Edicao.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+Cadastro.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
-export default function Edicao() {
+export default function Cadastro() {
   const { themeStretch } = useSettingsContext();
 
 
@@ -29,37 +28,21 @@ export default function Edicao() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState([userInitialValue]);
+  const [formData, setFormData] = React.useState([companyInitialValue]);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
+
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   }
 
-
-  const [loading, setLoading] = React.useState<boolean>(false);
-  // const router = useRouter();
-    // const id = router.query.id as string
-
-    // const handleGetDeliveryman = React.useCallback(async (id: string) => {
-    //     setLoading(true);
-    //     const data = await getDeliveryman(id);
-    //     if (data) {
-    //         setFormData(data);
-    //     } else {
-    //         setNoDeliveryman(true);
-    //     }
-    //     setLoading(false);
-    // }, []);
-    // React.useEffect(() => {
-    //     handleGetDeliveryman(id);
-    // }, [handleGetDeliveryman, id]);
-
   const schema: RJSFSchema = {
-    title: "Edição",
-    ...user.schema
+    title: "Cadastro",
+    ...company.schema
   };
-  const uiSchema: UiSchema = user.uiSchema;
+
+
+  const uiSchema: UiSchema = company.uiSchema;
 
 
 //   const onSubmit = (formItems: IChangeEvent) => {
@@ -80,13 +63,11 @@ export default function Edicao() {
   };
 
 
-  if(loading)
-    return <Loading />
 
   return (
     <>
       <Head>
-        <title> Edição de usuário</title> {/* titulo da pagina*/}
+        <title>Cadastro de empresa</title> {/* titulo da pagina*/}
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

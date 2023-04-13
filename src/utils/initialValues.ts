@@ -19,8 +19,7 @@ export const deliverymanInitialValue = {
 } as DeliverymanGetProps;
 
 export const companyInitialValue = {
-    id: '0',
-    corporate_name: '',
+    corporate_name: 'teste',
     commercial_name: '',
     cnpj: '',
     status: true,
