@@ -1,10 +1,8 @@
 // next
 import Head from 'next/head';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { Container, Grid } from '@mui/material'
 import CrudTable from 'src/sections/@dashboard/general/app/CrudTable';
-import { useAuthContext } from 'src/auth/useAuthContext';
 import { useSettingsContext } from 'src/components/settings';
 import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
@@ -18,50 +16,55 @@ GeneralAppPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}
 
 // ----------------------------------------------------------------------
 
-// const teste = [
-//     {
-//         id: '1',
-//         name: 'Caio',
-//         cpf: '212312121',
-//         role: 'admin',
-//         status: true
-//     },
-//     {
-//         id: '2',
-//         name: 'Vinicius',
-//         cpf: '1313131313',
-//         role: 'regular',
-//         status: true
-//     },
-//     {
-//         id: '3',
-//         name: 'Sharapova',
-//         cpf: '8888888888',
-//         role: 'regular',
-//         status: true
-//     },
-//     {
-//         id: '4',
-//         name: 'Serena Williams',
-//         cpf: '232323232323',
-//         role: 'regular',
-//         status: true
-//     },
-//     {
-//         id: '5',
-//         name: 'Messi',
-//         cpf: '10101010101',
-//         role: 'regular',
-//         status: true
-//     }
-// ] as UserGetProps[];
+const teste = [
+    {
+        id: '1',
+        name: 'Entregador 1',
+        cpf: '11111111111',
+        init_time: '08:00',
+        end_time: '18:00',
+        work_days: ["Segunda", "Terça", "Quarta"]
+    },
+    {
+        id: '2',
+        name: 'Entregador 2',
+        cpf: '222222222222',
+        init_time: '08:00',
+        end_time: '18:00',
+        work_days: ["Segunda", "Terça", "Quarta"]
+    },
+    {
+        id: '3',
+        name: 'Entregador 3',
+        cpf: '333333333333',
+        init_time: '08:00',
+        end_time: '18:00',
+        work_days: ["Segunda", "Terça", "Quarta", "Quinta"]
+    },
+    {
+        id: '4',
+        name: 'Entregador 4',
+        cpf: '4444444444444',
+        init_time: '08:00',
+        end_time: '18:00',
+        work_days: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"]
+    },
+    {
+        id: '5',
+        name: 'Entregador 5',
+        cpf: '5555555555555',
+        init_time: '08:00',
+        end_time: '18:00',
+        work_days: ["Segunda", "Terça", "Quarta"]
+    }
+] as DeliverymanGetProps[];
 
 export default function GeneralAppPage() {
 
     const { themeStretch } = useSettingsContext();
 
-    const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>([deliverymanInitialValue]);
-    // const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>(teste);
+    // const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>([deliverymanInitialValue]);
+    const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>(teste);
 
 
     return (
@@ -74,8 +77,9 @@ export default function GeneralAppPage() {
                 <Grid spacing={3}>
                     <Grid item xs={12} lg={8}>
                         <CrudTable
-                            title="Tabela crud"
+                            title="Entregadores"
                             tableData={deliverymans}
+                            setTableData={setDeliverymans}
                             tableLabels={[
                                 { id: 'name', label: 'Nome' },
                                 { id: 'cpf', label: 'CPF' },

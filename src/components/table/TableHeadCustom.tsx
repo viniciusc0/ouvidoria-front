@@ -97,11 +97,6 @@ export default function TableHeadCustom({
             )}
           </TableCell>
         ))}
-        <TableCell>
-          <Link href={router.pathname + '/cadastro'}>
-              <Iconify icon="material-symbols:add-circle-rounded" color={'green'} width={40} />
-          </Link>
-        </TableCell>
       </TableRow>
     </TableHead>
   );

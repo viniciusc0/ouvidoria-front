@@ -1,3 +1,4 @@
+import { CompanyGetProps } from "services/requests/company/interfaces";
 import { DeliverymanGetProps } from "services/requests/deliveryman/interfaces";
 import { UserGetProps } from "services/requests/user/interfaces";
 
@@ -16,3 +17,21 @@ export const deliverymanInitialValue = {
     end_time: '',
     work_days: []
 } as DeliverymanGetProps;
+
+export const companyInitialValue = {
+    id: '0',
+    corporate_name: '',
+    commercial_name: '',
+    cnpj: '',
+    status: true,
+    opening_hours: '',
+    end_working_hours: '',
+    work_days: [""],
+    cep: '',
+    public_place: '',
+    number: '',
+    neighboorhood: '',
+    city: '',
+    state: ''
+
+} as CompanyGetProps;

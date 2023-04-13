@@ -1,3 +1,5 @@
+import { RJSFSchema } from "@rjsf/utils";
+
 export const company =
 {
     "schema": {
@@ -145,4 +147,4 @@ export const company =
             "ui:widget": "RadioWidget"
         }
     }
-}
+} as RJSFSchema;

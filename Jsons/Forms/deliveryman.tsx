@@ -1,3 +1,5 @@
+import { RJSFSchema } from "@rjsf/utils";
+
 export const deliveryman =
 {
     "schema": {
@@ -65,7 +67,7 @@ export const deliveryman =
             "ui:widget": "CheckboxesWidget"
         }
     }
-}
+} as RJSFSchema;
 
 // export const categoryFiltersJson = {
 //     schema: {

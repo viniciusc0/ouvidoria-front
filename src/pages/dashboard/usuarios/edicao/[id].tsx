@@ -1,19 +1,18 @@
 // next
 import Head from 'next/head';
 // @mui
-import { AlertColor, Container } from '@mui/material';
+import { AlertColor, CircularProgress, Container } from '@mui/material';
 // layouts
 // components
 import { useRouter } from 'next/router';
 import { RJSFSchema, UiSchema } from '@rjsf/utils';
-import { IChangeEvent } from '@rjsf/core';
 import React from 'react';
 import BackButton from 'src/components/BackButton';
 import JsonForm from 'src/components/JsonForm';
+import { user } from 'Jsons/Forms/user';
 import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
-import { deliverymanInitialValue } from 'src/utils/initialValues';
-import { deliveryman } from 'Jsons/Forms/deliveryman';
+import { userInitialValue } from 'src/utils/initialValues';
 
 // ----------------------------------------------------------------------
 
@@ -29,21 +28,37 @@ export default function Cadastro() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState([deliverymanInitialValue]);
+  const [formData, setFormData] = React.useState([userInitialValue]);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
-
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   }
 
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+  // const router = useRouter();
+    // const id = router.query.id as string
+
+    // const handleGetDeliveryman = React.useCallback(async (id: string) => {
+    //     setLoading(true);
+    //     const data = await getDeliveryman(id);
+    //     if (data) {
+    //         setFormData(data);
+    //     } else {
+    //         setNoDeliveryman(true);
+    //     }
+    //     setLoading(false);
+    // }, []);
+    // React.useEffect(() => {
+    //     handleGetDeliveryman(id);
+    // }, [handleGetDeliveryman, id]);
+
   const schema: RJSFSchema = {
-    title: "Cadastro",
-    ...deliveryman.schema
+    title: "Edição",
+    ...user.schema
   };
-
-
-  const uiSchema: UiSchema = deliveryman.uiSchema;
+  const uiSchema: UiSchema = user.uiSchema;
 
 
 //   const onSubmit = (formItems: IChangeEvent) => {
@@ -63,12 +78,19 @@ export default function Cadastro() {
     //   }
   };
 
-
+  if(loading)
+  return(
+      <Container sx={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'calc(100vh - 150px)'
+      }} maxWidth={themeStretch ? false : 'xl'}>
+          <CircularProgress color="success" />
+      </Container>
+  );
 
   return (
     <>
       <Head>
-        <title>Cadastro de entregador</title> {/* titulo da pagina*/}
+        <title> Edição de usuário</title> {/* titulo da pagina*/}
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

@@ -1,3 +1,5 @@
+import { RJSFSchema } from "@rjsf/utils";
+
 export const user =
 {
     "schema": {
@@ -60,7 +62,7 @@ export const user =
             "ui:widget": "RadioWidget"
         }
     }
-}
+} as RJSFSchema;
 
 // export const categoryFiltersJson = {
 //     schema: {

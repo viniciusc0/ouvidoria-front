@@ -76,7 +76,8 @@ export default function GeneralAppPage() {
                 <Grid spacing={3}>
                     <Grid item xs={12} lg={8}>
                         <CrudTable
-                            title="Tabela crud"
+                            title="Usuários"
+                            setTableData={setUsers}
                             tableData={users}
                             tableLabels={[
                                 { id: 'name', label: 'Nome' },

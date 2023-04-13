@@ -3,7 +3,7 @@ export interface DeliverymanCreationProps{
     cpf: string;
     init_time: string;
     end_time:string;
-    work_days: []
+    work_days: string[]
 };
 
 export interface DeliverymanGetProps{
@@ -12,5 +12,5 @@ export interface DeliverymanGetProps{
     cpf: string;
     init_time: string;
     end_time:string;
-    work_days: []
+    work_days: string[]
 };
