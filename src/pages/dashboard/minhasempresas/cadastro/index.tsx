@@ -28,7 +28,7 @@ export default function Cadastro() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState([companyInitialValue]);
+  const [formData, setFormData] = React.useState(companyInitialValue);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
 

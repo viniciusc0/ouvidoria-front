@@ -2,7 +2,13 @@ export interface UserCreationProps{
     name: string;
     cpf: string;
     status: boolean;
-    role: string
+    role: {
+        "name": "Administrador",
+        "const": "admin"
+    } | {
+        "name": "Comum",
+        "const": "regular"
+    }
 };
 
 export interface UserGetProps{
@@ -10,5 +16,11 @@ export interface UserGetProps{
     name: string;
     cpf: string;
     status: boolean;
-    role: string
+    role: {
+        "name": "Administrador",
+        "const": "admin"
+    } | {
+        "name": "Comum",
+        "const": "regular"
+    }
 };

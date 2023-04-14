@@ -29,7 +29,7 @@ export default function Cadastro() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState([userInitialValue]);
+  const [formData, setFormData] = React.useState(userInitialValue);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
 

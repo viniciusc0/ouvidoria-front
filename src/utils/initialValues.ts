@@ -5,7 +5,10 @@ import { UserGetProps } from "services/requests/user/interfaces";
 export const userInitialValue = {
     name: '',
     cpf: '',
-    role: 'regular',
+    role: {
+        "name": "Comum",
+        "const": "regular"
+    },
     status: true
 } as UserGetProps;
 
@@ -15,11 +18,11 @@ export const deliverymanInitialValue = {
     cpf: '',
     init_time: '',
     end_time: '',
-    work_days: []
+    work_days: ['']
 } as DeliverymanGetProps;
 
 export const companyInitialValue = {
-    corporate_name: 'teste',
+    corporate_name: '',
     commercial_name: '',
     cnpj: '',
     status: true,

@@ -15,7 +15,7 @@ import { CompanyCreationProps } from "services/requests/company/interfaces";
 interface Props {
   schema: RJSFSchema;
   uiSchema: UiSchema;
-  formData: JSONObject | UserCreationProps[] | DeliverymanCreationProps[] | CompanyCreationProps[];
+  formData: JSONObject | UserCreationProps | DeliverymanCreationProps | CompanyCreationProps;
   // onSubmit: (x: IChangeEvent) => void;
   onSubmit: () => void;
   openSnackbar: boolean;

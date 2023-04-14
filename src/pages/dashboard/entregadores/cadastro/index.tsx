@@ -6,7 +6,6 @@ import { AlertColor, Container } from '@mui/material';
 // components
 import { useRouter } from 'next/router';
 import { RJSFSchema, UiSchema } from '@rjsf/utils';
-import { IChangeEvent } from '@rjsf/core';
 import React from 'react';
 import BackButton from 'src/components/BackButton';
 import JsonForm from 'src/components/JsonForm';
@@ -29,7 +28,7 @@ export default function Cadastro() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState([deliverymanInitialValue]);
+  const [formData, setFormData] = React.useState(deliverymanInitialValue);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
 

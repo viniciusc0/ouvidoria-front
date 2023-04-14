@@ -14,6 +14,7 @@ import { useSettingsContext } from 'src/components/settings';
 import { deliverymanInitialValue } from 'src/utils/initialValues';
 import { deliveryman } from 'Jsons/Forms/deliveryman';
 import Loading from 'src/components/Loading';
+import { DeliverymanCreationProps } from 'services/requests/deliveryman/interfaces';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +30,7 @@ export default function Edicao() {
         message: 'none',
     });
 
-    const [formData, setFormData] = React.useState([deliverymanInitialValue]);
+    const [formData, setFormData] = React.useState<DeliverymanCreationProps>(deliverymanInitialValue);
 
       const [loading, setLoading] = React.useState<boolean>(false);
     // const router = useRouter();

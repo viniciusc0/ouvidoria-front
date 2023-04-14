@@ -1,7 +1,7 @@
 // next
 import Head from 'next/head';
 // @mui
-import { AlertColor, CircularProgress, Container } from '@mui/material';
+import { AlertColor, Container } from '@mui/material';
 // layouts
 // components
 import { useRouter } from 'next/router';
@@ -14,6 +14,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
 import { userInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
+import { UserCreationProps } from 'services/requests/user/interfaces';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +30,7 @@ export default function Edicao() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState([userInitialValue]);
+  const [formData, setFormData] = React.useState(userInitialValue);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
   const handleCloseSnackbar = () => {
@@ -60,6 +61,7 @@ export default function Edicao() {
     ...user.schema
   };
   const uiSchema: UiSchema = user.uiSchema;
+
 
 
 //   const onSubmit = (formItems: IChangeEvent) => {
