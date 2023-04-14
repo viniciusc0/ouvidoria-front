@@ -11,15 +11,12 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
+import DashboardLayout from 'src/layouts/dashboard';
+import { useSettingsContext } from 'src/components/settings';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import RoleBasedGuard from 'src/auth/RoleBasedGuard';
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
-// routes
-import { PATH_DASHBOARD } from '../../routes/paths';
-// components
-import { useSettingsContext } from '../../components/settings';
-import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
-// auth
-import RoleBasedGuard from '../../auth/RoleBasedGuard';
+
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +49,7 @@ export default function PermissionDeniedPage() {
           links={[
             {
               name: 'Dashboard',
-              href: PATH_DASHBOARD.root,
+              href: '/',
             },
             {
               name: 'Permission Denied',

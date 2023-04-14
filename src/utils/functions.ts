@@ -8,6 +8,8 @@ export function getShowableItem(jsonObject : { [key: string]: any }, key : strin
         let work_days_str  = '';
         work_days.map((day : string) => work_days_str = work_days_str + day + ', ');
         return work_days_str.substring(0, work_days_str.length - 2);
+    }else if(key === 'role'){
+        return jsonObject[key].name
     }
 
     return jsonObject[key] as string;

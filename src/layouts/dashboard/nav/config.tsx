@@ -1,9 +1,9 @@
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import Label from '../../../components/label';
 import Iconify from '../../../components/iconify';
 import SvgColor from '../../../components/svg-color';
+import { PATH_PAGE } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -41,10 +41,10 @@ const navConfig = [
   {
     subheader: 'Cruds',
     items: [
-      { title: 'Minhas empresas', path: '/dashboard/minhasempresas', icon: ICONS.dashboard },
-      { title: 'Entregadores', path: '/dashboard/entregadores', icon: ICONS.ecommerce },
-      { title: 'Usuários', path: '/dashboard/usuarios', icon: ICONS.analytics },
-      { title: 'Pedidos', path: '/dashboard/pedidos', icon: ICONS.banking },
+      { title: 'Minhas empresas', path: PATH_PAGE.companies, icon: ICONS.dashboard },
+      { title: 'Entregadores', path: PATH_PAGE.deliverymans, icon: ICONS.ecommerce },
+      { title: 'Usuários', path: PATH_PAGE.users, icon: ICONS.analytics },
+      { title: 'Pedidos', path: PATH_PAGE.orders, icon: ICONS.banking },
     ],
   },
 

@@ -6,7 +6,6 @@ import { Box, Link, Typography } from '@mui/material';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import { CustomAvatar } from '../../../components/custom-avatar';
 
@@ -29,7 +28,7 @@ export default function NavAccount() {
   const { user } = useAuthContext();
 
   return (
-    <NextLink href={'dashboard/usuarios'} passHref>
+    <NextLink href={'/usuarios'} passHref>
       <Link underline="none" color="inherit">
         <StyledRoot>
           <CustomAvatar src={user?.photoURL} alt={user?.displayName} name={user?.displayName} />

@@ -2,10 +2,10 @@
 import Head from 'next/head';
 // @mui
 import { Container, Typography } from '@mui/material';
+import DashboardLayout from 'src/layouts/dashboard';
+import { useSettingsContext } from 'src/components/settings';
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
 // components
-import { useSettingsContext } from '../../components/settings';
 
 // ----------------------------------------------------------------------
 

@@ -23,35 +23,50 @@ const teste = [
         id: '1',
         name: 'Caio',
         cpf: '212312121',
-        role: 'admin',
+        role: {
+            "name": "Comum",
+            "const": "regular"
+        },
         status: true
     },
     {
         id: '2',
         name: 'Vinicius',
         cpf: '1313131313',
-        role: 'regular',
+        role: {
+        "name": "Comum",
+        "const": "regular"
+    },
         status: true
     },
     {
         id: '3',
         name: 'Sharapova',
         cpf: '8888888888',
-        role: 'regular',
+        role: {
+        "name": "Comum",
+        "const": "regular"
+    },
         status: true
     },
     {
         id: '4',
         name: 'Serena Williams',
         cpf: '232323232323',
-        role: 'regular',
+        role: {
+        "name": "Comum",
+        "const": "regular"
+    },
         status: true
     },
     {
         id: '5',
         name: 'Messi',
         cpf: '10101010101',
-        role: 'regular',
+        role: {
+            "name": "Comum",
+            "const": "regular"
+        },
         status: true
     }
 ] as UserGetProps[];
