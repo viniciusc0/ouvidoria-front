@@ -35,6 +35,10 @@ export default function Cadastro() {
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   }
+  function setSnackBarMessage(message: string, type: AlertColor) {
+    setOpenSnackbar(true);
+    setAlertMessage({ type: type, message: message });
+  }
 
   const schema: RJSFSchema = {
     title: "Cadastro",

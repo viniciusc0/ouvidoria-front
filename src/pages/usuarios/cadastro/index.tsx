@@ -6,7 +6,6 @@ import { AlertColor, Container } from '@mui/material';
 // components
 import { useRouter } from 'next/router';
 import { RJSFSchema, UiSchema } from '@rjsf/utils';
-import { IChangeEvent } from '@rjsf/core';
 import React from 'react';
 import BackButton from 'src/components/BackButton';
 import JsonForm from 'src/components/JsonForm';
@@ -32,9 +31,12 @@ export default function Cadastro() {
   const [formData, setFormData] = React.useState(userInitialValue);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
-
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
+  }
+  function setSnackBarMessage(message: string, type: AlertColor) {
+    setOpenSnackbar(true);
+    setAlertMessage({ type: type, message: message });
   }
 
   const schema: RJSFSchema = {
@@ -46,11 +48,14 @@ export default function Cadastro() {
   const uiSchema: UiSchema = user.uiSchema;
 
 
-//   const onSubmit = (formItems: IChangeEvent) => {
+  //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
-      console.log(formData)
+    console.log(formData);
+    if (formData.cpf === '' || formData.name === '') {
+      setSnackBarMessage('Preencha todos os campos', 'error');
+      return;
+    }
     //   const data = formItems.formData as CategoryCreationProps;
-    //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
     //     const res = await createCategory(data);
     //     if(res.data != undefined){
     //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
@@ -60,7 +65,6 @@ export default function Cadastro() {
     //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
     //       setOpenSnackbar(true);
     //     }
-    //   }
   };
 
 

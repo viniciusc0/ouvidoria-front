@@ -55,6 +55,10 @@ export default function Edicao() {
     const handleCloseSnackbar = () => {
         setOpenSnackbar(false);
     }
+    function setSnackBarMessage(message: string, type: AlertColor) {
+        setOpenSnackbar(true);
+        setAlertMessage({ type: type, message: message });
+      }
 
 
     const schema: RJSFSchema = {
