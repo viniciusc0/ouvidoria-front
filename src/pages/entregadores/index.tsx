@@ -9,6 +9,8 @@ import React from 'react';
 import { DeliverymanGetProps } from 'services/requests/deliveryman/interfaces';
 import { deliverymanInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
+import AccordionFilter from 'src/components/AccordionFilter';
+import { deliverymanFiltersJson } from 'Jsons/Forms/deliveryman';
 
 
 // ----------------------------------------------------------------------
@@ -69,6 +71,31 @@ export default function Entregadores() {
 
     const [loading, setLoading] = React.useState(false);
 
+    const [deliverymanFilters, setDeliverymanFilters] = React.useState<DeliverymanGetProps>(deliverymanInitialValue);
+    function handleDeliverymanFilters(data: DeliverymanGetProps){
+        setDeliverymanFilters(data);
+    }
+
+    //     const getDeliverymans = React.useCallback(async () => {
+    //     setLoading(true);
+    //     const deliverymansArray = await listCategoriesWithFilters(deliverymanFilters);
+    //     if (deliverymansArray != undefined) {
+    //         if (deliverymansArray?.length != 0) {
+    //             setNoDeliverymans(false);
+    //             setDeliverymans(deliverymansArray);
+    //         } else {
+    //             setNoDeliverymans(true);
+    //         }
+    //     } else {
+    //         setNoDeliverymans(true);
+    //     }
+    //     setLoading(false);
+    // }, [userFilters]);
+
+    // React.useEffect(() => {
+    //     getDeliverymans();
+    // }, [getDeliverymans]);
+
     if(loading)
     return <Loading />
 
@@ -79,6 +106,7 @@ export default function Entregadores() {
             </Head>
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
+                <AccordionFilter formJson={deliverymanFiltersJson}  setFilters={handleDeliverymanFilters} />
                 <Grid spacing={3}>
                     <Grid item xs={12} lg={8}>
                         <CrudTable

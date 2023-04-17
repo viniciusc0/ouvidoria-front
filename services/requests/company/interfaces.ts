@@ -18,3 +18,9 @@ export interface CompanyCreationProps{
 export interface CompanyGetProps extends CompanyCreationProps{
     id?: string;
 };
+
+export interface CompanyFiltersProps{
+    corporate_name: string;
+    cnpj: string;
+    status: boolean;
+};

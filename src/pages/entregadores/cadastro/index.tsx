@@ -44,8 +44,6 @@ export default function Cadastro() {
     title: "Cadastro",
     ...deliveryman.schema
   };
-
-
   const uiSchema: UiSchema = deliveryman.uiSchema;
 
 

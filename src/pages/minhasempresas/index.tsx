@@ -6,9 +6,11 @@ import CrudTable from 'src/sections/@dashboard/general/app/CrudTable';
 import { useSettingsContext } from 'src/components/settings';
 import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
-import { companyInitialValue } from 'src/utils/initialValues';
-import { CompanyGetProps } from 'services/requests/company/interfaces';
+import { companyFiltersInitialValue, companyInitialValue } from 'src/utils/initialValues';
+import { CompanyFiltersProps, CompanyGetProps } from 'services/requests/company/interfaces';
 import Loading from 'src/components/Loading';
+import AccordionFilter from 'src/components/AccordionFilter';
+import { companyFiltersJson } from 'Jsons/Forms/company';
 
 
 // ----------------------------------------------------------------------
@@ -30,7 +32,7 @@ const teste = [
         cep: '31907075',
         public_place: 'Rua cianoco',
         number: '287',
-        neighboorhood: 'Vitória',
+        neighborhood: 'Vitória',
         city: 'Belo Horizonte',
         state: 'Minas Gerais'
     },
@@ -46,7 +48,7 @@ const teste = [
         cep: '31907075',
         public_place: 'Rua Thomé',
         number: '143',
-        neighboorhood: 'Cidade Nova',
+        neighborhood: 'Cidade Nova',
         city: 'Belo Horizonte',
         state: 'Minas Gerais'
     },
@@ -62,7 +64,7 @@ const teste = [
         cep: '31907075',
         public_place: 'Rua wilaon',
         number: '354',
-        neighboorhood: 'Goiania',
+        neighborhood: 'Goiania',
         city: 'Belo Horizonte',
         state: 'Minas Gerais'
     }
@@ -77,6 +79,32 @@ export default function MinhasEmpresas() {
 
     const [loading, setLoading] = React.useState(false);
 
+    const [companyFilters, setUserFilters] = React.useState<CompanyFiltersProps>(companyFiltersInitialValue);
+    function handleCompaniesFilters(data: CompanyFiltersProps){
+        setUserFilters(data);
+    }
+
+
+    // const getCompanies = React.useCallback(async () => {
+    //     setLoading(true);
+    //     const companysArray = await listCategoriesWithFilters(companyFilters);
+    //     if (companysArray != undefined) {
+    //         if (companysArray?.length != 0) {
+    //             setNoCompanies(false);
+    //             setCompanies(companysArray);
+    //         } else {
+    //             setNoCompanies(true);
+    //         }
+    //     } else {
+    //         setNoCompanies(true);
+    //     }
+    //     setLoading(false);
+    // }, [companyFilters]);
+
+    // React.useEffect(() => {
+    //     getCompanies();
+    // }, [getCompanies]);
+
     if(loading)
     return <Loading />
 
@@ -87,6 +115,7 @@ export default function MinhasEmpresas() {
             </Head>
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
+                <AccordionFilter formJson={companyFiltersJson} setFilters={handleCompaniesFilters} />
                 <Grid spacing={3}>
                     <Grid item xs={12} lg={8}>
                         <CrudTable

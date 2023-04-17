@@ -1,4 +1,4 @@
-import { CompanyGetProps } from "services/requests/company/interfaces";
+import { CompanyFiltersProps, CompanyGetProps } from "services/requests/company/interfaces";
 import { DeliverymanGetProps } from "services/requests/deliveryman/interfaces";
 import { UserGetProps } from "services/requests/user/interfaces";
 
@@ -37,3 +37,9 @@ export const companyInitialValue = {
     state: ''
 
 } as CompanyGetProps;
+
+export const companyFiltersInitialValue = {
+    corporate_name: '',
+    cnpj: '',
+    status: true,
+} as CompanyFiltersProps;

@@ -64,36 +64,63 @@ export const user =
     }
 } as RJSFSchema;
 
-// export const categoryFiltersJson = {
-//     schema: {
-//         properties: {
-//             description: {
-//                 type: "string",
-//                 title: "Descrição",
-//             },
-//             limit: {
-//                 type: "number",
-//                 title: "Limite",
-//             },
-//             offset: {
-//                 type: "number",
-//                 title: "Offset",
-//             },
-//             status: {
-//                 type: "boolean",
-//                 title: "Ativa",
-//                 default: true
-//             },
-//         },
-//     },
-//     formData: {
-//     },
-//     uiSchema: {
-//         status: {
-//             "ui:widget": "CheckboxWidget",
-//         }
-//     }
-// };
+
+export const userFiltersJson = {
+    "schema": {
+        "properties": {
+            "name": {
+                "type": "string",
+                "title": "Nome",
+            },
+            "cpf": {
+                "type": "string",
+                "title": "CPF",
+            },
+            "status": {
+                "type": "boolean",
+                "title": "Status",
+                "oneOf": [
+                    { "const": true, "title": "Ativo(a)" },
+                    { "const": false, "title": "Inativo(a)" }
+                ]
+            },
+            "role": {
+                "title": "Tipo de usuário",
+                "enumNames": [
+                    'Administrador', 'Comum'
+                ],
+                "enum": [
+                    {
+                        "name": "Administrador",
+                        "const": 'admin',
+                    },
+                    {
+                        "name": "Comum",
+                        "const": 'regular',
+                    }
+                ]
+            }
+        }
+    },
+    "uiSchema": {
+        "name": {
+            "ui:placeholder": "Digite o nome do usuário"
+        },
+        "cpf": {
+            "ui:placeholder": "Digite o cpf do usuário",
+            'ui:widget': "TextWidgetWithMask",
+            'ui:options': {
+                mask: '999.999.999-99',
+            },
+        },
+        "role": {
+            "ui:widget": "RadioWidget"
+        },
+        "status": {
+            "ui:widget": "RadioWidget"
+        }
+    }
+};
 
 
 

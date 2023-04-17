@@ -11,6 +11,8 @@ import React from 'react';
 import { UserGetProps } from 'services/requests/user/interfaces';
 import { userInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
+import AccordionFilter from 'src/components/AccordionFilter';
+import { userFiltersJson } from 'Jsons/Forms/user';
 
 // ----------------------------------------------------------------------
 
@@ -83,6 +85,32 @@ export default function Usuarios() {
 
     const [loading, setLoading] = React.useState(false);
 
+    const [userFilters, setUserFilters] = React.useState<UserGetProps>(userInitialValue);
+    function handleUserFilters(data: UserGetProps){
+        setUserFilters(data);
+    }
+
+
+    // const getUsers = React.useCallback(async () => {
+    //     setLoading(true);
+    //     const usersArray = await listCategoriesWithFilters(userFilters);
+    //     if (usersArray != undefined) {
+    //         if (usersArray?.length != 0) {
+    //             setNoUsers(false);
+    //             setUsers(usersArray);
+    //         } else {
+    //             setNoUsers(true);
+    //         }
+    //     } else {
+    //         setNoUsers(true);
+    //     }
+    //     setLoading(false);
+    // }, [userFilters]);
+
+    // React.useEffect(() => {
+    //     getUsers();
+    // }, [getUsers]);
+
     if(loading)
     return <Loading />
 
@@ -93,6 +121,7 @@ export default function Usuarios() {
             </Head>
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
+                <AccordionFilter formJson={userFiltersJson} setFilters={handleUserFilters} />
                 <Grid spacing={3}>
                     <Grid item xs={12} lg={8}>
                         <CrudTable

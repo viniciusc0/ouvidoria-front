@@ -148,3 +148,44 @@ export const company =
         }
     }
 } as RJSFSchema;
+
+
+export const companyFiltersJson =
+{
+    "schema": {
+        "properties": {
+            "corporate_name": {
+                "type": "string",
+                "title": "Razão social",
+            },
+            "cnpj": {
+                "type": "string",
+                "title": "CNPJ",
+            },
+            "status": {
+                "type": "boolean",
+                "title": "Status",
+                "oneOf": [
+                    { "const": true, "title": "Ativo(a)" },
+                    { "const": false, "title": "Inativo(a)" }
+                ]
+            },
+        }
+    },
+    "uiSchema": {
+        "corporate_name": {
+            "ui:autofocus": true,
+            "ui:placeholder": "Digite a razão social da empresa"
+        },
+        "cnpj": {
+            "ui:placeholder": "Digite o cnpj da empresa",
+            "ui:widget" : "TextWidgetWithMask",
+            'ui:options': {
+                "mask": '99.999.999/9999-99',
+            },
+        },
+        "status": {
+            "ui:widget": "RadioWidget"
+        }
+    }
+} as RJSFSchema;
