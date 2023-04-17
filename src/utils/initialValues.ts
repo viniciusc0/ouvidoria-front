@@ -18,7 +18,7 @@ export const deliverymanInitialValue = {
     cpf: '',
     init_time: '',
     end_time: '',
-    work_days: ['']
+    work_days: []
 } as DeliverymanGetProps;
 
 export const companyInitialValue = {
@@ -28,11 +28,11 @@ export const companyInitialValue = {
     status: true,
     opening_hours: '',
     end_working_hours: '',
-    work_days: [""],
+    work_days: [],
     cep: '',
     public_place: '',
     number: '',
-    neighboorhood: '',
+    neighborhood: '',
     city: '',
     state: ''
 

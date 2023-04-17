@@ -9,7 +9,7 @@ export interface CompanyCreationProps{
     cep: string;
     public_place: string;
     number: string;
-    neighboorhood: string;
+    neighborhood: string;
     city: string;
     state: string;
 };

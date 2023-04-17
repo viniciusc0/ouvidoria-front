@@ -70,7 +70,11 @@ export default function Edicao() {
 
 //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
-      console.log(formData)
+      console.log(formData);
+      if (formData.cpf === '' || formData.name === '') {
+        setSnackBarMessage('Preencha todos os campos', 'error');
+        return;
+      }
     //   const data = formItems.formData as CategoryCreationProps;
     //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
     //     const res = await createCategory(data);

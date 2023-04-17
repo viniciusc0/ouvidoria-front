@@ -75,7 +75,7 @@ export const company =
                 "title": "Logradouro",
             },
             "number": {
-                "type": "string",
+                "type": "number",
                 "title": "Número",
             },
             "neighborhood": {

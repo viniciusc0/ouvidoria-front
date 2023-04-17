@@ -68,7 +68,11 @@ export default function Edicao() {
 
 //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
-      console.log(formData)
+      console.log(formData);
+      if (formData.corporate_name === '' || formData.cep === '' || formData.city === '' || formData.cnpj === '' || formData.end_working_hours === '' || formData.opening_hours === '' || formData.public_place === '' || formData.state === '' || formData.neighborhood === '' || formData.number === '' || formData.work_days.length === 0) {
+        setSnackBarMessage('Preencha os campos obrigatórios', 'error');
+        return;
+      }
     //   const data = formItems.formData as CategoryCreationProps;
     //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
     //     const res = await createCategory(data);
