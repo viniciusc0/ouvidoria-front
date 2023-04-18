@@ -48,8 +48,6 @@ export default function Header({ onOpenNav }: Props) {
         </IconButton>
       )}
 
-      <Searchbar />
-
       <Stack
         flexGrow={1}
         direction="row"
@@ -58,7 +56,7 @@ export default function Header({ onOpenNav }: Props) {
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
 
-        <NotificationsPopover />
+        {/* <NotificationsPopover /> */}
 
         <AccountPopover />
       </Stack>

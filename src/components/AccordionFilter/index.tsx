@@ -1,11 +1,11 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from "@mui/material";
 import { ObjectFieldTemplateProps, RegistryWidgetsType, UiSchema, WidgetProps } from "@rjsf/utils";
-import { SubmitButton, Container } from "./styles";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import validator from "@rjsf/validator-ajv8";
 import { IChangeEvent } from "@rjsf/core";
 import { Form } from "@rjsf/mui";
 import TextWidgetWithMask from "../TextWidgetWithMask";
+import { Container } from "./styles";
 
 interface Props {
     formJson: any;
@@ -41,7 +41,7 @@ export default function AccordionFilter({ formJson, setFilters, customSubmit }: 
     return (
 
         <Container>
-            <Accordion>
+            <Accordion >
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"

@@ -1,9 +1,9 @@
 import { createContext, useEffect, useReducer, useCallback } from 'react';
 // utils
-import axios from '../utils/axios';
 //
 import { isValidToken, setSession } from './utils';
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types';
+import api from 'services/requests/api';
 
 // ----------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
-        const response = await axios.get('/api/account/my-account');
+        const response = await api.get('/api/account/my-account');
 
         const { user } = response.data;
 
@@ -134,7 +134,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // LOGIN
   const login = async (email: string, password: string) => {
-    const response = await axios.post('/api/account/login', {
+    const response = await api.post('/api/account/login', {
       email,
       password,
     });
@@ -152,7 +152,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // REGISTER
   const register = async (email: string, password: string, firstName: string, lastName: string) => {
-    const response = await axios.post('/api/account/register', {
+    const response = await api.post('/api/account/register', {
       email,
       password,
       firstName,

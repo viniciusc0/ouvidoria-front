@@ -3,10 +3,10 @@ import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 import { createSlice } from '@reduxjs/toolkit';
 // utils
-import axios from '../../utils/axios';
 import { IProductState, ICheckoutCartItem } from '../../@types/product';
 //
 import { dispatch } from '../store';
+import api from 'services/requests/api';
 
 // ----------------------------------------------------------------------
 
@@ -197,7 +197,7 @@ export function getProducts() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/products');
+      const response = await api.get('/api/products');
       dispatch(slice.actions.getProductsSuccess(response.data.products));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -211,7 +211,7 @@ export function getProduct(name: string) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/products/product', {
+      const response = await api.get('/api/products/product', {
         params: { name },
       });
       dispatch(slice.actions.getProductSuccess(response.data.product));

@@ -13,6 +13,7 @@ import { userInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
 import AccordionFilter from 'src/components/AccordionFilter';
 import { userFiltersJson } from 'Jsons/Forms/user';
+import styled from 'styled-components';
 
 // ----------------------------------------------------------------------
 
@@ -36,9 +37,9 @@ const teste = [
         name: 'Vinicius',
         cpf: '1313131313',
         role: {
-        "name": "Comum",
-        "const": "regular"
-    },
+            "name": "Comum",
+            "const": "regular"
+        },
         status: true
     },
     {
@@ -46,9 +47,9 @@ const teste = [
         name: 'Sharapova',
         cpf: '8888888888',
         role: {
-        "name": "Comum",
-        "const": "regular"
-    },
+            "name": "Comum",
+            "const": "regular"
+        },
         status: true
     },
     {
@@ -56,9 +57,9 @@ const teste = [
         name: 'Serena Williams',
         cpf: '232323232323',
         role: {
-        "name": "Comum",
-        "const": "regular"
-    },
+            "name": "Comum",
+            "const": "regular"
+        },
         status: true
     },
     {
@@ -86,7 +87,7 @@ export default function Usuarios() {
     const [loading, setLoading] = React.useState(false);
 
     const [userFilters, setUserFilters] = React.useState<UserGetProps>(userInitialValue);
-    function handleUserFilters(data: UserGetProps){
+    function handleUserFilters(data: UserGetProps) {
         setUserFilters(data);
     }
 
@@ -111,8 +112,8 @@ export default function Usuarios() {
     //     getUsers();
     // }, [getUsers]);
 
-    if(loading)
-    return <Loading />
+    if (loading)
+        return <Loading />
 
     return (
         <>
@@ -124,20 +125,22 @@ export default function Usuarios() {
                 <AccordionFilter formJson={userFiltersJson} setFilters={handleUserFilters} />
                 <Grid spacing={3}>
                     <Grid item xs={12} lg={8}>
-                        <CrudTable
-                            title="Usuários"
-                            setTableData={setUsers}
-                            tableData={users}
-                            tableLabels={[
-                                { id: 'name', label: 'Nome' },
-                                { id: 'cpf', label: 'CPF' },
-                                { id: 'role', label: 'Cargo' },
-                                { id: 'status', label: 'Status' },
-                            ]}
-                        />
+                            <CrudTable
+                                title="Usuários"
+                                setTableData={setUsers}
+                                tableData={users}
+                                tableLabels={[
+                                    { id: 'name', label: 'Nome' },
+                                    { id: 'cpf', label: 'CPF' },
+                                    { id: 'role', label: 'Cargo' },
+                                    { id: 'status', label: 'Status' },
+                                ]}
+                            />
                     </Grid>
                 </Grid>
             </Container>
         </>
     );
 }
+
+

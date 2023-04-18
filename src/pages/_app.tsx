@@ -78,8 +78,7 @@ export default function MyApp(props: MyAppProps) {
       </Head>
 
       <AuthProvider>
-        <ReduxProvider store={store}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+        {/* <ReduxProvider store={store}> */}
             <SettingsProvider>
               <MotionLazyContainer>
                 <ThemeProvider>
@@ -95,8 +94,7 @@ export default function MyApp(props: MyAppProps) {
                 </ThemeProvider>
               </MotionLazyContainer>
             </SettingsProvider>
-          </LocalizationProvider>
-        </ReduxProvider>
+        {/* </ReduxProvider> */}
       </AuthProvider>
     </CacheProvider>
   );

@@ -29,6 +29,7 @@ import { DeliverymanGetProps } from 'services/requests/deliveryman/interfaces';
 import { useRouter } from 'next/router';
 import { CompanyGetProps } from 'services/requests/company/interfaces';
 import Link from 'next/link';
+import styled from 'styled-components';
 
 // ----------------------------------------------------------------------
 
@@ -55,11 +56,12 @@ export default function CrudTable({
   const router = useRouter();
 
   return (
+    <TableCard>
     <Card {...other}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
-        <Link href={router.pathname + '/cadastro'}>
-          <Iconify icon="material-symbols:add-circle-rounded" color={'green'} width={40} />
+        <Link href={router.pathname + '/cadastro'} >
+          <Iconify icon="material-symbols:add-circle-rounded" color={'green'} width={40} style={{marginRight: '20px'}}/>
         </Link>
       </Box>
 
@@ -89,8 +91,14 @@ export default function CrudTable({
         </Button>
       </Box>
     </Card>
+    </TableCard>
   );
 }
+
+const TableCard = styled.div`
+    border: 1.5px solid #c0c0c0;
+    border-radius: 15px;
+`;
 
 // ----------------------------------------------------------------------
 
