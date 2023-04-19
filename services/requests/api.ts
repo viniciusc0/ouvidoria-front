@@ -8,6 +8,10 @@ const axiosInstance = axios.create({ baseURL: HOST_API_KEY });
 
 
 axiosInstance.interceptors.request.use(function (config) {
+  const token = localStorage.getItem('token');
+  if(token && config.headers !== undefined){
+    config.headers['Authorization'] =  `Bearer ${token}`;
+  }
   return config;
 }, function (error) {
   // Do something with request error

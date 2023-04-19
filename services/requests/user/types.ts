@@ -1,4 +1,4 @@
-export interface UserCreationProps{
+export interface UserCreationProps {
     name: string;
     cpf: string;
     status: boolean;
@@ -11,7 +11,7 @@ export interface UserCreationProps{
     }
 };
 
-export interface UserGetProps{
+export interface UserGetProps {
     id?: string;
     name: string;
     cpf: string;
@@ -23,4 +23,16 @@ export interface UserGetProps{
         "name": "Comum",
         "const": "regular"
     }
+};
+
+
+export interface UserInfo {
+    id: string;
+    username: string;
+    email: string;
+    provider: string;
+    confirmed: boolean;
+    blocked: boolean;
+    createdAt: string;
+    updatedAt: string;
 };
