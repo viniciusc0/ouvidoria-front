@@ -3,8 +3,6 @@ import { forwardRef } from 'react';
 import NextLink from 'next/link';
 // @mui
 import { Box, Tooltip, ListItemText, Link } from '@mui/material';
-// locales
-import { useLocales } from '../../../locales';
 // auth
 import RoleBasedGuard from '../../../auth/RoleBasedGuard';
 //
@@ -16,7 +14,6 @@ import { StyledItem, StyledIcon } from './styles';
 
 const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   ({ item, depth, open, active, isExternalLink, ...other }, ref) => {
-    const { translate } = useLocales();
 
     const { title, path, icon, info, children, disabled, caption, roles } = item;
 
@@ -34,7 +31,7 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         {icon && <StyledIcon>{icon}</StyledIcon>}
 
         <ListItemText
-          primary={translate(title)}
+          primary={title}
           primaryTypographyProps={{
             noWrap: true,
             component: 'span',
@@ -49,7 +46,7 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         )}
 
         {caption && (
-          <Tooltip title={translate(caption)} arrow>
+          <Tooltip title={caption} arrow>
             <Box component="span" sx={{ ml: 0.5, lineHeight: 0 }}>
               <Iconify icon="eva:info-outline" width={16} />
             </Box>

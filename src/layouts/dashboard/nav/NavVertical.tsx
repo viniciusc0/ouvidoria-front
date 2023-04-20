@@ -35,6 +35,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
   }, [pathname]);
 
   const renderContent = (
+    <div style={{backgroundColor: '#d8d8d8', height: '100%'}}>
     <Scrollbar
       sx={{
         height: 1,
@@ -62,6 +63,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       <Box sx={{ flexGrow: 1 }} />
 
     </Scrollbar>
+    </div>
   );
 
   return (

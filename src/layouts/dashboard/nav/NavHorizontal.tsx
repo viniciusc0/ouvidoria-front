@@ -1,7 +1,7 @@
 import { memo } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { AppBar, Box, BoxProps, Toolbar } from '@mui/material';
+import { AppBar, Box, BoxProps, Toolbar, Typography } from '@mui/material';
 // config
 import { HEADER } from '../../../config';
 // utils
@@ -25,6 +25,7 @@ function NavHorizontal() {
         top: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
       }}
     >
+      
       <Toolbar
         sx={{
           ...bgBlur({

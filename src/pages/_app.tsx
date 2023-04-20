@@ -1,5 +1,3 @@
-// i18n
-import '../locales/i18n';
 
 // scroll bar
 import 'simplebar/src/simplebar.css';
@@ -27,19 +25,10 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-// redux
-import { Provider as ReduxProvider } from 'react-redux';
-// @mui
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// redux
-import { store } from '../redux/store';
 // utils
 import createEmotionCache from '../utils/createEmotionCache';
 // theme
 import ThemeProvider from '../theme';
-// locales
-import ThemeLocalization from '../locales';
 // components
 import { StyledChart } from '../components/chart';
 import ProgressBar from '../components/progress-bar';
@@ -78,23 +67,19 @@ export default function MyApp(props: MyAppProps) {
       </Head>
 
       <AuthProvider>
-        {/* <ReduxProvider store={store}> */}
             <SettingsProvider>
               <MotionLazyContainer>
                 <ThemeProvider>
                   <ThemeSettings>
-                    <ThemeLocalization>
                       <SnackbarProvider>
                         <StyledChart />
                         <ProgressBar />
                         {getLayout(<Component {...pageProps} />)}
                       </SnackbarProvider>
-                    </ThemeLocalization>
                   </ThemeSettings>
                 </ThemeProvider>
               </MotionLazyContainer>
             </SettingsProvider>
-        {/* </ReduxProvider> */}
       </AuthProvider>
     </CacheProvider>
   );
