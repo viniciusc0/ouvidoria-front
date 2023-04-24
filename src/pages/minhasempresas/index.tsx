@@ -7,7 +7,7 @@ import { useSettingsContext } from 'src/components/settings';
 import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
 import { companyFiltersInitialValue, companyInitialValue } from 'src/utils/initialValues';
-import { CompanyFiltersProps, CompanyGetProps } from 'services/requests/company/interfaces';
+import { CompanyFiltersProps, CompanyGetProps } from 'services/requests/company/types';
 import Loading from 'src/components/Loading';
 import AccordionFilter from 'src/components/AccordionFilter';
 import { companyFiltersJson } from 'Jsons/Forms/company';

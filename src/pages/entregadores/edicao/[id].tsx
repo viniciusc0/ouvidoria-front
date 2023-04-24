@@ -14,7 +14,7 @@ import { useSettingsContext } from 'src/components/settings';
 import { deliverymanInitialValue } from 'src/utils/initialValues';
 import { deliveryman } from 'Jsons/Forms/deliveryman';
 import Loading from 'src/components/Loading';
-import { DeliverymanCreationProps } from 'services/requests/deliveryman/interfaces';
+import { DeliverymanCreationProps } from 'services/requests/deliveryman/types';
 
 // ----------------------------------------------------------------------
 

@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import Iconify from 'src/components/iconify';
 import { LoadingButton } from '@mui/lab';
+import { RegisterProps } from 'services/requests/usersAuth/types';
+import { register } from 'services/requests/usersAuth/register';
 
 //
 
@@ -55,29 +57,22 @@ export default function Register() {
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
+interface FormValuesProps extends RegisterProps{
   afterSubmit?: string;
 };
 
 function AuthRegisterForm() {
-  const { register } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    username: Yup.string().required('Nome de usuário é obrigatório'),
+    email: Yup.string().email('Email inválido').required('Email é obrigatório'),
+    password: Yup.string().required('Senha é obrigatória'),
   });
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
+    username: '',
     email: '',
     password: '',
   };
@@ -96,9 +91,8 @@ function AuthRegisterForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      if (register) {
-        await register(data.email, data.password, data.firstName, data.lastName);
-      }
+        const response = await register(data);
+        console.log(response);
     } catch (error) {
       console.error(error);
 
@@ -117,11 +111,9 @@ function AuthRegisterForm() {
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="firstName" label="Nome" />
-          <RHFTextField name="lastName" label="Sobrenome" />
+          <RHFTextField name="username" label="Nome de usuário" />
+          <RHFTextField name="email" label="email" />
         </Stack>
-
-        <RHFTextField name="email" label="Email" />
 
         <RHFTextField
           name="password"

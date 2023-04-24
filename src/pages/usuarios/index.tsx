@@ -8,7 +8,7 @@ import { useAuthContext } from 'src/auth/useAuthContext';
 import { useSettingsContext } from 'src/components/settings';
 import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
-import { UserGetProps } from 'services/requests/user/interfaces';
+import { UserGetProps } from 'services/requests/user/types';
 import { userInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
 import AccordionFilter from 'src/components/AccordionFilter';

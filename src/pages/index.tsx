@@ -5,7 +5,6 @@ import { Grid, Container, Typography } from '@mui/material';
 import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
 import { AnalyticsConversionRates, AnalyticsCurrentSubject, AnalyticsCurrentVisits, AnalyticsNewsUpdate, AnalyticsOrderTimeline, AnalyticsTasks, AnalyticsTrafficBySite, AnalyticsWebsiteVisits, AnalyticsWidgetSummary } from 'src/sections/@dashboard/general/analytics';
-import { _analyticOrderTimeline, _analyticPost, _analyticTraffic } from 'src/_mock/arrays';
 
 // ----------------------------------------------------------------------
 
@@ -162,18 +161,6 @@ export default function GeneralAnalyticsPage() {
                 ],
               }}
             />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AnalyticsNewsUpdate title="News Update" list={_analyticPost} />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AnalyticsOrderTimeline title="Order Timeline" list={_analyticOrderTimeline} />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AnalyticsTrafficBySite title="Traffic by Site" list={_analyticTraffic} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

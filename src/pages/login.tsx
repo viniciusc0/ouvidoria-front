@@ -9,6 +9,8 @@ import { useAuthContext } from 'src/auth/useAuthContext';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import Iconify from 'src/components/iconify';
 import LoginLayout from 'src/layouts/login';
+import { login } from 'services/requests/usersAuth/login';
+import { LoginProps } from 'services/requests/usersAuth/types';
 
 
 // ----------------------------------------------------------------------
@@ -27,14 +29,6 @@ export default function Login() {
                         <Link variant="subtitle2">Crie uma conta</Link>
                     </NextLink>
                 </Stack>
-                {/* <Tooltip title={method} placement="left">
-                    <Box
-                        component="img"
-                        alt={method}
-                        src={`/assets/icons/auth/ic_${method}.png`}
-                        sx={{ width: 32, height: 32, position: 'absolute', right: 0 }}
-                    />
-                </Tooltip> */}
             </Stack>
             {/* <Alert severity="info" sx={{ mb: 3 }}>
                 Use email : <strong>demo@minimals.cc</strong> / password :<strong> demo1234</strong>
@@ -49,14 +43,11 @@ export default function Login() {
 
 
 
-type FormValuesProps = {
-    email: string;
-    password: string;
+interface FormValuesProps extends LoginProps{
     afterSubmit?: string;
 };
 
 function AuthLoginForm() {
-    const { login } = useAuthContext();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -81,7 +72,8 @@ function AuthLoginForm() {
         console.log(data);
 
         try {
-            await login(data.email, data.password);
+            const response = await login(data);
+            console.log(response)
         } catch (error) {
             console.error(error);
 

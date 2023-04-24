@@ -23,11 +23,11 @@ import Iconify from '../../../../components/iconify';
 import Scrollbar from '../../../../components/scrollbar';
 import MenuPopover from '../../../../components/menu-popover';
 import { TableHeadCustom } from '../../../../components/table';
-import { UserGetProps } from 'services/requests/user/interfaces';
+import { UserGetProps } from 'services/requests/user/types';
 import { getShowableItem } from 'src/utils/functions';
-import { DeliverymanGetProps } from 'services/requests/deliveryman/interfaces';
+import { DeliverymanGetProps } from 'services/requests/deliveryman/types';
 import { useRouter } from 'next/router';
-import { CompanyGetProps } from 'services/requests/company/interfaces';
+import { CompanyGetProps } from 'services/requests/company/types';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -98,6 +98,7 @@ export default function CrudTable({
 const TableCard = styled.div`
     border: 1.5px solid #c0c0c0;
     border-radius: 15px;
+    padding: 5px;
 `;
 
 // ----------------------------------------------------------------------

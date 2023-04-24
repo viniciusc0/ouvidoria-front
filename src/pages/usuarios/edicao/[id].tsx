@@ -14,7 +14,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
 import { userInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
-import { UserCreationProps } from 'services/requests/user/interfaces';
+import { UserCreationProps } from 'services/requests/user/types';
 
 // ----------------------------------------------------------------------
 

@@ -6,7 +6,7 @@ import CrudTable from 'src/sections/@dashboard/general/app/CrudTable';
 import { useSettingsContext } from 'src/components/settings';
 import DashboardLayout from 'src/layouts/dashboard';
 import React from 'react';
-import { DeliverymanGetProps } from 'services/requests/deliveryman/interfaces';
+import { DeliverymanGetProps } from 'services/requests/deliveryman/types';
 import { deliverymanInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
 import AccordionFilter from 'src/components/AccordionFilter';
