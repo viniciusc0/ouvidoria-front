@@ -50,15 +50,10 @@ export default function AccountPopover() {
     setOpenPopover(null);
   };
 
+  const router = useRouter();
+
   const handleLogout = async () => {
-    try {
-      logout();
-      replace(PATH_AUTH.login);
-      handleClosePopover();
-    } catch (error) {
-      console.error(error);
-      enqueueSnackbar('Unable to logout!', { variant: 'error' });
-    }
+    router.push('/login');
   };
 
   const handleClickItem = (path: string) => {

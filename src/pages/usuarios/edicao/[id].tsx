@@ -15,6 +15,8 @@ import { useSettingsContext } from 'src/components/settings';
 import { userInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
 import { UserCreationProps } from 'services/requests/user/types';
+import { getUser } from 'services/requests/user/getUser';
+import { createUser } from 'services/requests/user/createUser';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +33,7 @@ export default function Edicao() {
   });
 
   const [formData, setFormData] = React.useState(userInitialValue);
+  const [noUser, setNoUser] = React.useState<boolean>(false);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
   const handleCloseSnackbar = () => {
@@ -43,22 +46,22 @@ export default function Edicao() {
 
 
   const [loading, setLoading] = React.useState<boolean>(false);
-  // const router = useRouter();
-    // const id = router.query.id as string
+  const router = useRouter();
+    const id = router.query.id as string
 
-    // const handleGetDeliveryman = React.useCallback(async (id: string) => {
-    //     setLoading(true);
-    //     const data = await getDeliveryman(id);
-    //     if (data) {
-    //         setFormData(data);
-    //     } else {
-    //         setNoDeliveryman(true);
-    //     }
-    //     setLoading(false);
-    // }, []);
-    // React.useEffect(() => {
-    //     handleGetDeliveryman(id);
-    // }, [handleGetDeliveryman, id]);
+    const handleGetUser = React.useCallback(async (id: string) => {
+        setLoading(true);
+        const data = await getUser(id);
+        if (data) {
+            setFormData(data);
+        } else {
+            setNoUser(true);
+        }
+        setLoading(false);
+    }, []);
+    React.useEffect(() => {
+        handleGetUser(id);
+    }, [handleGetUser, id]);
 
   const schema: RJSFSchema = {
     title: "Edição",
@@ -71,13 +74,12 @@ export default function Edicao() {
 //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
       console.log(formData);
-      if (formData.cpf === '' || formData.name === '') {
-        setSnackBarMessage('Preencha todos os campos', 'error');
-        return;
-      }
-    //   const data = formItems.formData as CategoryCreationProps;
-    //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
-    //     const res = await createCategory(data);
+      // if (formData.cpf === '' || formData.name === '') {
+      //   setSnackBarMessage('Preencha todos os campos', 'error');
+      //   return;
+      // }
+      // const data = formItems.formData as UserCreationProps;
+        // const res = await createUser(data);
     //     if(res.data != undefined){
     //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
     //       setOpenSnackbar(true);
@@ -86,7 +88,6 @@ export default function Edicao() {
     //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
     //       setOpenSnackbar(true);
     //     }
-    //   }
   };
 
 

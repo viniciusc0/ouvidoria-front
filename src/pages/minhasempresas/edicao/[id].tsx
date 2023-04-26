@@ -14,6 +14,9 @@ import { useSettingsContext } from 'src/components/settings';
 import { companyInitialValue } from 'src/utils/initialValues';
 import { company } from 'Jsons/Forms/company';
 import Loading from 'src/components/Loading';
+import { getCompany } from 'services/requests/company/getCompany';
+import { CompanyCreationProps } from 'services/requests/company/types';
+import { createCompany } from 'services/requests/company/createCompany';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +34,7 @@ export default function Edicao() {
   });
 
   const [formData, setFormData] = React.useState(companyInitialValue);
+  const [noCompany, setNoCompany] = React.useState<boolean>(false);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
   const handleCloseSnackbar = () => {
@@ -42,22 +46,22 @@ export default function Edicao() {
   }
 
   const [loading, setLoading] = React.useState<boolean>(false);
-    // const router = useRouter();
-    // const id = router.query.id as string
+  const router = useRouter();
+  const id = router.query.id as string
 
-    // const handleGetCompany = React.useCallback(async (id: string) => {
-    //     setLoading(true);
-    //     const data = await getCompany(id);
-    //     if (data) {
-    //         setFormData(data);
-    //     } else {
-    //         setNoCompany(true);
-    //     }
-    //     setLoading(false);
-    // }, []);
-    // React.useEffect(() => {
-    //     handleGetCompany(id);
-    // }, [handleGetCompany, id]);
+  const handleGetCompany = React.useCallback(async (id: string) => {
+    setLoading(true);
+    const data = await getCompany(id);
+    if (data) {
+      setFormData(data);
+    } else {
+      setNoCompany(true);
+    }
+    setLoading(false);
+  }, []);
+  React.useEffect(() => {
+    handleGetCompany(id);
+  }, [handleGetCompany, id]);
 
   const schema: RJSFSchema = {
     title: "Edição",
@@ -66,16 +70,15 @@ export default function Edicao() {
   const uiSchema: UiSchema = company.uiSchema;
 
 
-//   const onSubmit = (formItems: IChangeEvent) => {
+  //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
-      console.log(formData);
-      if (formData.corporate_name === '' || formData.cep === '' || formData.city === '' || formData.cnpj === '' || formData.end_working_hours === '' || formData.opening_hours === '' || formData.public_place === '' || formData.state === '' || formData.neighborhood === '' || formData.number === '' || formData.work_days.length === 0) {
-        setSnackBarMessage('Preencha os campos obrigatórios', 'error');
-        return;
-      }
-    //   const data = formItems.formData as CategoryCreationProps;
-    //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
-    //     const res = await createCategory(data);
+    console.log(formData);
+    // if (formData.corporate_name === '' || formData.cep === '' || formData.city === '' || formData.cnpj === '' || formData.end_working_hours === '' || formData.opening_hours === '' || formData.public_place === '' || formData.state === '' || formData.neighborhood === '' || formData.number === '' || formData.work_days.length === 0) {
+    //   setSnackBarMessage('Preencha os campos obrigatórios', 'error');
+    //   return;
+    // }
+    // const data = formItems.formData as CompanyCreationProps;
+    // const res = await createCompany(data);
     //     if(res.data != undefined){
     //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
     //       setOpenSnackbar(true);
@@ -84,11 +87,10 @@ export default function Edicao() {
     //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
     //       setOpenSnackbar(true);
     //     }
-    //   }
   };
 
-  if(loading)
-        return <Loading />
+  if (loading)
+    return <Loading />
 
 
   return (

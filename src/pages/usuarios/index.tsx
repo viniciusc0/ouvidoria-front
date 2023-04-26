@@ -14,6 +14,7 @@ import Loading from 'src/components/Loading';
 import AccordionFilter from 'src/components/AccordionFilter';
 import { userFiltersJson } from 'Jsons/Forms/user';
 import styled from 'styled-components';
+import { listUsers } from 'services/requests/user/listUsers';
 
 // ----------------------------------------------------------------------
 
@@ -21,68 +22,13 @@ Usuarios.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dash
 
 // ----------------------------------------------------------------------
 
-const teste = [
-    {
-        id: '1',
-        name: 'Caio',
-        cpf: '212312121',
-        role: {
-            "name": "Comum",
-            "const": "regular"
-        },
-        status: true
-    },
-    {
-        id: '2',
-        name: 'Vinicius',
-        cpf: '1313131313',
-        role: {
-            "name": "Comum",
-            "const": "regular"
-        },
-        status: true
-    },
-    {
-        id: '3',
-        name: 'Sharapova',
-        cpf: '8888888888',
-        role: {
-            "name": "Comum",
-            "const": "regular"
-        },
-        status: true
-    },
-    {
-        id: '4',
-        name: 'Serena Williams',
-        cpf: '232323232323',
-        role: {
-            "name": "Comum",
-            "const": "regular"
-        },
-        status: true
-    },
-    {
-        id: '5',
-        name: 'Messi',
-        cpf: '10101010101',
-        role: {
-            "name": "Comum",
-            "const": "regular"
-        },
-        status: true
-    }
-] as UserGetProps[];
 
 export default function Usuarios() {
-    const { user } = useAuthContext();
-
-    const theme = useTheme();
-
     const { themeStretch } = useSettingsContext();
 
-    // const [users, setUsers] = React.useState<UserGetProps[]>([userInitialValue]);
-    const [users, setUsers] = React.useState<UserGetProps[]>(teste);
+    const [users, setUsers] = React.useState<UserGetProps[]>([userInitialValue]);
+    const [noUsers, setNoUsers] = React.useState<boolean>(false);
+    
 
     const [loading, setLoading] = React.useState(false);
 
@@ -92,25 +38,26 @@ export default function Usuarios() {
     }
 
 
-    // const getUsers = React.useCallback(async () => {
-    //     setLoading(true);
-    //     const usersArray = await listCategoriesWithFilters(userFilters);
-    //     if (usersArray != undefined) {
-    //         if (usersArray?.length != 0) {
-    //             setNoUsers(false);
-    //             setUsers(usersArray);
-    //         } else {
-    //             setNoUsers(true);
-    //         }
-    //     } else {
-    //         setNoUsers(true);
-    //     }
-    //     setLoading(false);
+    const getUsers = React.useCallback(async () => {
+        setLoading(true);
+        const usersArray = await listUsers() as UserGetProps[];
+        if (usersArray != undefined) {
+            if (usersArray?.length != 0) {
+                setNoUsers(false);
+                setUsers(usersArray);
+            } else {
+                setNoUsers(true);
+            }
+        } else {
+            setNoUsers(true);
+        }
+        setLoading(false);
     // }, [userFilters]);
+    }, []);
 
-    // React.useEffect(() => {
-    //     getUsers();
-    // }, [getUsers]);
+    React.useEffect(() => {
+        getUsers();
+    }, [getUsers]);
 
     if (loading)
         return <Loading />
@@ -130,10 +77,10 @@ export default function Usuarios() {
                                 setTableData={setUsers}
                                 tableData={users}
                                 tableLabels={[
-                                    { id: 'name', label: 'Nome' },
-                                    { id: 'cpf', label: 'CPF' },
-                                    { id: 'role', label: 'Cargo' },
-                                    { id: 'status', label: 'Status' },
+                                    { id: 'username', label: 'Username' },
+                                    { id: 'email', label: 'Email' },
+                                    // { id: 'role', label: 'Cargo' },
+                                    // { id: 'status', label: 'Status' },
                                 ]}
                             />
                     </Grid>

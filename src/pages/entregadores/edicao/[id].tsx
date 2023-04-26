@@ -15,6 +15,7 @@ import { deliverymanInitialValue } from 'src/utils/initialValues';
 import { deliveryman } from 'Jsons/Forms/deliveryman';
 import Loading from 'src/components/Loading';
 import { DeliverymanCreationProps } from 'services/requests/deliveryman/types';
+import { getDeliveryman } from 'services/requests/deliveryman/getDeliveryman';
 
 // ----------------------------------------------------------------------
 
@@ -31,24 +32,25 @@ export default function Edicao() {
     });
 
     const [formData, setFormData] = React.useState<DeliverymanCreationProps>(deliverymanInitialValue);
+    const [noDeliveryman, setNoDeliveryman] = React.useState<boolean>(false);
 
       const [loading, setLoading] = React.useState<boolean>(false);
-    // const router = useRouter();
-    // const id = router.query.id as string
+    const router = useRouter();
+    const id = router.query.id as string
 
-    // const handleGetDeliveryman = React.useCallback(async (id: string) => {
-    //     setLoading(true);
-    //     const data = await getDeliveryman(id);
-    //     if (data) {
-    //         setFormData(data);
-    //     } else {
-    //         setNoDeliveryman(true);
-    //     }
-    //     setLoading(false);
-    // }, []);
-    // React.useEffect(() => {
-    //     handleGetDeliveryman(id);
-    // }, [handleGetDeliveryman, id]);
+    const handleGetDeliveryman = React.useCallback(async (id: string) => {
+        setLoading(true);
+        const data = await getDeliveryman(id);
+        if (data) {
+            setFormData(data);
+        } else {
+            setNoDeliveryman(true);
+        }
+        setLoading(false);
+    }, []);
+    React.useEffect(() => {
+        handleGetDeliveryman(id);
+    }, [handleGetDeliveryman, id]);
 
 
     const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
@@ -71,13 +73,12 @@ export default function Edicao() {
     //   const onSubmit = (formItems: IChangeEvent) => {
     const onSubmit = () => {
         console.log(formData);
-        if (formData.name === '' || formData.init_time === '' || formData.end_time === '' || formData.cpf === '' || formData.work_days.length === 0) {
-            setSnackBarMessage('Preencha todos campos', 'error');
-            return;
-          }
-        //   const data = formItems.formData as CategoryCreationProps;
-        //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
-        //     const res = await createCategory(data);
+        // if (formData.name === '' || formData.init_time === '' || formData.end_time === '' || formData.cpf === '' || formData.work_days.length === 0) {
+        //     setSnackBarMessage('Preencha todos campos', 'error');
+        //     return;
+        //   }
+        //   const data = formItems.formData as DeliverymanCreationProps;
+        //     const res = await editDeliveryman(data);
         //     if(res.data != undefined){
         //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
         //       setOpenSnackbar(true);
@@ -86,7 +87,6 @@ export default function Edicao() {
         //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
         //       setOpenSnackbar(true);
         //     }
-        //   }
     };
 
     if(loading)

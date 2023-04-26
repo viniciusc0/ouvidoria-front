@@ -11,6 +11,8 @@ import Iconify from 'src/components/iconify';
 import LoginLayout from 'src/layouts/login';
 import { login } from 'services/requests/usersAuth/login';
 import { LoginProps } from 'services/requests/usersAuth/types';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 
 
 // ----------------------------------------------------------------------
@@ -43,7 +45,7 @@ export default function Login() {
 
 
 
-interface FormValuesProps extends LoginProps{
+interface FormValuesProps extends LoginProps {
     afterSubmit?: string;
 };
 
@@ -52,7 +54,7 @@ function AuthLoginForm() {
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
-        email: Yup.string().email('Esse email não é válido').required('Email é obrigatório'),
+        identifier: Yup.string().required('Email ou  nome de usuário é obrigatório'),
         password: Yup.string().required('Senha é obrigatória'),
     });
 
@@ -67,13 +69,16 @@ function AuthLoginForm() {
         formState: { errors, isSubmitting, isSubmitSuccessful },
     } = methods;
 
-    const onSubmit = async (data: FormValuesProps) => {
+    const router = useRouter();
 
-        console.log(data);
+    const onSubmit = async (data: FormValuesProps) => {
 
         try {
             const response = await login(data);
-            console.log(response)
+            if (response != undefined) {
+                Cookies.set("token", response?.jwt, { expires: 2 });
+                router.push('/');
+            }
         } catch (error) {
             console.error(error);
 
@@ -91,7 +96,7 @@ function AuthLoginForm() {
             <Stack spacing={3}>
                 {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-                <RHFTextField name="email" label="Email" />
+                <RHFTextField name="identifier" label="Email" />
 
                 <RHFTextField
                     name="password"

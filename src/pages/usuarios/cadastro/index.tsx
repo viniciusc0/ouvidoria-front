@@ -13,6 +13,8 @@ import { user } from 'Jsons/Forms/user';
 import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
 import { userInitialValue } from 'src/utils/initialValues';
+import { UserCreationProps } from 'services/requests/user/types';
+import { createUser } from 'services/requests/user/createUser';
 
 // ----------------------------------------------------------------------
 
@@ -51,12 +53,12 @@ export default function Cadastro() {
   //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
     console.log(formData);
-    if (formData.cpf === '' || formData.name === '') {
-      setSnackBarMessage('Preencha todos os campos', 'error');
-      return;
-    }
-    //   const data = formItems.formData as CategoryCreationProps;
-    //     const res = await createCategory(data);
+    // if (formData.cpf === '' || formData.name === '') {
+    //   setSnackBarMessage('Preencha todos os campos', 'error');
+    //   return;
+    // }
+      // const data = formItems.formData as UserCreationProps;
+        // const res = await createUser(data);
     //     if(res.data != undefined){
     //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
     //       setOpenSnackbar(true);

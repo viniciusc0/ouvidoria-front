@@ -1,41 +1,37 @@
-import { CompanyFiltersProps, CompanyGetProps } from "services/requests/company/interfaces";
-import { DeliverymanGetProps } from "services/requests/deliveryman/interfaces";
-import { UserGetProps } from "services/requests/user/interfaces";
+import { CompanyFiltersProps, CompanyGetProps } from "services/requests/company/types";
+import { DeliverymanGetProps } from "services/requests/deliveryman/types";
+import { UserGetProps } from "services/requests/user/types";
 
 export const userInitialValue = {
-    name: '',
     cpf: '',
-    role: {
-        "name": "Comum",
-        "const": "regular"
-    },
-    status: true
+    name:  '',
+    blocked: false,
+    confirmed: true,
+    email: '',
+    provider: '',
+    username: ''
+
 } as UserGetProps;
 
 
 export const deliverymanInitialValue = {
-    name: '',
+    business: 0,
     cpf: '',
-    init_time: '',
-    end_time: '',
-    work_days: []
+    days: [],
+    hourFinal: '',
+    hourStart:  '',
+    name: '',
+    phone: '',
+    tenant: 0,
 } as DeliverymanGetProps;
 
 export const companyInitialValue = {
-    corporate_name: '',
-    commercial_name: '',
-    cnpj: '',
+    cnpj:  '',
+    contactName: '',
+    contactPhone: '',
+    fantasyName: '',
+    reasonName: '',
     status: true,
-    opening_hours: '',
-    end_working_hours: '',
-    work_days: [],
-    cep: '',
-    public_place: '',
-    number: '',
-    neighborhood: '',
-    city: '',
-    state: ''
-
 } as CompanyGetProps;
 
 export const companyFiltersInitialValue = {

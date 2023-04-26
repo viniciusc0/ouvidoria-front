@@ -30,6 +30,7 @@ import { useRouter } from 'next/router';
 import { CompanyGetProps } from 'services/requests/company/types';
 import Link from 'next/link';
 import styled from 'styled-components';
+import AddButton from 'src/components/AddButton';
 
 // ----------------------------------------------------------------------
 
@@ -58,11 +59,9 @@ export default function CrudTable({
   return (
     <TableCard>
     <Card {...other}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
-        <Link href={router.pathname + '/cadastro'} >
-          <Iconify icon="material-symbols:add-circle-rounded" color={'green'} width={40} style={{marginRight: '20px'}}/>
-        </Link>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px' }}>
+        <CardHeader title={title} subheader={subheader} sx={{ mb: 2 }} />
+        <AddButton />
       </Box>
 
       <TableContainer sx={{ overflow: 'unset' }}>

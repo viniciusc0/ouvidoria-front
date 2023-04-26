@@ -13,6 +13,8 @@ import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
 import { companyInitialValue } from 'src/utils/initialValues';
 import { company } from 'Jsons/Forms/company';
+import { createCompany } from 'services/requests/company/createCompany';
+import { CompanyCreationProps } from 'services/requests/company/types';
 
 // ----------------------------------------------------------------------
 
@@ -49,17 +51,16 @@ export default function Cadastro() {
   const uiSchema: UiSchema = company.uiSchema;
 
 
-//   const onSubmit = (formItems: IChangeEvent) => {
+  //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
-      console.log(formData);
-      if (formData.corporate_name === '' || formData.cep === '' || formData.city === '' || formData.cnpj === '' || formData.end_working_hours === '' || formData.opening_hours === '' || formData.public_place === '' || formData.state === '' || formData.neighborhood === '' || formData.number === '' || formData.work_days.length === 0) {
-        setSnackBarMessage('Preencha os campos obrigatórios', 'error');
-        return;
-      }
-      // const unmask = value.replace(/[^\d]/g, '');
-    //   const data = formItems.formData as CategoryCreationProps;
-    //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
-    //     const res = await createCategory(data);
+    console.log(formData);
+    // if (formData.corporate_name === '' || formData.cep === '' || formData.city === '' || formData.cnpj === '' || formData.end_working_hours === '' || formData.opening_hours === '' || formData.public_place === '' || formData.state === '' || formData.neighborhood === '' || formData.number === '' || formData.work_days.length === 0) {
+    //   setSnackBarMessage('Preencha os campos obrigatórios', 'error');
+    //   return;
+    // }
+    // const unmask = value.replace(/[^\d]/g, '');
+    // const data = formItems.formData as CompanyCreationProps;
+    // const res = await createCompany(data);
     //     if(res.data != undefined){
     //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
     //       setOpenSnackbar(true);
@@ -68,7 +69,6 @@ export default function Cadastro() {
     //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
     //       setOpenSnackbar(true);
     //     }
-    //   }
   };
 
 

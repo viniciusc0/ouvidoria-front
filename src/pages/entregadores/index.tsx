@@ -11,6 +11,8 @@ import { deliverymanInitialValue } from 'src/utils/initialValues';
 import Loading from 'src/components/Loading';
 import AccordionFilter from 'src/components/AccordionFilter';
 import { deliverymanFiltersJson } from 'Jsons/Forms/deliveryman';
+import { listDeliverymans } from 'services/requests/deliveryman/listDeliverymans';
+import AddButton from 'src/components/AddButton';
 
 
 // ----------------------------------------------------------------------
@@ -19,55 +21,13 @@ Entregadores.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</
 
 // ----------------------------------------------------------------------
 
-const teste = [
-    {
-        id: '1',
-        name: 'Entregador 1',
-        cpf: '11111111111',
-        init_time: '08:00',
-        end_time: '18:00',
-        work_days: ["Segunda", "Terça", "Quarta"]
-    },
-    {
-        id: '2',
-        name: 'Entregador 2',
-        cpf: '222222222222',
-        init_time: '08:00',
-        end_time: '18:00',
-        work_days: ["Segunda", "Terça", "Quarta"]
-    },
-    {
-        id: '3',
-        name: 'Entregador 3',
-        cpf: '333333333333',
-        init_time: '08:00',
-        end_time: '18:00',
-        work_days: ["Segunda", "Terça", "Quarta", "Quinta"]
-    },
-    {
-        id: '4',
-        name: 'Entregador 4',
-        cpf: '4444444444444',
-        init_time: '08:00',
-        end_time: '18:00',
-        work_days: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"]
-    },
-    {
-        id: '5',
-        name: 'Entregador 5',
-        cpf: '5555555555555',
-        init_time: '08:00',
-        end_time: '18:00',
-        work_days: ["Segunda", "Terça", "Quarta"]
-    }
-] as DeliverymanGetProps[];
 
 export default function Entregadores() {
 
     const { themeStretch } = useSettingsContext();
 
-    // const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>([deliverymanInitialValue]);
-    const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>(teste);
+    const [deliverymans, setDeliverymans] = React.useState<DeliverymanGetProps[]>([deliverymanInitialValue]);
+    const [noDeliverymans, setNoDeliverymans] = React.useState<boolean>(false);
 
     const [loading, setLoading] = React.useState(false);
 
@@ -76,25 +36,27 @@ export default function Entregadores() {
         setDeliverymanFilters(data);
     }
 
-    //     const getDeliverymans = React.useCallback(async () => {
-    //     setLoading(true);
-    //     const deliverymansArray = await listCategoriesWithFilters(deliverymanFilters);
-    //     if (deliverymansArray != undefined) {
-    //         if (deliverymansArray?.length != 0) {
-    //             setNoDeliverymans(false);
-    //             setDeliverymans(deliverymansArray);
-    //         } else {
-    //             setNoDeliverymans(true);
-    //         }
-    //     } else {
-    //         setNoDeliverymans(true);
-    //     }
-    //     setLoading(false);
+        const getDeliverymans = React.useCallback(async () => {
+        setLoading(true);
+        const response = await listDeliverymans();
+        const deliverymansArray =  response.data as DeliverymanGetProps[];
+        if (deliverymansArray != undefined) {
+            if (deliverymansArray?.length != 0) {
+                setNoDeliverymans(false);
+                setDeliverymans(deliverymansArray);
+            } else {
+                setNoDeliverymans(true);
+            }
+        } else {
+            setNoDeliverymans(true);
+        }
+        setLoading(false);
     // }, [userFilters]);
+    }, []);
 
-    // React.useEffect(() => {
-    //     getDeliverymans();
-    // }, [getDeliverymans]);
+    React.useEffect(() => {
+        getDeliverymans();
+    }, [getDeliverymans]);
 
     if(loading)
     return <Loading />

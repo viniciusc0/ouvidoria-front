@@ -1,6 +1,7 @@
 import axios from 'axios';
-// config
 import { HOST_API_KEY } from 'src/config';
+import Cookies from 'js-cookie'
+
 
 // ----------------------------------------------------------------------
 
@@ -8,8 +9,8 @@ const axiosInstance = axios.create({ baseURL: HOST_API_KEY });
 
 
 axiosInstance.interceptors.request.use(function (config) {
-  const token = localStorage.getItem('token');
-  if(token && config.headers !== undefined){
+  const token = Cookies.get('token');
+  if(token !== undefined && config.headers !== undefined){
     config.headers['Authorization'] =  `Bearer ${token}`;
   }
   return config;

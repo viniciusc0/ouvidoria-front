@@ -74,7 +74,6 @@ function AuthRegisterForm() {
   const defaultValues = {
     username: '',
     email: '',
-    password: '',
   };
 
   const methods = useForm<FormValuesProps>({
@@ -112,7 +111,7 @@ function AuthRegisterForm() {
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
           <RHFTextField name="username" label="Nome de usuário" />
-          <RHFTextField name="email" label="email" />
+          <RHFTextField name="email" label="Email" />
         </Stack>
 
         <RHFTextField

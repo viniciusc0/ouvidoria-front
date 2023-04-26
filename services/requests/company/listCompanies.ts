@@ -1,17 +1,20 @@
 import api from "../api";
 import { FiltersProps, getParamsObj } from "../utils";
-import { CompanyGetProps } from "./types";
 
-export async function listCompanies(filters: FiltersProps) : Promise<CompanyGetProps[] | undefined>{
+export async function listCompanies(filters?: FiltersProps){
 
-    const params = getParamsObj(filters);
+    let params = {};
+    if(filters != undefined){
+        params = getParamsObj(filters);
+    }
 
     try {
         const res = await api.get('/businesses' , {
             params: params
         });
-        return res.data as CompanyGetProps[];
+        return res.data;
     } catch(error: any) {
+        console.log(error)
         return undefined;
     }
 }

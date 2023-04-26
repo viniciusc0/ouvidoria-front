@@ -1,16 +1,18 @@
 import api from "../api";
 import { FiltersProps, getParamsObj } from "../utils";
-import { DeliverymanGetProps } from "./types";
 
-export async function listDeliverymans(filters : FiltersProps) : Promise<DeliverymanGetProps[] | undefined>{
+export async function listDeliverymans(filters?: FiltersProps){
  
-    const params = getParamsObj(filters);
+    let params = {};
+    if(filters !== undefined){
+        params = getParamsObj(filters);
+    }
 
     try {
         const res = await api.get('/couriers',{
             params: params
         });
-        return res.data as DeliverymanGetProps[];
+        return res.data;
     } catch(error: any) {
         return undefined;
     }

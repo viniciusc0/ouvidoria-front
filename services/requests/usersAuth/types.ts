@@ -1,27 +1,19 @@
+import { UserInfo } from "../user/types";
+
 export interface LoginProps {
-    identifier?: string;
+    identifier: string;
     password: string;
-    email?: string;
 };
 
 export interface RegisterProps {
     username: string;
     email: string;
-    password: string;
+    password:string;
 };
 
 export interface LoginRegisterResponseProps {
     jwt: string;
-    user: {
-        id: string;
-        username: string;
-        email: string;
-        provider: string;
-        confirmed: string;
-        blocked: string;
-        createdAt: string;
-        updatedAt: string;
-    }
+    user: UserInfo;
 };
 
 export interface ResetPasswordProps{

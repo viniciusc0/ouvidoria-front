@@ -1,22 +1,25 @@
-export interface CompanyCreationProps{
-    corporate_name: string;
-    commercial_name?: string;
+interface Company{  
+    fantasyName: string;
+    reasonName: string;
     cnpj: string;
     status: boolean;
-    opening_hours: string;
-    end_working_hours: string;
-    work_days: string[];
-    cep: string;
-    public_place: string;
-    number: string;
-    neighborhood: string;
-    city: string;
-    state: string;
+    contactName: string;
+    contactPhone: string;
+}
+
+export interface CompanyCreationProps extends Company{
+    // opening_hours: string;
+    // end_working_hours: string;
+    // work_days: string[];
+    tenant: number;
+    address: number;
+    couriers: number[];
 };
 
-
-export interface CompanyGetProps extends CompanyCreationProps{
+export interface CompanyGetProps extends Company{
     id?: string;
+    createdAt?: string;
+    updatedAt?: string;
 };
 
 export interface CompanyFiltersProps{

@@ -50,13 +50,12 @@ export default function Cadastro() {
 //   const onSubmit = (formItems: IChangeEvent) => {
   const onSubmit = () => {
       console.log(formData);
-      if (formData.name === '' || formData.init_time === '' || formData.end_time === '' || formData.cpf === '' || formData.work_days.length === 0) {
-        setSnackBarMessage('Preencha todos campos', 'error');
-        return;
-      }
-    //   const data = formItems.formData as CategoryCreationProps;
-    //   if(data.description !== '' && data.imageUrl !== '' && data.position !== ''){
-    //     const res = await createCategory(data);
+      // if (formData.name === '' || formData.init_time === '' || formData.end_time === '' || formData.cpf === '' || formData.work_days.length === 0) {
+      //   setSnackBarMessage('Preencha todos campos', 'error');
+      //   return;
+      // }
+    //   const data = formItems.formData as DeliverymanCreationProps;
+    //     const res = await createDeliveryman(data);
     //     if(res.data != undefined){
     //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
     //       setOpenSnackbar(true);
@@ -65,7 +64,6 @@ export default function Cadastro() {
     //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
     //       setOpenSnackbar(true);
     //     }
-    //   }
   };
 
 

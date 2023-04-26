@@ -1,16 +1,14 @@
 export interface DeliverymanCreationProps{
     name: string;
     cpf: string;
-    init_time: string;
-    end_time:string;
-    work_days: string[]
+    hourStart: string;
+    hourFinal: string;
+    days: string[],
+    phone: string;
+    tenant: number;
+    business: number;
 };
 
-export interface DeliverymanGetProps{
+export interface DeliverymanGetProps extends DeliverymanCreationProps{
     id?: string;
-    name: string;
-    cpf: string;
-    init_time: string;
-    end_time:string;
-    work_days: string[]
 };
