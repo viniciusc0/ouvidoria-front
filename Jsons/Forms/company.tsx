@@ -5,28 +5,39 @@ export const company =
     "schema": {
         "description": "Empresa",
         "type": "object",
-        "required": [
-            "corporate_name",
-            "cnpj",
-            "status",
+        "required": [            
             "opening_hours",
             "end_working_hours",
             "work_days",
-            "cep",
-            "public_place",
+            "reasonName",
+            "cnpj",
+            "fantasyName",
+            "status",
+            "contactName",
+            "contactPhone",
+            "street",
             "number",
-            "neighborhood",
+            "district",
             "city",
-            "state",
+            "uf",
+            "cep"
         ],
         "properties": {
-            "corporate_name": {
+            "reasonName": {
                 "type": "string",
                 "title": "Razão social",
             },
-            "commercial_name": {
+            "fantasyName": {
                 "type": "string",
                 "title": "Nome fantasia",
+            },
+            "contactName": {
+                "type": "string",
+                "title": "Nome do contato",
+            },
+            "contactPhone": {
+                "type": "string",
+                "title": "Telefone de contato",
             },
             "cnpj": {
                 "type": "string",
@@ -40,37 +51,37 @@ export const company =
                     { "const": false, "title": "Inativo(a)" }
                 ]
             },
-            "opening_hours": {
-                "type": "string",
-                "title": "Horário de funcionamento (início)",
-                "format": "time"
-            },
-            "end_working_hours": {
-                "type": "string",
-                "title": "Horário de funcionamento (término)",
-                "format": "time"
-            },
-            "work_days": {
-                "title": "Dias de trabalho",
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                    "enum": [
-                        'Segunda',
-                        'Terça',
-                        'Quarta',
-                        'Quinta',
-                        'Sexta',
-                        'Sábado',
-                        'Domingo',
-                    ]
-                }
-            },
+            // "opening_hours": {
+            //     "type": "string",
+            //     "title": "Horário de funcionamento (início)",
+            //     "format": "time"
+            // },
+            // "end_working_hours": {
+            //     "type": "string",
+            //     "title": "Horário de funcionamento (término)",
+            //     "format": "time"
+            // },
+            // "work_days": {
+            //     "title": "Dias de trabalho",
+            //     "type": "array",
+            //     "uniqueItems": true,
+            //     "items": {
+            //         "enum": [
+            //             'Segunda',
+            //             'Terça',
+            //             'Quarta',
+            //             'Quinta',
+            //             'Sexta',
+            //             'Sábado',
+            //             232323233'Domingo',
+            //         ]
+            //     }
+            // },
             "cep": {
                 "type": "string",
                 "title": "CEP",
             },
-            "public_place": {
+            "street": {
                 "type": "string",
                 "title": "Logradouro",
             },
@@ -78,7 +89,7 @@ export const company =
                 "type": "number",
                 "title": "Número",
             },
-            "neighborhood": {
+            "district": {
                 "type": "string",
                 "title": "Bairro",
             },
@@ -86,20 +97,29 @@ export const company =
                 "type": "string",
                 "title": "Cidade",
             },
-            "state": {
+            "uf": {
                 "type": "string",
                 "title": "Estado",
             },
         }
     },
     "uiSchema": {
-        "corporate_name": {
+        "reasonName": {
             "ui:autofocus": true,
             "ui:placeholder": "Digite a razão social da empresa"
         },
-        "commercial_name": {
-            "ui:autofocus": true,
+        "fantasyName": {
             "ui:placeholder": "Digite o nome fantasia da empresa"
+        },
+        "contactName": {
+            "ui:placeholder": "Digite o nome de contato da empresa"
+        },
+        "contactPhone": {
+            "ui:placeholder": "Digite o telefone de contato da empresa",
+            "ui:widget" : "TextWidgetWithMask",
+            'ui:options': {
+                "mask": '(99)99999-9999',
+            },
         },
         "cnpj": {
             "ui:placeholder": "Digite o cnpj da empresa",
@@ -124,7 +144,7 @@ export const company =
                 "mask": '99999-999',
             },
         },
-        "public_place": {
+        "street": {
             "ui:placeholder": "Digite o logradouro"
         },
         "number": {
@@ -134,13 +154,13 @@ export const company =
                 "mask": '999999999',
             },
         },
-        "neighborhood": {
+        "district": {
             "ui:placeholder": "Digite o bairro"
         },
         "city": {
             "ui:placeholder": "Digite a cidade"
         },
-        "state": {
+        "uf": {
             "ui:placeholder": "Digite o estado"
         },
         "status": {
@@ -154,7 +174,7 @@ export const companyFiltersJson =
 {
     "schema": {
         "properties": {
-            "corporate_name": {
+            "reasonName": {
                 "type": "string",
                 "title": "Razão social",
             },
@@ -173,7 +193,7 @@ export const companyFiltersJson =
         }
     },
     "uiSchema": {
-        "corporate_name": {
+        "reasonName": {
             "ui:autofocus": true,
             "ui:placeholder": "Digite a razão social da empresa"
         },

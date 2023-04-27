@@ -11,7 +11,7 @@ import BackButton from 'src/components/BackButton';
 import JsonForm from 'src/components/JsonForm';
 import DashboardLayout from 'src/layouts/dashboard';
 import { useSettingsContext } from 'src/components/settings';
-import { companyInitialValue } from 'src/utils/initialValues';
+import { companyFormDataInitialValue } from 'src/utils/initialValues';
 import { company } from 'Jsons/Forms/company';
 import { createCompany } from 'services/requests/company/createCompany';
 import { CompanyCreationProps } from 'services/requests/company/types';
@@ -30,7 +30,7 @@ export default function Cadastro() {
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState(companyInitialValue);
+  const [formData, setFormData] = React.useState(companyFormDataInitialValue);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
 
@@ -50,25 +50,41 @@ export default function Cadastro() {
 
   const uiSchema: UiSchema = company.uiSchema;
 
+  const router = useRouter();
 
-  //   const onSubmit = (formItems: IChangeEvent) => {
-  const onSubmit = () => {
-    console.log(formData);
+  const onSubmit = async () => {
+    
     // if (formData.corporate_name === '' || formData.cep === '' || formData.city === '' || formData.cnpj === '' || formData.end_working_hours === '' || formData.opening_hours === '' || formData.public_place === '' || formData.state === '' || formData.neighborhood === '' || formData.number === '' || formData.work_days.length === 0) {
     //   setSnackBarMessage('Preencha os campos obrigatórios', 'error');
     //   return;
     // }
     // const unmask = value.replace(/[^\d]/g, '');
-    // const data = formItems.formData as CompanyCreationProps;
-    // const res = await createCompany(data);
-    //     if(res.data != undefined){
-    //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
-    //       setOpenSnackbar(true);
-    //       router.back();
-    //     }else{
-    //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
-    //       setOpenSnackbar(true);
-    //     }
+    const companyMockedData = {
+      cnpj: formData.cnpj,
+      contactName: formData.contactName,
+      contactPhone: formData.contactPhone,
+      fantasyName: formData.fantasyName,
+      reasonName: formData.reasonName,
+      status: formData.status,
+      address: {
+        cep : formData.cep,
+        city: formData.city,
+        district: formData.district,
+        number: formData.number,
+        street: formData.street,
+        uf: formData.uf
+      }
+    } as CompanyCreationProps
+    console.log(companyMockedData);
+    const res = await createCompany(companyMockedData);
+        if(res != undefined){
+          setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
+          setOpenSnackbar(true);
+          router.back();
+        }else{
+          setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
+          setOpenSnackbar(true);
+        }
   };
 
 

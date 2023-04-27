@@ -1,6 +1,8 @@
 export function getShowableItem(jsonObject : { [key: string]: any }, key : string) : string{
     if(key === 'id'){
         return '';
+    }else if(key === 'address'){
+        return '';
     }else if(key === 'createdAt' || key === 'updatedAt'){
         return '';
     }else if(key === 'status'){

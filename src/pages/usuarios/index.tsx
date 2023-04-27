@@ -40,8 +40,9 @@ export default function Usuarios() {
 
     const getUsers = React.useCallback(async () => {
         setLoading(true);
-        const usersArray = await listUsers() as UserGetProps[];
-        if (usersArray != undefined) {
+        const response = await listUsers();
+        if (response != undefined) {
+        const usersArray = response as UserGetProps[];
             if (usersArray?.length != 0) {
                 setNoUsers(false);
                 setUsers(usersArray);

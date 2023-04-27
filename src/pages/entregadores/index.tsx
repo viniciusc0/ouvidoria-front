@@ -39,8 +39,8 @@ export default function Entregadores() {
         const getDeliverymans = React.useCallback(async () => {
         setLoading(true);
         const response = await listDeliverymans();
+        if (response != undefined) {
         const deliverymansArray =  response.data as DeliverymanGetProps[];
-        if (deliverymansArray != undefined) {
             if (deliverymansArray?.length != 0) {
                 setNoDeliverymans(false);
                 setDeliverymans(deliverymansArray);

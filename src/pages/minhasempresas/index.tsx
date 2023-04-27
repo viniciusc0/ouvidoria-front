@@ -40,10 +40,10 @@ export default function MinhasEmpresas() {
     const getCompanies = React.useCallback(async () => {
         setLoading(true);
         const response = await listCompanies();
-        const companiesArray = response.data as CompanyGetProps[];
+        if (response != undefined) {
+        const companiesArray = response as CompanyGetProps[];
         console.log(companiesArray)
-        if (companiesArray != undefined) {
-            if (companiesArray?.length != 0) {
+            if (companiesArray?.length !== 0) {
                 setNoCompanies(false);
                 setCompanies(companiesArray);
             } else {

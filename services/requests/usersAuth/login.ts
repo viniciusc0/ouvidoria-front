@@ -7,6 +7,6 @@ export async function login(body : LoginProps) : Promise<LoginRegisterResponsePr
         const res = await api.post('/auth/local', body);
         return res.data as LoginRegisterResponseProps;
     } catch(error: any) {
-        return undefined;
+        return error;
     }
 }

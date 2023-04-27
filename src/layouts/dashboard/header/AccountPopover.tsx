@@ -36,7 +36,7 @@ const OPTIONS = [
 export default function AccountPopover() {
   const { replace, push } = useRouter();
 
-  const { user, logout } = useAuthContext();
+  const { user, logoutUser } = useAuthContext();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -50,10 +50,10 @@ export default function AccountPopover() {
     setOpenPopover(null);
   };
 
-  const router = useRouter();
+
 
   const handleLogout = async () => {
-    router.push('/login');
+    logoutUser();
   };
 
   const handleClickItem = (path: string) => {

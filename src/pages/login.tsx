@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, Stack, Alert, IconButton, InputAdornment, Box, Tooltip, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useAuthContext } from 'src/auth/useAuthContext';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import Iconify from 'src/components/iconify';
 import LoginLayout from 'src/layouts/login';
@@ -19,7 +18,6 @@ import Cookies from 'js-cookie';
 
 
 export default function Login() {
-    const { method } = useAuthContext();
 
     return (
         <LoginLayout>
@@ -72,7 +70,6 @@ function AuthLoginForm() {
     const router = useRouter();
 
     const onSubmit = async (data: FormValuesProps) => {
-
         try {
             const response = await login(data);
             if (response != undefined) {

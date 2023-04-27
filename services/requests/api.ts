@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { HOST_API_KEY } from 'src/config';
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/router';
+import { useAuthContext } from 'src/auth/useAuthContext';
 
 
 // ----------------------------------------------------------------------
@@ -12,6 +14,8 @@ axiosInstance.interceptors.request.use(function (config) {
   const token = Cookies.get('token');
   if(token !== undefined && config.headers !== undefined){
     config.headers['Authorization'] =  `Bearer ${token}`;
+  }else{
+
   }
   return config;
 }, function (error) {

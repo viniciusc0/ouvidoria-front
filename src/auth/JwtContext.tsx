@@ -1,35 +1,32 @@
 import { createContext, useEffect, useReducer, useCallback } from 'react';
 // utils
-//
-import { isValidToken, setSession } from './utils';
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types';
-import api from 'services/requests/api';
+import Cookies from 'js-cookie';
+import { userInfo } from 'services/requests/user/userInfo';
+import { login } from 'services/requests/usersAuth/login';
+import { useRouter } from 'next/router';
+import { LoginRegisterResponseProps } from 'services/requests/usersAuth/types';
+import { UserInfo } from 'services/requests/user/types';
+import { register } from 'services/requests/usersAuth/register';
 
-// ----------------------------------------------------------------------
-
-// NOTE:
-// We only build demo at basic level.
-// Customer will need to do some extra handling yourself if you want to extend the logic and other features...
-
-// ----------------------------------------------------------------------
 
 enum Types {
   INITIAL = 'INITIAL',
-  LOGIN = 'LOGIN',
-  REGISTER = 'REGISTER',
   LOGOUT = 'LOGOUT',
+  LOGIN = 'LOGIN',
+  REGISTER='REGISTER'
 }
 
 type Payload = {
   [Types.INITIAL]: {
     isAuthenticated: boolean;
-    user: AuthUserType;
+    user: UserInfo | null;
   };
   [Types.LOGIN]: {
-    user: AuthUserType;
+    user: LoginRegisterResponseProps | null;
   };
   [Types.REGISTER]: {
-    user: AuthUserType;
+    user: LoginRegisterResponseProps | null;
   };
   [Types.LOGOUT]: undefined;
 };
@@ -38,11 +35,7 @@ type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
 
 // ----------------------------------------------------------------------
 
-const initialState: AuthStateType = {
-  isInitialized: false,
-  isAuthenticated: false,
-  user: null,
-};
+
 
 const reducer = (state: AuthStateType, action: ActionsType) => {
   if (action.type === Types.INITIAL) {
@@ -66,6 +59,7 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
       user: action.payload.user,
     };
   }
+
   if (action.type === Types.LOGOUT) {
     return {
       ...state,
@@ -73,6 +67,7 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
       user: null,
     };
   }
+
   return state;
 };
 
@@ -82,31 +77,32 @@ export const AuthContext = createContext<JWTContextType | null>(null);
 
 // ----------------------------------------------------------------------
 
-type AuthProviderProps = {
-  children: React.ReactNode;
+const initialState: AuthStateType = {
+  isInitialized: false,
+  isAuthenticated: false,
+  user: null,
 };
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: {children: React.ReactNode} ) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const initialize = useCallback(async () => {
     try {
-      const accessToken = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
+      const token = typeof window !== 'undefined' ? Cookies.get('token') : undefined;
 
-      if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+      if (token) {
+        const response = await userInfo();
 
-        const response = await api.get('/api/account/my-account');
-
-        const { user } = response.data;
-
-        dispatch({
-          type: Types.INITIAL,
-          payload: {
-            isAuthenticated: true,
-            user,
-          },
-        });
+        if(response != undefined){
+          const user = response;
+          dispatch({
+            type: Types.INITIAL,
+            payload: {
+              isAuthenticated: true,
+              user,
+            },
+          });
+        }
       } else {
         dispatch({
           type: Types.INITIAL,
@@ -132,63 +128,53 @@ export function AuthProvider({ children }: AuthProviderProps) {
     initialize();
   }, [initialize]);
 
-  // LOGIN
-  const login = async (email: string, password: string) => {
-    const response = await api.post('/api/account/login', {
-      email,
-      password,
-    });
-    const { accessToken, user } = response.data;
+  const router = useRouter();
 
-    setSession(accessToken);
+  async function loginUser(data: any){
+    const response = await login(data);
+    if (response != undefined) {
+        Cookies.set("token", response?.jwt, { expires: 2 });
+        
+        dispatch({
+          type: Types.LOGIN,
+          payload: {
+            user: response
+          }
+        });
+        router.push('/');
+      }
+  }
 
-    dispatch({
-      type: Types.LOGIN,
-      payload: {
-        user,
-      },
-    });
-  };
+  async function registerUser(data: any){
+    const response = await register(data);
+    if (response != undefined) {
+        Cookies.set("token", response?.jwt, { expires: 2 });
+        
+        dispatch({
+          type: Types.REGISTER,
+          payload: {
+            user: response
+          }
+        });
+      }
+  }
 
-  // REGISTER
-  const register = async (email: string, password: string, firstName: string, lastName: string) => {
-    const response = await api.post('/api/account/register', {
-      email,
-      password,
-      firstName,
-      lastName,
-    });
-    const { accessToken, user } = response.data;
+  async function logoutUser(){
 
-    localStorage.setItem('accessToken', accessToken);
+        Cookies.remove("token");
+        dispatch({
+          type: Types.LOGOUT,
+        });
+  }
 
-    dispatch({
-      type: Types.REGISTER,
-      payload: {
-        user,
-      },
-    });
-  };
-
-  // LOGOUT
-  const logout = async () => {
-    setSession(null);
-    dispatch({
-      type: Types.LOGOUT,
-    });
-  };
 
   return (
     <AuthContext.Provider
       value={{
         ...state,
-        method: 'jwt',
-        login,
-        loginWithGoogle: () => {},
-        loginWithGithub: () => {},
-        loginWithTwitter: () => {},
-        logout,
-        register,
+        loginUser,
+        logoutUser,
+        registerUser,
       }}
     >
       {children}

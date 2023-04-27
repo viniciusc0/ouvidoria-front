@@ -32,7 +32,24 @@ export const companyInitialValue = {
     fantasyName: '',
     reasonName: '',
     status: true,
+
 } as CompanyGetProps;
+
+export const companyFormDataInitialValue = {
+    fantasyName: '',
+    reasonName: '',
+    cnpj: '',
+    status: true,
+    contactName: '',
+    contactPhone: '',
+    street: '',
+    number: '',
+    complement: '',
+    district: '',
+    city: '',
+    uf: '',
+    cep: '',
+};
 
 export const companyFiltersInitialValue = {
     corporate_name: '',
