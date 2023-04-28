@@ -1,6 +1,6 @@
 {
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint", "unused-imports"
   ],
   "extends": [
     "next/core-web-vitals",
@@ -22,12 +22,28 @@
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
-    "@typescript-eslint/no-unused-vars": [
-      1,
-      {
-        "vars": "all",
-        "args": "none"
-      }
-    ]
+
+    //Responsaveis pelo warning sobre hooks exhaustive-deps
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off",
+
+    //Responsaveis pelo error de imports duplicados, para corrigir `npx next lint --fix`
+    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/no-duplicate-imports": "warn",
+
+    //Responsavelpelo warning sobre variaveis declaradas e nunca utilizadas.
+    "unused-imports/no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-unused-vars": "off"
+    // caso deseje modificar para o warning começar a aparecer, basta descomentar as linhas abaixo e remover as de cima
+    // "@typescript-eslint/no-unused-vars": [
+    //     1,
+    //     {
+    //         "vars": "all",
+    //         "args": "none"
+    //     }
+    // ],
+
+
   }
 }

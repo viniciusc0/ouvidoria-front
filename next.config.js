@@ -14,7 +14,7 @@ module.exports = withTM({
   trailingSlash: true,
   env: {
     // HOST
-    HOST_API_KEY: 'https://cn-platform-service-dev-3ovvs.ondigitalocean.app/api',
+    HOST_API_KEY: '',
     // MAPBOX
     MAPBOX_API: '',
     // FIREBASE
@@ -33,4 +33,3 @@ module.exports = withTM({
     AUTH0_CLIENT_ID: '',
   },
 });
-

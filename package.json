@@ -1,21 +1,24 @@
 {
-  "name": "@minimal/material-kit-nextjs",
-  "author": "Minimals UI",
+  "name": "latlong",
+  "author": "https://latlong.com.br",
   "version": "4.0.0",
-  "description": "Next.Js & Typescript",
+  "description": "Latlong ts",
   "private": true,
+  "homepage": ".",
   "scripts": {
     "lint": "next lint",
     "lint:es": "eslint --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --ext .ts,.tsx .",
-    "dev": "next dev -p 8081",
+    "dev": "env-cmd -f .env.local next dev -p 8081",
     "start": "next start",
-    "build": "next build",
+    "build": "next build --degub && next export",
     "build-netlify": "next build && cp -r .next _next && mv _next .next/",
     "export": "yarn build && next export -o _static",
     "clear-all": "rm -rf .next .swc _static node_modules",
     "re-start": "rm -rf .next .swc _static node_modules && yarn install && yarn dev",
-    "re-build": "rm -rf .next .swc _static node_modules && yarn install && yarn build"
+    "re-build": "rm -rf .next .swc _static node_modules && yarn install && yarn build",
+    "build:development": "env-cmd -f env.development yarn build",
+    "build:production": "env-cmd -f env.production yarn build"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.22.5",
