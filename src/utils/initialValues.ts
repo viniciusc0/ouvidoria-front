@@ -41,6 +41,7 @@ export const companyFormDataInitialValue = {
     cnpj: '',
     status: true,
     contactName: '',
+    contactEmail: '',
     contactPhone: '',
     street: '',
     number: '',
@@ -52,7 +53,7 @@ export const companyFormDataInitialValue = {
 };
 
 export const companyFiltersInitialValue = {
-    corporate_name: '',
+    reasonName: '',
     cnpj: '',
     status: true,
 } as CompanyFiltersProps;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ import { LoginProps } from 'services/requests/usersAuth/types';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import { useAuthContext } from 'src/auth/useAuthContext';
+import { AuthTypes } from 'src/auth/JwtContext';
 
 
 // ----------------------------------------------------------------------
@@ -86,6 +87,15 @@ function AuthLoginForm() {
             });
         }
     };
+    
+    const {dispatch} = useAuthContext();
+
+    useEffect(()=>{
+        dispatch({
+            type: AuthTypes.LOGOUT
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

@@ -65,6 +65,8 @@ function AuthRegisterForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const {registerUser} = useAuthContext();
+
   const RegisterSchema = Yup.object().shape({
     username: Yup.string().required('Nome de usuário é obrigatório'),
     email: Yup.string().email('Email inválido').required('Email é obrigatório'),
@@ -90,8 +92,7 @@ function AuthRegisterForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-        const response = await register(data);
-        console.log(response);
+        registerUser(data)
     } catch (error) {
       console.error(error);
 

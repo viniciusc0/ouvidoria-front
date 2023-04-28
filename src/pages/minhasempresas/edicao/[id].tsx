@@ -15,8 +15,11 @@ import { companyInitialValue } from 'src/utils/initialValues';
 import { company } from 'Jsons/Forms/company';
 import Loading from 'src/components/Loading';
 import { getCompany } from 'services/requests/company/getCompany';
-import { CompanyCreationProps } from 'services/requests/company/types';
+import { CompanyCreationProps, CompanyFormData } from 'services/requests/company/types';
 import { createCompany } from 'services/requests/company/createCompany';
+import { companyFormDataInitialValue } from 'src/utils/initialValues';
+import { convertCompanyDataToBackendFormat, convertCompanyDataToFrontendFormat, removeMask } from 'src/utils/functions';
+import { editCompany } from 'services/requests/company/editCompany';
 
 // ----------------------------------------------------------------------
 
@@ -27,13 +30,12 @@ export default function Edicao() {
 
   const { themeStretch } = useSettingsContext();
 
-
   const [alertMessage, setAlertMessage] = React.useState<{ type: AlertColor, message: string }>({
     type: 'success',
     message: 'none',
   });
 
-  const [formData, setFormData] = React.useState(companyInitialValue);
+  const [formData, setFormData] = React.useState(companyFormDataInitialValue);
   const [noCompany, setNoCompany] = React.useState<boolean>(false);
 
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
@@ -47,13 +49,16 @@ export default function Edicao() {
 
   const [loading, setLoading] = React.useState<boolean>(false);
   const router = useRouter();
-  const id = router.query.id as string
+  const id = router.query.id as string;
+  const [addressId, setAddressId] = React.useState<string>('');
 
   const handleGetCompany = React.useCallback(async (id: string) => {
     setLoading(true);
     const data = await getCompany(id);
-    if (data) {
-      setFormData(data);
+    if (data != undefined) {
+      data.address.id != undefined ? setAddressId(data.address.id) : null;
+      const companyConvertedData = convertCompanyDataToFrontendFormat(data);
+      setFormData(companyConvertedData);
     } else {
       setNoCompany(true);
     }
@@ -71,22 +76,27 @@ export default function Edicao() {
 
 
   //   const onSubmit = (formItems: IChangeEvent) => {
-  const onSubmit = () => {
+  const onSubmit = async () => {
     console.log(formData);
     // if (formData.corporate_name === '' || formData.cep === '' || formData.city === '' || formData.cnpj === '' || formData.end_working_hours === '' || formData.opening_hours === '' || formData.public_place === '' || formData.state === '' || formData.neighborhood === '' || formData.number === '' || formData.work_days.length === 0) {
     //   setSnackBarMessage('Preencha os campos obrigatórios', 'error');
     //   return;
     // }
-    // const data = formItems.formData as CompanyCreationProps;
-    // const res = await createCompany(data);
-    //     if(res.data != undefined){
-    //       setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
-    //       setOpenSnackbar(true);
-    //       router.back();
-    //     }else{
-    //       setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
-    //       setOpenSnackbar(true);
-    //     }
+    let companyConvertedData = convertCompanyDataToBackendFormat(formData);
+    companyConvertedData = {
+      ...companyConvertedData,
+      address: {
+        id: addressId,
+        ...companyConvertedData.address
+      }
+    };
+    const res = await editCompany(id, companyConvertedData);
+    if (res != undefined) {
+      setSnackBarMessage('Edição efetuada com sucesso!', 'success');
+      router.back();
+    } else {
+      setSnackBarMessage('Erro ao efetuar edição!', 'error');
+    }
   };
 
   if (loading)
@@ -96,7 +106,7 @@ export default function Edicao() {
   return (
     <>
       <Head>
-        <title>Cadastro de entregador</title> {/* titulo da pagina*/}
+        <title>Edição de empresa</title> {/* titulo da pagina*/}
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -115,3 +125,7 @@ export default function Edicao() {
     </>
   );
 }
+
+
+
+
