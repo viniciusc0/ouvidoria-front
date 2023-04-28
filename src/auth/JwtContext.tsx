@@ -10,65 +10,64 @@ import { UserInfo } from 'services/requests/user/types';
 import { register } from 'services/requests/usersAuth/register';
 
 
-enum Types {
+export enum AuthTypes {
   INITIAL = 'INITIAL',
   LOGOUT = 'LOGOUT',
   LOGIN = 'LOGIN',
-  REGISTER='REGISTER'
+  REGISTER = 'REGISTER'
 }
 
 type Payload = {
-  [Types.INITIAL]: {
+  [AuthTypes.INITIAL]: {
     isAuthenticated: boolean;
     user: UserInfo | null;
   };
-  [Types.LOGIN]: {
+  [AuthTypes.LOGIN]: {
     user: LoginRegisterResponseProps | null;
   };
-  [Types.REGISTER]: {
+  [AuthTypes.REGISTER]: {
     user: LoginRegisterResponseProps | null;
   };
-  [Types.LOGOUT]: undefined;
+  [AuthTypes.LOGOUT]: undefined;
 };
 
-type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
+export type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
 
 // ----------------------------------------------------------------------
 
 
 
+
 const reducer = (state: AuthStateType, action: ActionsType) => {
-  if (action.type === Types.INITIAL) {
-    return {
-      isInitialized: true,
-      isAuthenticated: action.payload.isAuthenticated,
-      user: action.payload.user,
-    };
-  }
-  if (action.type === Types.LOGIN) {
-    return {
-      ...state,
-      isAuthenticated: true,
-      user: action.payload.user,
-    };
-  }
-  if (action.type === Types.REGISTER) {
-    return {
-      ...state,
-      isAuthenticated: true,
-      user: action.payload.user,
-    };
-  }
 
-  if (action.type === Types.LOGOUT) {
-    return {
-      ...state,
-      isAuthenticated: false,
-      user: null,
-    };
-  }
+  switch (action.type) {
+    case AuthTypes.INITIAL:
+      return {
+        isInitialized: true,
+        isAuthenticated: action.payload.isAuthenticated,
+        user: action.payload.user,
+      };
+    case AuthTypes.LOGIN:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+      };
+    case AuthTypes.REGISTER:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+      };
 
-  return state;
+    case AuthTypes.LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      };
+    default: return state;
+  }
 };
 
 // ----------------------------------------------------------------------
@@ -83,7 +82,7 @@ const initialState: AuthStateType = {
   user: null,
 };
 
-export function AuthProvider({ children }: {children: React.ReactNode} ) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const initialize = useCallback(async () => {
@@ -93,10 +92,10 @@ export function AuthProvider({ children }: {children: React.ReactNode} ) {
       if (token) {
         const response = await userInfo();
 
-        if(response != undefined){
+        if (response != undefined) {
           const user = response;
           dispatch({
-            type: Types.INITIAL,
+            type: AuthTypes.INITIAL,
             payload: {
               isAuthenticated: true,
               user,
@@ -105,7 +104,7 @@ export function AuthProvider({ children }: {children: React.ReactNode} ) {
         }
       } else {
         dispatch({
-          type: Types.INITIAL,
+          type: AuthTypes.INITIAL,
           payload: {
             isAuthenticated: false,
             user: null,
@@ -115,7 +114,7 @@ export function AuthProvider({ children }: {children: React.ReactNode} ) {
     } catch (error) {
       console.error(error);
       dispatch({
-        type: Types.INITIAL,
+        type: AuthTypes.INITIAL,
         payload: {
           isAuthenticated: false,
           user: null,
@@ -130,41 +129,41 @@ export function AuthProvider({ children }: {children: React.ReactNode} ) {
 
   const router = useRouter();
 
-  async function loginUser(data: any){
+  async function loginUser(data: any) {
     const response = await login(data);
     if (response != undefined) {
-        Cookies.set("token", response?.jwt, { expires: 2 });
-        
-        dispatch({
-          type: Types.LOGIN,
-          payload: {
-            user: response
-          }
-        });
-        router.push('/');
-      }
+      Cookies.set("token", response?.jwt, { expires: 2 });
+
+      dispatch({
+        type: AuthTypes.LOGIN,
+        payload: {
+          user: response
+        }
+      });
+      router.push('/');
+    }
   }
 
-  async function registerUser(data: any){
+  async function registerUser(data: any) {
     const response = await register(data);
     if (response != undefined) {
-        Cookies.set("token", response?.jwt, { expires: 2 });
-        
-        dispatch({
-          type: Types.REGISTER,
-          payload: {
-            user: response
-          }
-        });
-      }
+      Cookies.set("token", response?.jwt, { expires: 2 });
+
+      dispatch({
+        type: AuthTypes.REGISTER,
+        payload: {
+          user: response
+        }
+      });
+      router.push('/');
+    }
   }
 
-  async function logoutUser(){
-
-        Cookies.remove("token");
-        dispatch({
-          type: Types.LOGOUT,
-        });
+  async function logoutUser() {
+    Cookies.remove("token");
+    dispatch({
+      type: AuthTypes.LOGOUT,
+    });
   }
 
 
@@ -175,6 +174,7 @@ export function AuthProvider({ children }: {children: React.ReactNode} ) {
         loginUser,
         logoutUser,
         registerUser,
+        dispatch
       }}
     >
       {children}

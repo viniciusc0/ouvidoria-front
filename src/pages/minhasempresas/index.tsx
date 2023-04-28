@@ -78,8 +78,8 @@ export default function MinhasEmpresas() {
                             tableData={companies}
                             setTableData={setCompanies}
                             tableLabels={[
-                                { id: 'commercial_name', label: 'Nome comercial' },
-                                { id: 'corporate_name', label: 'Razão social' },
+                                { id: 'fantasyName', label: 'Nome comercial' },
+                                { id: 'reasonName', label: 'Razão social' },
                                 { id: 'cnpj', label: 'CNPJ' },
                                 { id: 'status', label: 'Status' },
                                 { id: 'contactName', label: 'Contato' },

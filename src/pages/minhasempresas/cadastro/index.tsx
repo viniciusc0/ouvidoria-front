@@ -15,6 +15,7 @@ import { companyFormDataInitialValue } from 'src/utils/initialValues';
 import { company } from 'Jsons/Forms/company';
 import { createCompany } from 'services/requests/company/createCompany';
 import { CompanyCreationProps } from 'services/requests/company/types';
+import { convertCompanyDataToBackendFormat, removeMask } from 'src/utils/functions';
 
 // ----------------------------------------------------------------------
 
@@ -58,32 +59,15 @@ export default function Cadastro() {
     //   setSnackBarMessage('Preencha os campos obrigatórios', 'error');
     //   return;
     // }
-    // const unmask = value.replace(/[^\d]/g, '');
-    const companyMockedData = {
-      cnpj: formData.cnpj,
-      contactName: formData.contactName,
-      contactPhone: formData.contactPhone,
-      fantasyName: formData.fantasyName,
-      reasonName: formData.reasonName,
-      status: formData.status,
-      address: {
-        cep : formData.cep,
-        city: formData.city,
-        district: formData.district,
-        number: formData.number,
-        street: formData.street,
-        uf: formData.uf
-      }
-    } as CompanyCreationProps
-    console.log(companyMockedData);
-    const res = await createCompany(companyMockedData);
+    
+    const companyConvertedData = convertCompanyDataToBackendFormat(formData);
+    console.log(companyConvertedData);
+    const res = await createCompany(companyConvertedData);
         if(res != undefined){
-          setAlertMessage({type: 'success', message: 'Cadastro efetuado com sucesso!'});
-          setOpenSnackbar(true);
+          setSnackBarMessage('Cadastro efetuado com sucesso!', 'success');
           router.back();
         }else{
-          setAlertMessage({type: 'error', message: 'Erro ao efetuar cadastro!'});
-          setOpenSnackbar(true);
+          setSnackBarMessage('Erro ao efetuar cadastro!', 'error')
         }
   };
 

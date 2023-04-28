@@ -35,6 +35,10 @@ export const company =
                 "type": "string",
                 "title": "Nome do contato",
             },
+            "contactEmail": {
+                "type": "string",
+                "title": "Email de contato",
+            },
             "contactPhone": {
                 "type": "string",
                 "title": "Telefone de contato",
@@ -112,7 +116,10 @@ export const company =
             "ui:placeholder": "Digite o nome fantasia da empresa"
         },
         "contactName": {
-            "ui:placeholder": "Digite o nome de contato da empresa"
+            "ui:placeholder": "Digite o nome de um contato da empresa"
+        },
+        "contactEmail": {
+            "ui:placeholder": "Digite o email de contato da empresa"
         },
         "contactPhone": {
             "ui:placeholder": "Digite o telefone de contato da empresa",

@@ -2,6 +2,7 @@
 // ----------------------------------------------------------------------
 
 import { Dispatch } from "react";
+import { ActionsType } from "./JwtContext";
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -24,6 +25,7 @@ export type AuthStateType = {
 
 
 export type JWTContextType = {
+  dispatch: Dispatch<ActionsType>
   isAuthenticated: boolean;
   isInitialized: boolean;
   user: AuthUserType;

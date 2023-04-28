@@ -1,12 +1,14 @@
-import { AddressCreationProps } from "../address/types";
+import { AddressCreationProps, AddressGetProps } from "../address/types";
 
 export interface CompanyCreationProps{  
+    id?: string
     fantasyName: string;
     reasonName: string;
     cnpj: string;
     status: boolean;
     contactName: string;
     contactPhone: string;
+    contactEmail: string;
     address: AddressCreationProps;
 }
 
@@ -17,6 +19,7 @@ export interface CompanyFormData{
     status: boolean;
     contactName: string;
     contactPhone: string;
+    contactEmail: string;
     street: string;
     number: string;
     complement: string;
@@ -40,10 +43,11 @@ export interface CompanyGetProps extends CompanyCreationProps{
     id?: string;
     createdAt?: string;
     updatedAt?: string;
+    address: AddressGetProps;
 };
 
 export interface CompanyFiltersProps{
-    corporate_name: string;
+    reasonName: string;
     cnpj: string;
     status: boolean;
 };
