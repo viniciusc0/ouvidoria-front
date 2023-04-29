@@ -1,12 +1,16 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
+import AuthController from 'controllers/authController'
 import Cookies from 'js-cookie'
-import { BASE_API } from 'src/config'
+import { BASE_APP } from 'src/config'
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: BASE_API.base_url })
+const config = {
+    baseURL: BASE_APP.base_url,
+}
 
-axiosInstance.interceptors.request.use(
+const instance: AxiosInstance = axios.create(config)
+instance.interceptors.request.use(
     function (config) {
         const token = Cookies.get('token')
         if (token !== undefined && config.headers !== undefined) {
@@ -19,17 +23,16 @@ axiosInstance.interceptors.request.use(
     },
 )
 
-axiosInstance.interceptors.response.use(
+instance.interceptors.response.use(
     function (response) {
-        return response
+        return response.data
     },
     function (error) {
         if (error.response.status == 401 || error.response.status == 403) {
-            Cookies.remove('token')
-            location.href = '/login'
+            new AuthController().logout()
         }
         return Promise.reject(error)
     },
 )
 
-export default axiosInstance
+export default instance

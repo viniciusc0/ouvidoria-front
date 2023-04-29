@@ -5,7 +5,9 @@
     "lib": ["es6", "dom"],
     "baseUrl": ".",
     "paths": {
-      "src/*":["src/*"]
+      "src/*":["src/*"],
+      "services/*":["services/*"],
+      "@types":["/@types/*"]
     },
     "strict": true,
     "noEmit": true,

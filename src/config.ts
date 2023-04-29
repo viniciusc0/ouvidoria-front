@@ -1,7 +1,8 @@
 import { PATH_PAGE } from './routes/paths'
 
-export const BASE_API = {
-    base_url: process.env.BASE_URL,
+const ENV: any = process.env.envs
+export const BASE_APP = {
+    base_url: ENV.BASE_URL,
 }
 
 export const HOST_API_KEY = process.env.HOST_API_KEY || ''
