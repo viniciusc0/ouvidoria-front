@@ -1,5 +1,5 @@
 import api from 'services/requests/api'
-import { ForgotPasswordData, LoginData, LoginResponse } from 'src/@types/login/interface'
+import { ILogin, ILoginForgotPassword, ILoginForm } from 'types/IAuth'
 
 class AuthService {
     urlBaseService
@@ -8,11 +8,11 @@ class AuthService {
         this.urlBaseService = '/auth'
     }
 
-    async login(data: LoginData): Promise<LoginResponse> {
+    async login(data: ILoginForm): Promise<ILogin> {
         return await api.post(`${this.urlBaseService}/local`, data)
     }
 
-    async forgotPassword(data: ForgotPasswordData): Promise<{ ok: boolean } | undefined> {
+    async forgotPassword(data: ILoginForgotPassword): Promise<{ ok: boolean } | undefined> {
         return await api.post(`${this.urlBaseService}/forgot-password`, data)
     }
 }

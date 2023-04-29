@@ -9,7 +9,7 @@ import { PATH_PAGE } from '../../../routes/paths'
 // auth
 // components
 import AuthController from 'controllers/authController'
-import { LoginResponse } from 'types/login/interface'
+import { IUser } from 'types/IUser'
 import { IconButtonAnimate } from '../../../components/animate'
 import { CustomAvatar } from '../../../components/custom-avatar'
 import MenuPopover from '../../../components/menu-popover'
@@ -38,7 +38,7 @@ export default function AccountPopover() {
     const { replace, push } = useRouter()
 
     // const { user, logoutUser } = useAuthContext()
-    const [user, setUser] = useState<LoginResponse>()
+    const [user, setUser] = useState<IUser>()
 
     const { enqueueSnackbar } = useSnackbar()
 
@@ -90,17 +90,17 @@ export default function AccountPopover() {
                     }),
                 }}
             >
-                <CustomAvatar src={user?.photoURL} alt={user?.user.username} name={user?.user.username} />
+                <CustomAvatar src={user?.photoURL} alt={user?.username} name={user?.username} />
             </IconButtonAnimate>
 
             <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 200, p: 0 }}>
                 <Box sx={{ my: 1.5, px: 2.5 }}>
                     <Typography variant="subtitle2" noWrap>
-                        {user?.user.username}
+                        {user?.username}
                     </Typography>
 
                     <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                        {user?.user.email}
+                        {user?.email}
                     </Typography>
                 </Box>
 

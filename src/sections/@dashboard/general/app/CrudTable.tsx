@@ -1,6 +1,6 @@
 import { useState } from 'react'
 // @mui
-import { Box, Card, CardHeader, CardProps, Divider, IconButton, MenuItem, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
+import { Card, CardProps, IconButton, MenuItem, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
 // utils
 // components
 import { useRouter } from 'next/router'
@@ -8,7 +8,6 @@ import { CompanyGetProps } from 'services/requests/company/types'
 import { DeliverymanGetProps } from 'services/requests/deliveryman/types'
 import { UserGetProps } from 'services/requests/user/types'
 import { getShowableItem } from 'src/utils/functions'
-import styled from 'styled-components'
 import Iconify from '../../../../components/iconify'
 import MenuPopover from '../../../../components/menu-popover'
 import Scrollbar from '../../../../components/scrollbar'
@@ -16,7 +15,7 @@ import { TableHeadCustom } from '../../../../components/table'
 
 // ----------------------------------------------------------------------
 
-type RowArrayTypes = UserGetProps[] | DeliverymanGetProps[] | CompanyGetProps[]
+type RowArrayTypes = any
 type RowTypes = UserGetProps | DeliverymanGetProps | CompanyGetProps
 
 interface Props extends CardProps {
@@ -31,43 +30,23 @@ export default function CrudTable({ title, subheader, tableData, setTableData, t
     const router = useRouter()
 
     return (
-        <TableCard>
-            <Card {...other}>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px' }}>
-                    <CardHeader title={title} subheader={subheader} sx={{ mb: 2 }} />
-                </Box>
+        <Card {...other} sx={{ boxShadow: '1px 1px 10px #ccc', borderRadius: 1 }}>
+            <TableContainer sx={{ overflow: 'unset' }}>
+                <Scrollbar>
+                    <Table sx={{ minWidth: 720 }}>
+                        <TableHeadCustom headLabel={tableLabels} />
 
-                <TableContainer sx={{ overflow: 'unset' }}>
-                    <Scrollbar>
-                        <Table sx={{ minWidth: 720 }}>
-                            <TableHeadCustom headLabel={tableLabels} />
-
-                            <TableBody>
-                                {tableData.map(row => (
-                                    <GenericTableRow key={row.id} row={row} setTableData={setTableData} />
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </Scrollbar>
-                </TableContainer>
-
-                <Divider />
-
-                {/* <Box sx={{ p: 2, textAlign: 'right' }}>
-                    <Button size="small" color="inherit" endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}>
-                        View All
-                    </Button>
-                </Box> */}
-            </Card>
-        </TableCard>
+                        <TableBody>
+                            {tableData.map(row => (
+                                <GenericTableRow key={row.id} row={row} setTableData={setTableData} />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Scrollbar>
+            </TableContainer>
+        </Card>
     )
 }
-
-const TableCard = styled.div`
-    border: 1.5px solid #c0c0c0;
-    border-radius: 15px;
-    padding: 5px;
-`
 
 // ----------------------------------------------------------------------
 

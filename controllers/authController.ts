@@ -1,11 +1,12 @@
 import Cookies from 'js-cookie'
-import AuthService from 'services/requests/usersAuth/authService'
-import { LoginData, LoginResponse } from 'types/login/interface'
+import AuthService from 'services/authService'
+import { ILogin, ILoginForm } from 'types/IAuth'
+import { IUser } from 'types/IUser'
 
 class AuthController {
     keyUser = '@latlong/user'
 
-    async login(data: LoginData) {
+    async login(data: ILoginForm) {
         try {
             const authService = new AuthService()
             const response = await authService.login(data)
@@ -19,26 +20,21 @@ class AuthController {
         }
     }
 
-    setUser(data: LoginResponse) {
+    setUser(data: ILogin) {
         Cookies.set('token', data.jwt, {
             expires: 2,
         })
-
         localStorage.setItem(this.keyUser, JSON.stringify(data.user))
     }
 
-    getUser(): LoginResponse | undefined {
+    getUser(): IUser | undefined {
         const user = localStorage.getItem(this.keyUser)
         const token = Cookies.get('token')
         if (!user || !token) {
             this.logout()
             return
         }
-
-        return {
-            user: JSON.parse(user),
-            jwt: token,
-        }
+        return JSON.parse(user)
     }
 
     logout(): void {
