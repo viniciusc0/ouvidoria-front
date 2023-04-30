@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Alert, Grid, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
+import { Alert, Card, Container, Grid, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
 import AuthController from 'controllers/authController'
 import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
@@ -10,28 +10,19 @@ import { AuthTypes } from 'src/auth/JwtContext'
 import { useAuthContext } from 'src/auth/useAuthContext'
 import FormProvider, { RHFTextField } from 'src/components/hook-form'
 import Iconify from 'src/components/iconify'
-import LoginLayout from 'src/layouts/login'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
 export default function Login() {
     return (
-        <LoginLayout>
-            <Grid spacing={4} container>
-                <Grid item xs={12} md={6}>
-                    <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                        <Typography variant="h4">Seja bem vindo ao LatLong</Typography>
-                    </Grid>
-                    <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                        <Typography variant="body2">Dando sentido ao seu negócio</Typography>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12} md={6}>
+        <Container sx={{ height: '100vh' }}>
+            <Grid container justifyContent={'center'} alignItems={'center'}>
+                <Grid item>
                     <AuthLoginForm />
                 </Grid>
             </Grid>
-        </LoginLayout>
+        </Container>
     )
 }
 
@@ -81,54 +72,60 @@ function AuthLoginForm() {
     }, [])
 
     return (
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={3}>
-                {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+        <Card sx={{ width: '100%', padding: '50px', height: '100%' }}>
+            <Grid item sx={{ textAlign: 'center', padding: '20px 0' }}>
+                <Typography variant="h4">Bem vindo ao Latlong App</Typography>
+                <Typography variant="body2">Dando sentido ao seu negócio</Typography>
+            </Grid>
+            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                <Stack spacing={3}>
+                    {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-                <RHFTextField name="identifier" label="Email" />
+                    <RHFTextField name="identifier" label="Email" />
 
-                <RHFTextField
-                    name="password"
-                    label="Senha"
-                    type={showPassword ? 'text' : 'password'}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </Stack>
+                    <RHFTextField
+                        name="password"
+                        label="Senha"
+                        type={showPassword ? 'text' : 'password'}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Stack>
 
-            <Stack alignItems="flex-end" sx={{ my: 2 }}>
-                <NextLink href={'/login'} passHref>
-                    <Link variant="body2" color="inherit" underline="always">
-                        Esqueceu sua senha?
-                    </Link>
-                </NextLink>
-            </Stack>
+                <Stack alignItems="flex-end" sx={{ my: 2 }}>
+                    <NextLink href={'/login'} passHref>
+                        <Link variant="body2" color="inherit" underline="always">
+                            Esqueceu sua senha?
+                        </Link>
+                    </NextLink>
+                </Stack>
 
-            <LoadingButton
-                fullWidth
-                color="inherit"
-                size="large"
-                type="submit"
-                variant="contained"
-                loading={false}
-                sx={{
-                    bgcolor: 'text.primary',
-                    color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-                    '&:hover': {
+                <LoadingButton
+                    fullWidth
+                    color="inherit"
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    loading={false}
+                    sx={{
                         bgcolor: 'text.primary',
                         color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-                    },
-                }}
-            >
-                Login
-            </LoadingButton>
-        </FormProvider>
+                        '&:hover': {
+                            bgcolor: 'text.primary',
+                            color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+                        },
+                    }}
+                >
+                    Login
+                </LoadingButton>
+            </FormProvider>
+        </Card>
     )
 }
