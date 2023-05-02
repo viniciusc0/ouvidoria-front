@@ -14,8 +14,9 @@ import Iconify from 'src/components/iconify'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import CrudTable from 'src/sections/@dashboard/general/app/CrudTable'
-import { companyFiltersInitialValue } from 'src/utils/initialValues'
-import { IBusiness } from 'types/IBusiness'
+import { businessFiltersInitialValue } from 'src/utils/initialValues'
+import { IBusiness, IBusinessFilter } from 'types/IBusiness'
+import { BusinessFiltersEntity } from './form/businessEntity'
 
 // ----------------------------------------------------------------------
 
@@ -28,40 +29,29 @@ export default function MinhasEmpresas() {
     const { themeStretch } = useSettingsContext()
 
     const [businesses, setBusinesses] = useState<IBusiness[]>([])
-    const [noCompanies, setNoCompanies] = useState<boolean>(false)
+    // const [noCompanies, setNoCompanies] = useState<boolean>(false)
 
     const [loading, setLoading] = useState(false)
 
-    const [companyFilters, setUserFilters] = useState<CompanyFiltersProps>(companyFiltersInitialValue)
-    function handleCompaniesFilters(data: CompanyFiltersProps) {
-        setUserFilters(data)
+    const [businessFilters, setBusinessFilters] = useState<IBusinessFilter>(businessFiltersInitialValue)
+    function handleBusinessFilters(data: CompanyFiltersProps) {
+        setBusinessFilters(data)
+        console.log(data)
     }
 
-    const getCompanies = async () => {
+    const getBusinesses = async () => {
         setLoading(true)
         const businessControler = new BusinessController()
-        const businesses = await businessControler.getAll()
+        const businesses = await businessControler.getAll(businessFilters)
 
         setBusinesses(businesses)
-        // const response = await listCompanies()
-        // if (response != undefined) {
-        //     const companiesArray = response as CompanyGetProps[]
-        //     if (companiesArray?.length !== 0) {
-        //         setNoCompanies(false)
-        //         setCompanies(companiesArray)
-        //     } else {
-        //         setNoCompanies(true)
-        //     }
-        // } else {
-        //     setNoCompanies(true)
-        // }
+
         setLoading(false)
-        // }, [companyFilters]);
     }
 
     useEffect(() => {
-        getCompanies()
-    }, [])
+        getBusinesses()
+    }, [businessFilters])
 
     if (loading) return <Loading />
 
@@ -102,7 +92,7 @@ export default function MinhasEmpresas() {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <AccordionFilter formJson={companyFiltersJson} setFilters={handleCompaniesFilters} />
+                            <AccordionFilter schemaForm={BusinessFiltersEntity} setFilters={handleBusinessFilters} />
                         </Grid>
 
                         <Grid item xs={12}>

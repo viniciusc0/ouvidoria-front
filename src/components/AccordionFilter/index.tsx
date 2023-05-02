@@ -2,17 +2,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Typography } from '@mui/material'
 import { IChangeEvent } from '@rjsf/core'
 import { Form } from '@rjsf/mui'
-import { ObjectFieldTemplateProps, RegistryWidgetsType, UiSchema, WidgetProps } from '@rjsf/utils'
+import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema, WidgetProps } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import TextWidgetWithMask from '../TextWidgetWithMask'
+import { useEffect, useState } from 'react'
+import { ISchemaForm } from 'types/ISchemaForm'
 
 interface Props {
-    formJson: any
+    schemaForm: ISchemaForm[];
     setFilters: (data: any) => void
     customSubmit?: (formItems: IChangeEvent) => void
 }
 
-export default function AccordionFilter({ formJson, setFilters, customSubmit }: Props) {
+export default function AccordionFilter({ schemaForm, setFilters, customSubmit }: Props) {
     function onSubmit(formItems: IChangeEvent) {
         setFilters(formItems.formData)
     }
@@ -39,6 +41,45 @@ export default function AccordionFilter({ formJson, setFilters, customSubmit }: 
         TextWidgetWithMask: TextWidgetWithMask,
     }
 
+    const [schema, setSchema] = useState<RJSFSchema>([])
+    const [uiSchema, setUiSchema] = useState<UiSchema>()
+    const [formData, setFormData] = useState<any>()
+
+    const loadSchema = () => {
+        const propsSchema = {}
+        schemaForm.forEach(schema => {
+            propsSchema[schema.name] = {}
+            for (const [key, value] of Object.entries(schema.props)) {
+                propsSchema[schema.name][key] = value
+            }
+        })
+
+        const uiSchemaForm = {}
+        schemaForm.forEach(schema => {
+            uiSchemaForm[schema.name] = {}
+            for (const [key, value] of Object.entries(schema.uiSchema)) {
+                let keyCustom = `ui:${key}`
+                uiSchemaForm[schema.name][keyCustom] = value
+            }
+        })
+
+        const schemaLoaded: RJSFSchema = {
+            type: 'object',
+            required: schemaForm.filter(sf => sf.required).map(sf => sf.name),
+            properties: propsSchema,
+            uiSchema: uiSchemaForm,
+        }
+        setUiSchema(uiSchemaForm)
+        setSchema(schemaLoaded)
+        return schemaLoaded
+    }
+
+
+    useEffect(() => {
+        loadSchema()
+    }, [])
+
+
     return (
         <Grid item xs={12} sx={{ boxShadow: '1px 1px 10px #ccc', borderRadius: 1 }}>
             <Accordion>
@@ -47,20 +88,21 @@ export default function AccordionFilter({ formJson, setFilters, customSubmit }: 
                 </AccordionSummary>
                 <AccordionDetails>
                     <Grid item xs={12}>
-                        <Form
+                        {uiSchema && schema && (<Form
                             autoComplete="off"
                             widgets={widgets}
-                            schema={formJson.schema}
-                            uiSchema={formJson.uiSchema as UiSchema}
+                            schema={schema}
+                            uiSchema={uiSchema}
                             validator={validator}
-                            formData={formJson.formData}
+                            formData=''
                             templates={{ ObjectFieldTemplate }}
                             onSubmit={customSubmit ? customSubmit : onSubmit}
                         >
                             <Grid container justifyContent={'flex-end'}>
-                                <Button variant="contained">Filtrar</Button>
+                                <Button variant="contained" type="submit">Filtrar</Button>
                             </Grid>
                         </Form>
+                        )}
                     </Grid>
                 </AccordionDetails>
             </Accordion>

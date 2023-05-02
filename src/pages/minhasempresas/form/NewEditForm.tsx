@@ -1,4 +1,7 @@
+import BusinessController from 'controllers/businessController'
+import { useRouter } from 'next/router'
 import JsonForm from 'src/components/JsonForm'
+import { convertBusinessDataToBackendFormat } from 'src/utils/functions'
 import { ISchemaForm } from 'types/ISchemaForm'
 
 type BusinessNewEditForm = {
@@ -7,8 +10,29 @@ type BusinessNewEditForm = {
 }
 
 const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
-    const onSubmit = data => {
-        console.log(11, data)
+
+    const router = useRouter();
+    const id = router.query.id;
+
+    const onSubmit = async data => {
+        console.log(data);
+        const businessController = new BusinessController();
+        if (typeof id === 'string') {
+            //edição
+            try {
+                await businessController.put(id, convertBusinessDataToBackendFormat(data));
+            } catch (error) {
+
+            }
+        } else {
+            //cadastro
+            try {
+                await businessController.create(convertBusinessDataToBackendFormat(data));
+            } catch (error) {
+
+            }
+        }
+
     }
 
     return (
@@ -17,8 +41,6 @@ const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
             values={values}
             onSubmit={onSubmit}
             msgSuccess={'Oba! Salvo com sucesso'}
-            // handleCloseSnackbar={handleCloseSnackbar}
-            // alertMessage={alertMessage}
         />
     )
 }

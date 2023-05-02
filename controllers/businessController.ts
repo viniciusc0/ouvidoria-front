@@ -6,7 +6,7 @@ class BusinessController {
         const urlParams = new URLSearchParams()
         if (filters) {
             Object.keys(filters).forEach(key => {
-                if (filters && filters[key] != undefined) {
+                if (filters && filters[key] != undefined && filters[key] !== '') {
                     urlParams.append(`filters[${key}]`, filters[key])
                 }
             })
@@ -23,6 +23,11 @@ class BusinessController {
     async put(id: string, business: IBusiness): Promise<IBusiness> {
         const businessService = new BusinessService()
         return await businessService.update(id, business)
+    }
+
+    async create(business: IBusiness): Promise<IBusiness> {
+        const businessService = new BusinessService();
+        return await businessService.create(business);
     }
 }
 

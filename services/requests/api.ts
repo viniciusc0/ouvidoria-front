@@ -10,6 +10,7 @@ const config = {
 }
 
 const instance: AxiosInstance = axios.create(config)
+
 instance.interceptors.request.use(
     function (config) {
         const token = Cookies.get('token')

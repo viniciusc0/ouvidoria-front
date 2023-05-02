@@ -10,6 +10,7 @@ import { IAddress } from 'types/IAddress'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
+import AddressController from 'controllers/addressController'
 
 interface Props {
     // schema: RJSFSchema
@@ -30,7 +31,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
     const [schema, setSchema] = useState<RJSFSchema>([])
     const [uiSchema, setUiSchema] = useState<UiSchema>()
     const [formData, setFormData] = useState<any>()
-    const { enqueueSnackbar } = useSnackbar()
 
     function transformErrors(errors: any) {
         return errors.map((error: any) => {
@@ -48,14 +48,12 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
     const widgets: RegistryWidgetsType = {
         TextWidgetWithMask: TextWidgetWithMask,
     }
-    const regexNumber = (value: string) => {
-        return value.replace(/[^0-9]/g, '')
-    }
+
 
     const getAddressByCep = async (cep: string) => {
         try {
-            cep = regexNumber(cep)
-            const res: IAddress = await instance.get(`/cep/${cep}`)
+            const addressController = new AddressController();
+            const res = await addressController.getCep(cep);
             setFormData(old => ({
                 ...old,
                 cep: res.cep,
@@ -64,9 +62,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                 city: res.city,
                 uf: res.uf,
             }))
-            enqueueSnackbar('CEP encontrado', {
-                variant: 'success',
-            })
         } catch (error) {
             console.log(error)
         }

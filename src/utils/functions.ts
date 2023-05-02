@@ -1,4 +1,4 @@
-import { CompanyCreationProps, CompanyFormData, CompanyGetProps } from "services/requests/company/types";
+import { IBusiness, IBusinessForm } from "types/IBusiness";
 
 export function getShowableItem(jsonObject: { [key: string]: any }, key: string): string {
     if (key === 'id') {
@@ -21,12 +21,14 @@ export function getShowableItem(jsonObject: { [key: string]: any }, key: string)
     return jsonObject[key] as string;
 }
 
-export function removeMask(str: string) {
-    return str.replace(/[^\d]/g, '')
+export function removeMask(str: string | undefined) {
+    if (str != undefined)
+        return str.replace(/[^\d]/g, '');
+
 }
 
-export function convertCompanyDataToBackendFormat(data: CompanyFormData) {
-    return {
+export function convertBusinessDataToBackendFormat(data: IBusinessForm) {
+    let obj = {
         cnpj: removeMask(data.cnpj),
         contactName: data.contactName,
         contactEmail: data.contactEmail,
@@ -42,11 +44,24 @@ export function convertCompanyDataToBackendFormat(data: CompanyFormData) {
             street: data.street,
             uf: data.uf
         }
-    } as CompanyCreationProps
+    } as IBusiness;
+
+    if (data.id && obj.address) {
+        obj = {
+            ...obj,
+            address: {
+                ...obj.address,
+                id: data.id
+            }
+        };
+    }
+
+    return obj;
 }
 
-export function convertCompanyDataToFrontendFormat(data: CompanyGetProps) {
-    return {
+export function convertBusinessDataToFrontendFormat(data: IBusiness) {
+
+    let obj = {
         cnpj: data.cnpj,
         contactName: data.contactName,
         contactPhone: data.contactPhone,
@@ -54,11 +69,23 @@ export function convertCompanyDataToFrontendFormat(data: CompanyGetProps) {
         fantasyName: data.fantasyName,
         reasonName: data.reasonName,
         status: data.status,
-        cep: data.address.cep,
-        city: data.address.city,
-        district: data.address.district,
-        number: data.address.number,
-        street: data.address.street,
-        uf: data.address.uf
-    } as CompanyFormData;
+    } as IBusinessForm;
+
+
+    if (data.address != null) {
+        obj = {
+            ...obj,
+            id: data.address.id,
+            cep: data.address.cep,
+            city: data.address.city,
+            district: data.address.district,
+            number: data.address.number,
+            street: data.address.street,
+            uf: data.address.uf
+        }
+    }
+    return obj;
+
+
+
 }

@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-    padding: 20px 25px 0px 25px;
+    padding: 20px 25px 15px 25px;
     cursor: pointer;
 `;
 
