@@ -1,6 +1,6 @@
 import AddressFormSchema from 'src/pages/address/form/schema'
 import { ISchemaForm, TypeSchemaForm } from 'types/ISchemaForm'
-const BusinessFormSchema: ISchemaForm[] = [
+const BusinessEntity: ISchemaForm[] = [
     {
         name: 'cnpj',
         required: true,
@@ -11,7 +11,7 @@ const BusinessFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                mask: '999.999/9999-99',
+                mask: '99.999.999/9999-99',
             },
             widget: 'TextWidgetWithMask',
             autofocus: true,
@@ -96,4 +96,4 @@ const BusinessFormSchema: ISchemaForm[] = [
     ...AddressFormSchema,
 ]
 
-export default BusinessFormSchema
+export default BusinessEntity

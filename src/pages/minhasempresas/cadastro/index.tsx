@@ -15,7 +15,7 @@ import DashboardLayout from 'src/layouts/dashboard'
 import { convertCompanyDataToBackendFormat } from 'src/utils/functions'
 import { companyFormDataInitialValue } from 'src/utils/initialValues'
 import NewEditForm from '../form/NewEditForm'
-import BusinessFormSchema from '../form/businessForm'
+import BusinessEntity from '../form/businessEntity'
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ export default function Cadastro() {
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
                 <BackButton />
-                <NewEditForm schema={BusinessFormSchema} />
+                <NewEditForm schema={BusinessEntity} />
             </Container>
         </Card>
     )

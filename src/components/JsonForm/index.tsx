@@ -118,6 +118,9 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
 
     useEffect(() => {
         loadSchema()
+        if (values) {
+            setFormData(values)
+        }
     }, [])
 
     return (
