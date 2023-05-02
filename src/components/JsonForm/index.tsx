@@ -142,11 +142,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                     </Form>
                 )}
             </FormWrapper>
-            {/* <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
-                <Alert variant="filled" severity={alertMessage.type}>
-                    {alertMessage.message}
-                </Alert>
-            </Snackbar> */}
         </Container>
     )
 }

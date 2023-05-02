@@ -24,23 +24,8 @@ Cadastro.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dash
 
 // ----------------------------------------------------------------------
 export default function Cadastro() {
-    const { themeStretch } = useSettingsContext()
+    const { themeStretch } = useSettingsContext();
 
-    const [formData, setFormData] = React.useState(businessFormDataInitialValue)
-
-    const { enqueueSnackbar } = useSnackbar()
-
-
-    const router = useRouter()
-
-    // try {
-    //     const res = await createCompany(businessConvertedData)
-    //     enqueueSnackbar('CEP encontrado', {
-    //         variant: 'success',
-    //     })
-    // } catch (error) {
-
-    // }
 
     return (
         <Card>

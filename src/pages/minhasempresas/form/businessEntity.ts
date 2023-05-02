@@ -54,18 +54,6 @@ export const BusinessEntity: ISchemaForm[] = [
         },
     },
     {
-        name: 'fantasyName',
-        required: false,
-        label: 'Nome fantasia',
-        props: {
-            type: TypeSchemaForm.STRING,
-            title: 'Nome fantasia',
-        },
-        uiSchema: {
-            autofocus: false,
-        },
-    },
-    {
         name: 'contactName',
         required: false,
         label: 'Nome de contato',
@@ -97,12 +85,12 @@ export const BusinessEntity: ISchemaForm[] = [
             type: TypeSchemaForm.STRING,
             title: 'Celular de contato',
         },
-
         uiSchema: {
             autofocus: false,
             options: {
                 mask: '(99) 9 9999-9999',
             },
+            widget: 'TextWidgetWithMask',
         },
     },
     ...AddressFormSchema,
