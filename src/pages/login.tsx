@@ -16,7 +16,7 @@ import * as Yup from 'yup'
 
 export default function Login() {
     return (
-        <Container sx={{ height: '100vh' }}>
+        <Container sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
             <Grid container justifyContent={'center'} alignItems={'center'}>
                 <Grid item>
                     <AuthLoginForm />
@@ -60,7 +60,7 @@ function AuthLoginForm() {
         if (res.response.status == 400) {
             setError('afterSubmit', {
                 ...res,
-                message: 'Falha ao tentar autenticar, revise seu usuário e senha',
+                message: 'Usuário ou senha incorretos ',
             })
         }
     }
@@ -72,7 +72,7 @@ function AuthLoginForm() {
     }, [])
 
     return (
-        <Card sx={{ width: '100%', padding: '50px', height: '100%' }}>
+        <Card sx={{ width: '100%', padding: '50px', height: '100%', boxShadow: '1px 1px 10px #cecece' }}>
             <Grid item sx={{ textAlign: 'center', padding: '20px 0' }}>
                 <Typography variant="h4">Bem vindo ao Latlong App</Typography>
                 <Typography variant="body2">Dando sentido ao seu negócio</Typography>
@@ -115,10 +115,10 @@ function AuthLoginForm() {
                     variant="contained"
                     loading={false}
                     sx={{
-                        bgcolor: 'text.primary',
+                        bgcolor: 'primary.main',
                         color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
                         '&:hover': {
-                            bgcolor: 'text.primary',
+                            bgcolor: 'primary.dark',
                             color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
                         },
                     }}

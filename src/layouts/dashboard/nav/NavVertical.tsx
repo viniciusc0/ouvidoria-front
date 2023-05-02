@@ -11,8 +11,8 @@ import { NAV } from '../../../config'
 import { NavSectionVertical } from '../../../components/nav-section'
 import Scrollbar from '../../../components/scrollbar'
 //
-import navConfig from './config'
 import NavAccount from './NavAccount'
+import navConfig from './config'
 
 // ----------------------------------------------------------------------
 

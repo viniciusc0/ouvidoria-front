@@ -1,13 +1,22 @@
 import { useState } from 'react'
 // @mui
-import { Card, CardProps, IconButton, MenuItem, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
+import {
+    Card,
+    CardProps,
+    IconButton,
+    MenuItem,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+} from '@mui/material'
 // utils
 // components
 import { useRouter } from 'next/router'
 import { CompanyGetProps } from 'services/requests/company/types'
 import { DeliverymanGetProps } from 'services/requests/deliveryman/types'
 import { UserGetProps } from 'services/requests/user/types'
-import { getShowableItem } from 'src/utils/functions'
 import Iconify from '../../../../components/iconify'
 import MenuPopover from '../../../../components/menu-popover'
 import Scrollbar from '../../../../components/scrollbar'
@@ -17,13 +26,17 @@ import { TableHeadCustom } from '../../../../components/table'
 
 type RowArrayTypes = any
 type RowTypes = UserGetProps | DeliverymanGetProps | CompanyGetProps
+type ILabels = {
+    id: string
+    label: string
+}
 
 interface Props extends CardProps {
     title?: string
     subheader?: string
     tableData: RowArrayTypes
     setTableData: (data: any) => void
-    tableLabels: any
+    tableLabels: ILabels[]
 }
 
 export default function CrudTable({ title, subheader, tableData, setTableData, tableLabels, ...other }: Props) {
@@ -38,7 +51,12 @@ export default function CrudTable({ title, subheader, tableData, setTableData, t
 
                         <TableBody>
                             {tableData.map(row => (
-                                <GenericTableRow key={row.id} row={row} setTableData={setTableData} />
+                                <GenericTableRow
+                                    key={row.id}
+                                    row={row}
+                                    setTableData={setTableData}
+                                    tableLabels={tableLabels}
+                                />
                             ))}
                         </TableBody>
                     </Table>
@@ -53,9 +71,10 @@ export default function CrudTable({ title, subheader, tableData, setTableData, t
 type RowProps = {
     row: RowTypes
     setTableData: (data: any) => void
+    tableLabels: ILabels[]
 }
 
-function GenericTableRow({ row, setTableData }: RowProps) {
+function GenericTableRow({ row, setTableData, tableLabels }: RowProps) {
     const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
     const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -76,19 +95,27 @@ function GenericTableRow({ row, setTableData }: RowProps) {
         setTableData((data: any) => data.filter((item: any) => item.id !== row.id))
         //falta requisição de remoção
     }
+    const formatValues = (value: any) => {
+        switch (value) {
+            case true:
+                return 'Ativo'
+            case false:
+                return 'Inativo'
+            default:
+                return value.toString()
+        }
+    }
 
     const router = useRouter()
 
     return (
         <>
             <TableRow>
-                {Object.keys(row).map((key, index) => {
-                    const res = getShowableItem(row, key)
-                    if (res === '') return <TableCell key={index} style={{ display: 'none' }} />
-                    return <TableCell key={index}>{res}</TableCell>
-                })}
+                {Object.keys(row).map(keyRow =>
+                    tableLabels.map(tl => tl.id == keyRow && <TableCell> {formatValues(row[keyRow])} </TableCell>),
+                )}
 
-                <TableCell align="right">
+                <TableCell align="left">
                     <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
                         <Iconify icon="eva:more-vertical-fill" />
                     </IconButton>

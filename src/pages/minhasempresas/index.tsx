@@ -111,12 +111,13 @@ export default function MinhasEmpresas() {
                                 tableData={businesses}
                                 setTableData={setBusinesses}
                                 tableLabels={[
-                                    { id: 'fantasyName', label: 'Nome comercial' },
                                     { id: 'reasonName', label: 'Razão social' },
                                     { id: 'cnpj', label: 'CNPJ' },
                                     { id: 'status', label: 'Status' },
-                                    { id: 'contactName', label: 'Contato' },
-                                    { id: 'contactPhone', label: 'Telefone' },
+                                    { id: 'action', label: 'Ações' },
+
+                                    // { id: 'contactName', label: 'Contato' },
+                                    // { id: 'contactPhone', label: 'Telefone' },
                                     // { id: 'opening_hours', label: 'Início de expediente' },
                                     // { id: 'end_working_hours', label: 'Fim de expediente' },
                                     // { id: 'work_days', label: 'Dias de funcionamento' },

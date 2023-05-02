@@ -10,11 +10,12 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { createCompany } from 'services/requests/company/createCompany'
 import BackButton from 'src/components/BackButton'
-import JsonForm from 'src/components/JsonForm'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import { convertCompanyDataToBackendFormat } from 'src/utils/functions'
 import { companyFormDataInitialValue } from 'src/utils/initialValues'
+import NewEditForm from '../form/NewEditForm'
+import BusinessFormSchema from '../form/businessForm'
 
 // ----------------------------------------------------------------------
 
@@ -75,16 +76,7 @@ export default function Cadastro() {
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
                 <BackButton />
-                <JsonForm
-                    setFormData={setFormData}
-                    schema={schema}
-                    uiSchema={uiSchema}
-                    formData={formData}
-                    onSubmit={onSubmit}
-                    openSnackbar={openSnackbar}
-                    handleCloseSnackbar={handleCloseSnackbar}
-                    alertMessage={alertMessage}
-                />
+                <NewEditForm schema={BusinessFormSchema} />
             </Container>
         </Card>
     )

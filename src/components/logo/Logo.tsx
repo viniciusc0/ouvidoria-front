@@ -1,25 +1,24 @@
-import { forwardRef } from 'react';
+import { forwardRef } from 'react'
 // next
-import NextLink from 'next/link';
+import NextLink from 'next/link'
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Link, BoxProps } from '@mui/material';
+import { Box, BoxProps, Link } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 // ----------------------------------------------------------------------
 
 export interface LogoProps extends BoxProps {
-  disabledLink?: boolean;
+    disabledLink?: boolean
 }
 
-const Logo = forwardRef<HTMLDivElement, LogoProps>(
-  ({ disabledLink = false, sx, ...other }, ref) => {
-    const theme = useTheme();
+const Logo = forwardRef<HTMLDivElement, LogoProps>(({ disabledLink = false, sx, ...other }, ref) => {
+    const theme = useTheme()
 
-    const PRIMARY_LIGHT = theme.palette.primary.light;
+    const PRIMARY_LIGHT = theme.palette.primary.light
 
-    const PRIMARY_MAIN = theme.palette.primary.main;
+    const PRIMARY_MAIN = theme.palette.primary.main
 
-    const PRIMARY_DARK = theme.palette.primary.dark;
+    const PRIMARY_DARK = theme.palette.primary.dark
 
     // OR using local (public folder)
     // -------------------------------------------------------
@@ -32,63 +31,74 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     // );
 
     const logo = (
-      <Box
-        ref={ref}
-        component="div"
-        sx={{
-          width: 40,
-          height: 40,
-          display: 'inline-flex',
-          ...sx,
-        }}
-        {...other}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 512 512">
-          <defs>
-            <linearGradient id="BG1" x1="100%" x2="50%" y1="9.946%" y2="50%">
-              <stop offset="0%" stopColor={PRIMARY_DARK} />
-              <stop offset="100%" stopColor={PRIMARY_MAIN} />
-            </linearGradient>
-
-            <linearGradient id="BG2" x1="50%" x2="50%" y1="0%" y2="100%">
-              <stop offset="0%" stopColor={PRIMARY_LIGHT} />
-              <stop offset="100%" stopColor={PRIMARY_MAIN} />
-            </linearGradient>
-
-            <linearGradient id="BG3" x1="50%" x2="50%" y1="0%" y2="100%">
-              <stop offset="0%" stopColor={PRIMARY_LIGHT} />
-              <stop offset="100%" stopColor={PRIMARY_MAIN} />
-            </linearGradient>
-          </defs>
-
-          <g fill={PRIMARY_MAIN} fillRule="evenodd" stroke="none" strokeWidth="1">
-            <path
-              fill="url(#BG1)"
-              d="M183.168 285.573l-2.918 5.298-2.973 5.363-2.846 5.095-2.274 4.043-2.186 3.857-2.506 4.383-1.6 2.774-2.294 3.939-1.099 1.869-1.416 2.388-1.025 1.713-1.317 2.18-.95 1.558-1.514 2.447-.866 1.38-.833 1.312-.802 1.246-.77 1.18-.739 1.111-.935 1.38-.664.956-.425.6-.41.572-.59.8-.376.497-.537.69-.171.214c-10.76 13.37-22.496 23.493-36.93 29.334-30.346 14.262-68.07 14.929-97.202-2.704l72.347-124.682 2.8-1.72c49.257-29.326 73.08 1.117 94.02 40.927z"
-            />
-            <path
-              fill="url(#BG2)"
-              d="M444.31 229.726c-46.27-80.956-94.1-157.228-149.043-45.344-7.516 14.384-12.995 42.337-25.267 42.337v-.142c-12.272 0-17.75-27.953-25.265-42.337C189.79 72.356 141.96 148.628 95.69 229.584c-3.483 6.106-6.828 11.932-9.69 16.996 106.038-67.127 97.11 135.667 184 137.278V384c86.891-1.611 77.962-204.405 184-137.28-2.86-5.062-6.206-10.888-9.69-16.994"
-            />
-            <path
-              fill="url(#BG3)"
-              d="M450 384c26.509 0 48-21.491 48-48s-21.491-48-48-48-48 21.491-48 48 21.491 48 48 48"
-            />
-          </g>
-        </svg>
-      </Box>
-    );
+        <Box
+            ref={ref}
+            component="div"
+            sx={{
+                width: '100%',
+                height: '10px',
+                display: 'inline-flex',
+                ...sx,
+            }}
+            {...other}
+        >
+            <svg width="150" height="50" viewBox="0 0 382 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <mask id="path-1-inside-1_1_47" fill="white">
+                    <path d="M58 1H76V113H58V1Z" />
+                </mask>
+                <path d="M58 1H76V113H58V1Z" fill="white" />
+                <path
+                    d="M58 1V0H57V1H58ZM76 1H77V0H76V1ZM58 2H76V0H58V2ZM75 1V113H77V1H75ZM59 113V1H57V113H59Z"
+                    fill="black"
+                    mask="url(#path-1-inside-1_1_47)"
+                />
+                <mask id="path-3-inside-2_1_47" fill="white">
+                    <path d="M76 12.3761H126V28.3761H76V12.3761Z" />
+                </mask>
+                <path d="M76 12.3761H126V28.3761H76V12.3761Z" fill="black" />
+                <path
+                    d="M76 13.3761H126V11.3761H76V13.3761ZM126 27.3761H76V29.3761H126V27.3761Z"
+                    fill="black"
+                    mask="url(#path-3-inside-2_1_47)"
+                />
+                <path d="M134.048 20.3127L125.841 28.4219L125.755 12.2919L134.048 20.3127Z" fill="black" />
+                <mask id="path-6-inside-3_1_47" fill="white">
+                    <path d="M58.3724 47.306L8.37903 48.1219L8.11792 32.1241L58.1113 31.3081L58.3724 47.306Z" />
+                </mask>
+                <path
+                    d="M58.3724 47.306L8.37903 48.1219L8.11792 32.1241L58.1113 31.3081L58.3724 47.306Z"
+                    fill="black"
+                />
+                <path
+                    d="M58.3561 46.3061L8.36271 47.1221L8.39535 49.1218L58.3887 48.3058L58.3561 46.3061ZM8.13424 33.1239L58.1276 32.308L58.0949 30.3082L8.1016 31.1242L8.13424 33.1239Z"
+                    fill="black"
+                    mask="url(#path-6-inside-3_1_47)"
+                />
+                <path d="M0.202839 40.3177L8.27606 32.0756L8.62574 48.2021L0.202839 40.3177Z" fill="black" />
+                <line x1="67.5" y1="59" x2="67.5" y2="72.72" stroke="black" />
+                <line x1="67.5" y1="94.28" x2="67.5" y2="108" stroke="black" />
+                <line x1="67.5" y1="76.64" x2="67.5" y2="90.36" stroke="black" />
+                <line x1="67.5" y1="5" x2="67.5" y2="18.72" stroke="black" />
+                <line x1="67.5" y1="40.28" x2="67.5" y2="54" stroke="black" />
+                <line x1="67.5" y1="22.64" x2="67.5" y2="36.36" stroke="black" />
+                <line x1="139.5" y1="0.995536" x2="140.5" y2="112.996" stroke="black" />
+                <path
+                    d="M156.8 35.85H161.525V67.85H178.6V72H156.775L156.8 35.85ZM183.665 72L196.74 35.85H201.965L215.04 72H210.315L206.765 62.1H191.99L188.365 72H183.665ZM193.165 57.85H205.54L199.39 40.425L193.165 57.85ZM214.332 40.1V35.85H241.682V40.1H230.657V72H226.007V40.1H214.332ZM247.669 35.85H252.394V67.85H269.469V72H247.644L247.669 35.85ZM289.15 72.5C285.933 72.5 283.15 71.775 280.8 70.325C278.45 68.875 276.633 66.775 275.35 64.025C274.083 61.2583 273.45 57.9167 273.45 54C273.45 50.05 274.092 46.6917 275.375 43.925C276.658 41.1417 278.475 39.0167 280.825 37.55C283.192 36.0833 285.967 35.35 289.15 35.35C292.35 35.35 295.117 36.0833 297.45 37.55C299.783 39 301.583 41.1167 302.85 43.9C304.117 46.6667 304.75 50.0333 304.75 54C304.75 57.9167 304.117 61.2583 302.85 64.025C301.6 66.775 299.808 68.875 297.475 70.325C295.142 71.775 292.367 72.5 289.15 72.5ZM289.15 68.475C291.383 68.475 293.283 67.9667 294.85 66.95C296.417 65.9333 297.608 64.3583 298.425 62.225C299.258 60.0917 299.675 57.3667 299.675 54.05C299.675 50.6833 299.258 47.9167 298.425 45.75C297.592 43.5833 296.392 41.9833 294.825 40.95C293.258 39.9 291.367 39.375 289.15 39.375C286.95 39.375 285.058 39.9 283.475 40.95C281.892 42 280.675 43.6083 279.825 45.775C278.975 47.9417 278.55 50.7 278.55 54.05C278.55 57.3667 278.975 60.0917 279.825 62.225C280.675 64.3583 281.892 65.9333 283.475 66.95C285.058 67.9667 286.95 68.475 289.15 68.475ZM335.769 35.85H340.394V72H336.269L316.869 43.5V72H312.244V35.85H316.669L335.769 63.95V35.85ZM363.214 72.5C360.047 72.5 357.314 71.775 355.014 70.325C352.714 68.8583 350.947 66.75 349.714 64C348.481 61.25 347.864 57.925 347.864 54.025C347.864 50.0917 348.489 46.7333 349.739 43.95C351.006 41.1667 352.806 39.0417 355.139 37.575C357.472 36.0917 360.231 35.35 363.414 35.35C365.231 35.35 366.939 35.6667 368.539 36.3C370.139 36.9333 371.556 37.8 372.789 38.9C374.022 39.9833 375.006 41.225 375.739 42.625C376.489 44.025 376.914 45.4833 377.014 47H372.064C371.831 45.6667 371.314 44.425 370.514 43.275C369.714 42.125 368.697 41.2 367.464 40.5C366.247 39.8 364.872 39.45 363.339 39.45C361.256 39.45 359.422 39.9667 357.839 41C356.272 42.0167 355.047 43.5917 354.164 45.725C353.297 47.8583 352.864 50.5917 352.864 53.925C352.864 56.4917 353.131 58.6917 353.664 60.525C354.197 62.3583 354.939 63.85 355.889 65C356.856 66.1333 357.981 66.975 359.264 67.525C360.564 68.0583 361.964 68.325 363.464 68.325C364.981 68.325 366.297 68.0583 367.414 67.525C368.547 66.9917 369.489 66.3083 370.239 65.475C370.989 64.625 371.564 63.7167 371.964 62.75C372.381 61.7667 372.606 60.825 372.639 59.925L372.789 56.725H363.989V53.325L377.589 53.35V72H374.114V66.5C373.481 67.5333 372.681 68.5083 371.714 69.425C370.747 70.3417 369.564 71.0833 368.164 71.65C366.781 72.2167 365.131 72.5 363.214 72.5Z"
+                    fill="black"
+                />
+            </svg>
+        </Box>
+    )
 
     if (disabledLink) {
-      return <>{logo}</>;
+        return <>{logo}</>
     }
 
     return (
-      <NextLink href="/" passHref>
-        <Link sx={{ display: 'contents' }}>{logo}</Link>
-      </NextLink>
-    );
-  }
-);
+        <NextLink href="/" passHref>
+            <Link sx={{ display: 'contents' }}>{logo}</Link>
+        </NextLink>
+    )
+})
 
-export default Logo;
+export default Logo
