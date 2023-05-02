@@ -114,9 +114,8 @@ export default function MinhasEmpresas() {
                                     { id: 'reasonName', label: 'Razão social' },
                                     { id: 'cnpj', label: 'CNPJ' },
                                     { id: 'status', label: 'Status' },
+                                    { id: 'contactName', label: 'Contato' },
                                     { id: 'action', label: 'Ações' },
-
-                                    // { id: 'contactName', label: 'Contato' },
                                     // { id: 'contactPhone', label: 'Telefone' },
                                     // { id: 'opening_hours', label: 'Início de expediente' },
                                     // { id: 'end_working_hours', label: 'Fim de expediente' },

@@ -2,6 +2,7 @@ import { Button } from '@mui/material'
 import Form from '@rjsf/mui'
 import { RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
+import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
 import instance from 'services/requests/api'
 import styles from 'styles/Form.module.css'
@@ -29,6 +30,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
     const [schema, setSchema] = useState<RJSFSchema>([])
     const [uiSchema, setUiSchema] = useState<UiSchema>()
     const [formData, setFormData] = useState<any>()
+    const { enqueueSnackbar } = useSnackbar()
 
     function transformErrors(errors: any) {
         return errors.map((error: any) => {
@@ -54,8 +56,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
         try {
             cep = regexNumber(cep)
             const res: IAddress = await instance.get(`/cep/${cep}`)
-            console.log(res)
-
             setFormData(old => ({
                 ...old,
                 cep: res.cep,
@@ -64,6 +64,9 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                 city: res.city,
                 uf: res.uf,
             }))
+            enqueueSnackbar('CEP encontrado', {
+                variant: 'success',
+            })
         } catch (error) {
             console.log(error)
         }
