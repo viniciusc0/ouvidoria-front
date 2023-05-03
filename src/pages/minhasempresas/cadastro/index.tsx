@@ -6,7 +6,7 @@ import { AlertColor, Card, Container, Grid } from '@mui/material'
 // components
 import { company } from 'Jsons/Forms/company'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import { createCompany } from 'services/requests/company/createCompany'
 import BackButton from 'src/components/BackButton'
 import { useSettingsContext } from 'src/components/settings'
@@ -24,8 +24,7 @@ Cadastro.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dash
 
 // ----------------------------------------------------------------------
 export default function Cadastro() {
-    const { themeStretch } = useSettingsContext();
-
+    const { themeStretch } = useSettingsContext()
 
     return (
         <Card>
@@ -45,7 +44,6 @@ export default function Cadastro() {
                             },
                             { name: 'Cadastro' },
                         ]}
-
                     />
                 </Grid>
                 <NewEditForm schema={BusinessEntity} />
