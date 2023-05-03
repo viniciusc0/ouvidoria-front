@@ -1,5 +1,4 @@
 import BusinessController from 'controllers/businessController'
-import { ro } from 'date-fns/locale'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import JsonForm from 'src/components/JsonForm'
@@ -22,14 +21,12 @@ const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
     const onSubmit = async data => {
         const businessController = new BusinessController();
         try {
-            if (typeof id === 'string') {
-                //edição
+            if (typeof id === 'string' && data.id) {
                 await businessController.put(id, convertBusinessDataToBackendFormat(data));
                 enqueueSnackbar('Alteração realizada!', {
                     variant: 'success',
                 })
             } else {
-                //cadastro
                 await businessController.create(convertBusinessDataToBackendFormat(data));
                 enqueueSnackbar('Alteração realizada!', {
                     variant: 'success',
@@ -37,7 +34,7 @@ const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
             }
             router.push('/minhasempresas');
         } catch (error) {
-            if (typeof id === 'string') {
+            if (typeof id === 'string' && data.id) {
                 enqueueSnackbar('Erro ao editar empresa', {
                     variant: 'error',
                 })

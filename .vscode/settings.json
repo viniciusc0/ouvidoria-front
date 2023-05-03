@@ -1,7 +1,8 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
+
   "workbench.preferredLightColorTheme": "Default Light+",
-  "workbench.colorTheme": "Grunge Contrast (rainglow)",
+  "workbench.colorTheme": "Chocolate (rainglow)",
   "screencastMode.mouseIndicatorColor": "#FF0000",
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
@@ -11,7 +12,7 @@
   "editor.formatOnSave": true,
   "editor.fontLigatures": false,
   "[typescriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": true,
@@ -27,7 +28,7 @@
     }
   },
   "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": true,

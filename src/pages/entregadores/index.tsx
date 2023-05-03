@@ -32,15 +32,15 @@ export default function Entregadores() {
     const [loading, setLoading] = React.useState(false);
 
     const [deliverymanFilters, setDeliverymanFilters] = React.useState<DeliverymanGetProps>(deliverymanInitialValue);
-    function handleDeliverymanFilters(data: DeliverymanGetProps){
+    function handleDeliverymanFilters(data: DeliverymanGetProps) {
         setDeliverymanFilters(data);
     }
 
-        const getDeliverymans = React.useCallback(async () => {
+    const getDeliverymans = React.useCallback(async () => {
         setLoading(true);
         const response = await listDeliverymans();
         if (response != undefined) {
-        const deliverymansArray =  response.data as DeliverymanGetProps[];
+            const deliverymansArray = response.data as DeliverymanGetProps[];
             if (deliverymansArray?.length != 0) {
                 setNoDeliverymans(false);
                 setDeliverymans(deliverymansArray);
@@ -51,15 +51,15 @@ export default function Entregadores() {
             setNoDeliverymans(true);
         }
         setLoading(false);
-    // }, [userFilters]);
+        // }, [userFilters]);
     }, []);
 
     React.useEffect(() => {
         getDeliverymans();
     }, [getDeliverymans]);
 
-    if(loading)
-    return <Loading />
+    if (loading)
+        return <Loading />
 
     return (
         <>
@@ -68,7 +68,7 @@ export default function Entregadores() {
             </Head>
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
-                <AccordionFilter formJson={deliverymanFiltersJson}  setFilters={handleDeliverymanFilters} />
+                <AccordionFilter schemaForm={deliverymanFiltersJson} setFilters={handleDeliverymanFilters} />
                 <Grid spacing={3}>
                     <Grid item xs={12} lg={8}>
                         <CrudTable

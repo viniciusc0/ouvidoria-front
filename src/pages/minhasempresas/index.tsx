@@ -17,6 +17,7 @@ import CrudTable from 'src/sections/@dashboard/general/app/CrudTable'
 import { businessFiltersInitialValue } from 'src/utils/initialValues'
 import { IBusiness, IBusinessFilter } from 'types/IBusiness'
 import { BusinessFiltersEntity } from './form/businessEntity'
+import { removeMask } from 'src/utils/functions'
 
 // ----------------------------------------------------------------------
 
@@ -34,9 +35,12 @@ export default function MinhasEmpresas() {
     const [loading, setLoading] = useState(false)
 
     const [businessFilters, setBusinessFilters] = useState<IBusinessFilter>(businessFiltersInitialValue)
-    function handleBusinessFilters(data: CompanyFiltersProps) {
-        setBusinessFilters(data)
+    function handleBusinessFilters(data: IBusinessFilter) {
+        if (data.cnpj) {
+            data.cnpj = removeMask(data.cnpj) as string
+        }
         console.log(data)
+        setBusinessFilters(data)
     }
 
     const getBusinesses = async () => {

@@ -47,6 +47,9 @@ export default function AccordionFilter({ schemaForm, setFilters, customSubmit }
 
     const loadSchema = () => {
         const propsSchema = {}
+        if (!schemaForm.length) {
+            return
+        }
         schemaForm.forEach(schema => {
             propsSchema[schema.name] = {}
             for (const [key, value] of Object.entries(schema.props)) {

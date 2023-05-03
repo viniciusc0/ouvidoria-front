@@ -30,7 +30,6 @@ export default function Edicao() {
   const { themeStretch } = useSettingsContext();
 
   const [formData, setFormData] = React.useState<IBusinessForm>(businessFormDataInitialValue);
-  const [noBusiness, setNoBusiness] = React.useState<boolean>(false);
 
 
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -42,14 +41,11 @@ export default function Edicao() {
     const businessController = new BusinessController();
     try {
       const data = await businessController.getById(id);
-      console.log(data)
       const businessConvertedData = convertBusinessDataToFrontendFormat(data);
       setFormData(businessConvertedData);
-
     } catch (error) {
       console.log(error)
     }
-
     setLoading(false);
   }, []);
   React.useEffect(() => {
