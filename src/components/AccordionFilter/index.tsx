@@ -12,16 +12,20 @@ interface Props {
     schemaForm: ISchemaForm[]
     setFilters: (data: any) => void
     customSubmit?: (formItems: IChangeEvent) => void
-    initialValues: any
+    formData: any
 }
 
-export default function AccordionFilter({ schemaForm, setFilters, customSubmit, initialValues }: Props) {
+export default function AccordionFilter({ schemaForm, setFilters, customSubmit, formData }: Props) {
     function onSubmit(formItems: IChangeEvent) {
         setFilters(formItems.formData)
     }
 
     function clearFilters() {
-        setFilters(initialValues)
+        if (!formData.status) {
+            setFilters({})
+            return
+        }
+        setFilters({ status: true })
     }
 
     const widgets: RegistryWidgetsType = {
@@ -82,7 +86,7 @@ export default function AccordionFilter({ schemaForm, setFilters, customSubmit, 
                                 schema={schema}
                                 uiSchema={uiSchema}
                                 validator={validator}
-                                formData={initialValues}
+                                formData={formData}
                                 templates={{ ObjectFieldTemplate }}
                                 onSubmit={customSubmit ? customSubmit : onSubmit}
                             >

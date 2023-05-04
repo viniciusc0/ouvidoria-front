@@ -93,7 +93,7 @@ export default function MinhasEmpresas() {
                             <AccordionFilter
                                 schemaForm={BusinessFiltersEntity}
                                 setFilters={handleSetBusinessFilters}
-                                initialValues={{ status: true }}
+                                formData={businessFilters}
                             />
                         </Grid>
 
