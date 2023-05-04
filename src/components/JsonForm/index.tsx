@@ -2,15 +2,12 @@ import { Button } from '@mui/material'
 import Form from '@rjsf/mui'
 import { RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
-import { useSnackbar } from 'notistack'
+import AddressController from 'controllers/addressController'
 import { useEffect, useState } from 'react'
-import instance from 'services/requests/api'
 import styles from 'styles/Form.module.css'
-import { IAddress } from 'types/IAddress'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
-import AddressController from 'controllers/addressController'
 
 interface Props {
     // schema: RJSFSchema
@@ -25,6 +22,21 @@ type JSONValue = string | string[] | number | boolean | JSONObject
 
 interface JSONObject {
     [x: string]: JSONValue
+}
+
+export function formError(errorObj: any, enqueueSnackBack: any) {
+    if (errorObj && errorObj.response?.data?.error?.details?.errors) {
+        let msg = ''
+        const { errors } = errorObj.response?.data?.error?.details
+        if (errors && errors.length) {
+            errors.forEach(err => {
+                msg += `${err.path.join(', ')}: ${err.message}`.toUpperCase()
+            })
+            enqueueSnackBack(msg, {
+                variant: 'error',
+            })
+        }
+    }
 }
 
 export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: Props) {
@@ -49,11 +61,10 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
         TextWidgetWithMask: TextWidgetWithMask,
     }
 
-
     const getAddressByCep = async (cep: string) => {
         try {
-            const addressController = new AddressController();
-            const res = await addressController.getCep(cep);
+            const addressController = new AddressController()
+            const res = await addressController.getCep(cep)
             setFormData(old => ({
                 ...old,
                 cep: res.cep,
@@ -104,16 +115,62 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
         return schemaLoaded
     }
 
+    const formatAddressObjectInitialValues = () => {
+        if (values && values.address) {
+            values.cep = values.address.cep
+            values.street = values.address.street
+            values.district = values.address.district
+            values.city = values.address.city
+            values.uf = values.address.uf
+            values.number = values.address.number
+            values.complement = values.address.complement || ''
+        }
+    }
+
+    const formatAddressObjectSubmit = () => {
+        if (!formData.cep) {
+            return formData
+        }
+        const payload = {
+            ...formData,
+            address: {
+                cep: formData.cep,
+                street: formData.street,
+                district: formData.district,
+                city: formData.city,
+                uf: formData.uf,
+                complement: formData.complement || '',
+                number: formData.number,
+            },
+        }
+
+        Object.keys(payload).forEach(key => {
+            if (!payload[key]) {
+                payload[key] = ''
+            }
+        })
+
+        return payload
+    }
+
     const submitForm = () => {
         if (!formData) {
             return
         }
-        const formDataCustom = onSubmit(formData)
+
+        const payload = formatAddressObjectSubmit()
+        onSubmit(payload)
     }
 
     useEffect(() => {
         loadSchema()
         if (values) {
+            Object.keys(values).forEach(key => {
+                if (!values[key]) {
+                    values[key] = ''
+                }
+            })
+            formatAddressObjectInitialValues()
             setFormData(values)
         }
     }, [])

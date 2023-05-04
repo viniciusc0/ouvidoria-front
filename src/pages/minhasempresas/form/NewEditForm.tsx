@@ -1,8 +1,7 @@
 import BusinessController from 'controllers/businessController'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import JsonForm from 'src/components/JsonForm'
-import { convertBusinessDataToBackendFormat } from 'src/utils/functions'
+import JsonForm, { formError } from 'src/components/JsonForm'
 import { ISchemaForm } from 'types/ISchemaForm'
 
 type BusinessNewEditForm = {
@@ -17,22 +16,19 @@ const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
     const { enqueueSnackbar } = useSnackbar()
 
     const onSubmit = async data => {
-        const businessController = new BusinessController()
         try {
-            if (typeof id === 'string' && data.id) {
-                await businessController.put(id, convertBusinessDataToBackendFormat(data))
-                enqueueSnackbar('Alteração realizada!', { variant: 'success' })
+            const businessController = new BusinessController()
+            if (data.id) {
+                await businessController.update(data.id, data)
+                enqueueSnackbar('Oba! Empresa alterada com sucesso!', { variant: 'success' })
             } else {
-                await businessController.create(convertBusinessDataToBackendFormat(data))
-                enqueueSnackbar('Alteração realizada!', { variant: 'success' })
+                await businessController.create(data)
+                enqueueSnackbar('Oba! Empresa criada com sucesso', { variant: 'success' })
             }
             router.push('/minhasempresas')
         } catch (error) {
-            if (typeof id === 'string' && data.id) {
-                enqueueSnackbar('Erro ao editar empresa', { variant: 'error' })
-            } else {
-                enqueueSnackbar('Erro ao cadastrar empresa', { variant: 'error' })
-            }
+            console.log(error)
+            formError(error, enqueueSnackbar)
         }
     }
 

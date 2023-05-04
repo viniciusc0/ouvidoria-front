@@ -2,7 +2,7 @@ import { PATH_PAGE } from './routes/paths'
 
 const ENV: any = process.env.envs
 export const BASE_APP = {
-    base_url: ENV.BASE_URL,
+    base_url: ENV.BASE_URL_BACKEND,
 }
 
 export const HOST_API_KEY = process.env.HOST_API_KEY || ''

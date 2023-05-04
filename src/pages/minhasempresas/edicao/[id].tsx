@@ -4,15 +4,17 @@ import Head from 'next/head'
 import { Container, Grid } from '@mui/material'
 // layouts
 // components
-import React from 'react'
+import BusinessController from 'controllers/businessController'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import BackButton from 'src/components/BackButton'
-import DashboardLayout from 'src/layouts/dashboard'
-import { useSettingsContext } from 'src/components/settings'
+import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
+import { useSettingsContext } from 'src/components/settings'
+import DashboardLayout from 'src/layouts/dashboard'
+import { IBusiness } from 'types'
 import NewEditForm from '../form/NewEditForm'
 import { BusinessEntity } from '../form/businessEntity'
-import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
-import useSingleBusinessFetch from 'hooks/useSingleBusinessFetch'
 
 // ----------------------------------------------------------------------
 
@@ -21,9 +23,26 @@ Edicao.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dashbo
 // ----------------------------------------------------------------------
 export default function Edicao() {
     const { themeStretch } = useSettingsContext()
+    const { query } = useRouter()
+    const [loading, setLoading] = useState<boolean>(false)
+    const [initialValues, setInitialValues] = useState<IBusiness>({})
+    // const { formData, loading } = useSingleBusinessFetch()
 
-    const { formData, loading } = useSingleBusinessFetch()
-
+    const loadData = async id => {
+        setLoading(true)
+        const businessController = new BusinessController()
+        const business = await businessController.getById(id)
+        if (!business) {
+            return
+        }
+        setInitialValues(business)
+        setLoading(false)
+    }
+    useEffect(() => {
+        if (query.id && Number(query.id)) {
+            loadData(query.id)
+        }
+    }, [query.id])
     if (loading) return <Loading />
 
     return (
@@ -46,7 +65,7 @@ export default function Edicao() {
                         ]}
                     />
                 </Grid>
-                <NewEditForm schema={BusinessEntity} values={formData} />
+                <NewEditForm schema={BusinessEntity} values={initialValues} />
             </Container>
         </>
     )

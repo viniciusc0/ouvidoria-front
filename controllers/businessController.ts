@@ -2,6 +2,10 @@ import BusinessService from 'services/businessService'
 import { IBusiness, IBusinessFilter } from 'types/IBusiness'
 
 class BusinessController {
+    regexNumbers(value): string {
+        const valueFormatted = value.replace(/[^0-9]/g, '')
+        return valueFormatted
+    }
     async getAll(filters?: IBusinessFilter): Promise<IBusiness[]> {
         const urlParams = new URLSearchParams()
         if (filters) {
@@ -20,14 +24,22 @@ class BusinessController {
         return await businessService.getById(id)
     }
 
-    async put(id: string, business: IBusiness): Promise<IBusiness> {
+    async update(id: string, business: IBusiness): Promise<IBusiness> {
         const businessService = new BusinessService()
+        business.cnpj = this.regexNumbers(business.cnpj)
+        if (business.contactPhone) {
+            business.contactPhone = this.regexNumbers(business.cnpj)
+        }
         return await businessService.update(id, business)
     }
 
     async create(business: IBusiness): Promise<IBusiness> {
-        const businessService = new BusinessService();
-        return await businessService.create(business);
+        const businessService = new BusinessService()
+        business.cnpj = this.regexNumbers(business.cnpj)
+        if (business.contactPhone) {
+            business.contactPhone = this.regexNumbers(business.cnpj)
+        }
+        return await businessService.create(business)
     }
 }
 

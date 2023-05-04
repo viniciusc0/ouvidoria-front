@@ -3,7 +3,7 @@ import { ISchemaForm, TypeSchemaForm } from 'types/ISchemaForm'
 const AddressFormSchema: ISchemaForm[] = [
     {
         name: 'cep',
-        required: false,
+        required: true,
         label: 'Cep',
         props: {
             type: TypeSchemaForm.STRING,
@@ -19,7 +19,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'street',
-        required: false,
+        required: true,
         label: 'Rua',
         props: {
             type: TypeSchemaForm.STRING,
@@ -31,7 +31,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'number',
-        required: false,
+        required: true,
         label: 'Número',
         props: {
             type: TypeSchemaForm.STRING,
@@ -55,7 +55,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'district',
-        required: false,
+        required: true,
         label: 'Bairro',
         props: {
             type: TypeSchemaForm.STRING,
@@ -67,7 +67,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'city',
-        required: false,
+        required: true,
         label: 'Cidade',
         props: {
             type: TypeSchemaForm.STRING,
@@ -79,7 +79,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'uf',
-        required: false,
+        required: true,
         label: 'Estado U.F',
         props: {
             type: TypeSchemaForm.STRING,
