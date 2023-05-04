@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import Form from '@rjsf/mui'
-import { RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
+import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import AddressController from 'controllers/addressController'
 import { useEffect, useState } from 'react'
@@ -196,6 +196,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                         onChange={onChange}
                         transformErrors={transformErrors} //customizar mensagem dos erros
                         widgets={widgets}
+                        templates={{ ObjectFieldTemplate }}
                     >
                         <Button variant="contained" type="submit">
                             Salvar
@@ -204,5 +205,32 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                 )}
             </FormWrapper>
         </Container>
+    )
+}
+
+function ObjectFieldTemplate(props: ObjectFieldTemplateProps) {
+    return (
+        <div>
+            <h3>{props.title}</h3>
+            <p>{props.description}</p>
+            <div
+                style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                }}
+            >
+                {props.properties.map((element: any, index: number) => (
+                    <div
+                        key={index}
+                        style={{
+                            margin: '0px 1% 10px 1%',
+                            // flexBasis: '48%',
+                        }}
+                    >
+                        {element.content}
+                    </div>
+                ))}
+            </div>
+        </div>
     )
 }
