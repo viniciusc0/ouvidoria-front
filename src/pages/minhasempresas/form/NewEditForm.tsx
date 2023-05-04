@@ -27,7 +27,6 @@ const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
             }
             router.push('/minhasempresas')
         } catch (error) {
-            console.log(error)
             formError(error, enqueueSnackbar)
         }
     }

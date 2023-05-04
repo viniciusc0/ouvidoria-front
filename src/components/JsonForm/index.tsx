@@ -30,12 +30,16 @@ export function formError(errorObj: any, enqueueSnackBack: any) {
         const { errors } = errorObj.response?.data?.error?.details
         if (errors && errors.length) {
             errors.forEach(err => {
-                msg += `${err.path.join(', ')}: ${err.message}`.toUpperCase()
+                msg += `${err.path.join(', ')}: ${err.message}`.toLocaleLowerCase()
             })
             enqueueSnackBack(msg, {
                 variant: 'error',
             })
         }
+    } else {
+        enqueueSnackBack(errorObj.message, {
+            variant: 'error',
+        })
     }
 }
 
