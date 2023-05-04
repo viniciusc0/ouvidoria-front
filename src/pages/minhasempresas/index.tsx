@@ -90,7 +90,11 @@ export default function MinhasEmpresas() {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <AccordionFilter schemaForm={BusinessFiltersEntity} setFilters={handleSetBusinessFilters} />
+                            <AccordionFilter
+                                schemaForm={BusinessFiltersEntity}
+                                setFilters={handleSetBusinessFilters}
+                                initialValues={{ status: true }}
+                            />
                         </Grid>
 
                         <Grid item xs={12}>

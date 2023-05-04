@@ -120,8 +120,7 @@ export const BusinessFiltersEntity: ISchemaForm[] = [
             type: TypeSchemaForm.STRING,
             title: 'Razão Social',
         },
-        uiSchema: {
-        },
+        uiSchema: {},
     },
     {
         name: 'status',
@@ -133,12 +132,10 @@ export const BusinessFiltersEntity: ISchemaForm[] = [
                 { const: true, title: 'Ativo(a)' },
                 { const: false, title: 'Inativo(a)' },
             ],
-
         },
         uiSchema: {
-            widget: 'RadioWidget'
+            widget: 'select',
+            // widget: 'RadioWidget',
         },
     },
 ]
-
-
