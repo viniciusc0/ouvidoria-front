@@ -55,7 +55,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'district',
-        required: false,
+        required: true,
         label: 'Bairro',
         props: {
             type: TypeSchemaForm.STRING,
@@ -67,7 +67,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'city',
-        required: false,
+        required: true,
         label: 'Cidade',
         props: {
             type: TypeSchemaForm.STRING,
@@ -79,7 +79,7 @@ const AddressFormSchema: ISchemaForm[] = [
     },
     {
         name: 'uf',
-        required: false,
+        required: true,
         label: 'Estado U.F',
         props: {
             type: TypeSchemaForm.STRING,

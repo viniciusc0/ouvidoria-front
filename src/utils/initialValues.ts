@@ -1,8 +1,11 @@
-import { CompanyFiltersProps, CompanyGetProps } from "services/requests/company/types";
 import { DeliverymanGetProps } from "services/requests/deliveryman/types";
 import { UserGetProps } from "services/requests/user/types";
+import { IUser } from "types/IUser";
+import { IBusiness } from "types/IBusiness";
+import { IBusinessFilter } from "types/IBusiness";
 
 export const userInitialValue = {
+    id: 0,
     cpf: '',
     name:  '',
     blocked: false,
@@ -11,7 +14,7 @@ export const userInitialValue = {
     provider: '',
     username: ''
 
-} as UserGetProps;
+} as IUser;
 
 
 export const deliverymanInitialValue = {
@@ -25,7 +28,7 @@ export const deliverymanInitialValue = {
     tenant: 0,
 } as DeliverymanGetProps;
 
-export const companyInitialValue = {
+export const businessInitialValue = {
     cnpj:  '',
     contactName: '',
     contactPhone: '',
@@ -33,9 +36,9 @@ export const companyInitialValue = {
     reasonName: '',
     status: true,
 
-} as CompanyGetProps;
+} as IBusiness;
 
-export const companyFormDataInitialValue = {
+export const businessFormDataInitialValue = {
     fantasyName: '',
     reasonName: '',
     cnpj: '',
@@ -52,8 +55,8 @@ export const companyFormDataInitialValue = {
     cep: '',
 };
 
-export const companyFiltersInitialValue = {
+export const businessFiltersInitialValue = {
     reasonName: '',
     cnpj: '',
     status: true,
-} as CompanyFiltersProps;
+} as IBusinessFilter;

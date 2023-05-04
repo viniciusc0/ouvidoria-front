@@ -1,12 +1,16 @@
 export enum TypeSchemaForm {
     'BOOLEAN' = 'boolean',
     'STRING' = 'string',
+    'NUMBER' = 'number',
 }
 
 type IPropertiesSchema = {
     type: TypeSchemaForm
     title?: string
     className?: string
+    items?: any
+    enum?: any
+    oneOf?: any
 }
 
 type IOptionsUISchema = {

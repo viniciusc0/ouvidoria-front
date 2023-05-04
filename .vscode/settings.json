@@ -2,7 +2,7 @@
   "typescript.tsdk": "node_modules/typescript/lib",
 
   "workbench.preferredLightColorTheme": "Default Light+",
-  "workbench.colorTheme": "Default Dark+",
+  "workbench.colorTheme": "Chocolate (rainglow)",
   "screencastMode.mouseIndicatorColor": "#FF0000",
   "editor.codeActionsOnSave": {
     "source.fixAll": true,

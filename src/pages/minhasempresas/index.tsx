@@ -2,11 +2,7 @@
 import Head from 'next/head'
 // @mui
 import { Button, Card, Container, Grid } from '@mui/material'
-import { companyFiltersJson } from 'Jsons/Forms/company'
-import BusinessController from 'controllers/businessController'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { CompanyFiltersProps } from 'services/requests/company/types'
 import AccordionFilter from 'src/components/AccordionFilter'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
@@ -14,8 +10,12 @@ import Iconify from 'src/components/iconify'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import CrudTable from 'src/sections/@dashboard/general/app/CrudTable'
-import { companyFiltersInitialValue } from 'src/utils/initialValues'
-import { IBusiness } from 'types/IBusiness'
+import { BusinessFiltersEntity } from './form/businessEntity'
+import { removeMask } from 'src/utils/functions'
+import { useEffect, useState } from 'react'
+import { IBusiness, IBusinessFilter } from 'types/IBusiness'
+import { businessFiltersInitialValue } from 'src/utils/initialValues'
+import BusinessController from 'controllers/businessController'
 
 // ----------------------------------------------------------------------
 
@@ -27,41 +27,29 @@ export default function MinhasEmpresas() {
     const router = useRouter()
     const { themeStretch } = useSettingsContext()
 
-    const [businesses, setBusinesses] = useState<IBusiness[]>([])
-    const [noCompanies, setNoCompanies] = useState<boolean>(false)
+    const [businessFilters, setBusinessFilters] = useState<IBusinessFilter>(businessFiltersInitialValue)
 
-    const [loading, setLoading] = useState(false)
-
-    const [companyFilters, setUserFilters] = useState<CompanyFiltersProps>(companyFiltersInitialValue)
-    function handleCompaniesFilters(data: CompanyFiltersProps) {
-        setUserFilters(data)
+    function handleSetBusinessFilters(data: IBusinessFilter) {
+        if (data.cnpj) {
+            data.cnpj = removeMask(data.cnpj)
+        }
+        setBusinessFilters(data)
     }
 
-    const getCompanies = async () => {
+    const [loading, setLoading] = useState(false)
+    const [businesses, setBusinesses] = useState<IBusiness[]>([])
+
+    const getBusinesses = async () => {
         setLoading(true)
         const businessControler = new BusinessController()
-        const businesses = await businessControler.getAll()
-
+        const businesses = await businessControler.getAll(businessFilters)
         setBusinesses(businesses)
-        // const response = await listCompanies()
-        // if (response != undefined) {
-        //     const companiesArray = response as CompanyGetProps[]
-        //     if (companiesArray?.length !== 0) {
-        //         setNoCompanies(false)
-        //         setCompanies(companiesArray)
-        //     } else {
-        //         setNoCompanies(true)
-        //     }
-        // } else {
-        //     setNoCompanies(true)
-        // }
         setLoading(false)
-        // }, [companyFilters]);
     }
 
     useEffect(() => {
-        getCompanies()
-    }, [])
+        getBusinesses()
+    }, [businessFilters])
 
     if (loading) return <Loading />
 
@@ -102,12 +90,15 @@ export default function MinhasEmpresas() {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <AccordionFilter formJson={companyFiltersJson} setFilters={handleCompaniesFilters} />
+                            <AccordionFilter
+                                schemaForm={BusinessFiltersEntity}
+                                setFilters={handleSetBusinessFilters}
+                                formData={businessFilters}
+                            />
                         </Grid>
 
                         <Grid item xs={12}>
                             <CrudTable
-                                // title="Empresas"
                                 tableData={businesses}
                                 setTableData={setBusinesses}
                                 tableLabels={[

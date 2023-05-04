@@ -2,11 +2,9 @@ import { Button } from '@mui/material'
 import Form from '@rjsf/mui'
 import { RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
-import { useSnackbar } from 'notistack'
+import AddressController from 'controllers/addressController'
 import { useEffect, useState } from 'react'
-import instance from 'services/requests/api'
 import styles from 'styles/Form.module.css'
-import { IAddress } from 'types/IAddress'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
@@ -26,11 +24,29 @@ interface JSONObject {
     [x: string]: JSONValue
 }
 
+export function formError(errorObj: any, enqueueSnackBack: any) {
+    if (errorObj && errorObj.response?.data?.error?.details?.errors) {
+        let msg = ''
+        const { errors } = errorObj.response?.data?.error?.details
+        if (errors && errors.length) {
+            errors.forEach(err => {
+                msg += `${err.path.join(', ')}: ${err.message}`.toLocaleLowerCase()
+            })
+            enqueueSnackBack(msg, {
+                variant: 'error',
+            })
+        }
+    } else {
+        enqueueSnackBack(errorObj.message, {
+            variant: 'error',
+        })
+    }
+}
+
 export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: Props) {
     const [schema, setSchema] = useState<RJSFSchema>([])
     const [uiSchema, setUiSchema] = useState<UiSchema>()
     const [formData, setFormData] = useState<any>()
-    const { enqueueSnackbar } = useSnackbar()
 
     function transformErrors(errors: any) {
         return errors.map((error: any) => {
@@ -48,14 +64,11 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
     const widgets: RegistryWidgetsType = {
         TextWidgetWithMask: TextWidgetWithMask,
     }
-    const regexNumber = (value: string) => {
-        return value.replace(/[^0-9]/g, '')
-    }
 
     const getAddressByCep = async (cep: string) => {
         try {
-            cep = regexNumber(cep)
-            const res: IAddress = await instance.get(`/cep/${cep}`)
+            const addressController = new AddressController()
+            const res = await addressController.getCep(cep)
             setFormData(old => ({
                 ...old,
                 cep: res.cep,
@@ -64,9 +77,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                 city: res.city,
                 uf: res.uf,
             }))
-            enqueueSnackbar('CEP encontrado', {
-                variant: 'success',
-            })
         } catch (error) {
             console.log(error)
         }
@@ -109,16 +119,62 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
         return schemaLoaded
     }
 
+    const formatAddressObjectInitialValues = () => {
+        if (values && values.address) {
+            values.cep = values.address.cep
+            values.street = values.address.street
+            values.district = values.address.district
+            values.city = values.address.city
+            values.uf = values.address.uf
+            values.number = values.address.number
+            values.complement = values.address.complement || ''
+        }
+    }
+
+    const formatAddressObjectSubmit = () => {
+        if (!formData.cep) {
+            return formData
+        }
+        const payload = {
+            ...formData,
+            address: {
+                cep: formData.cep,
+                street: formData.street,
+                district: formData.district,
+                city: formData.city,
+                uf: formData.uf,
+                complement: formData.complement || '',
+                number: formData.number,
+            },
+        }
+
+        Object.keys(payload).forEach(key => {
+            if (!payload[key]) {
+                payload[key] = ''
+            }
+        })
+
+        return payload
+    }
+
     const submitForm = () => {
         if (!formData) {
             return
         }
-        const formDataCustom = onSubmit(formData)
+
+        const payload = formatAddressObjectSubmit()
+        onSubmit(payload)
     }
 
     useEffect(() => {
         loadSchema()
         if (values) {
+            Object.keys(values).forEach(key => {
+                if (!values[key]) {
+                    values[key] = ''
+                }
+            })
+            formatAddressObjectInitialValues()
             setFormData(values)
         }
     }, [])
@@ -147,11 +203,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                     </Form>
                 )}
             </FormWrapper>
-            {/* <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
-                <Alert variant="filled" severity={alertMessage.type}>
-                    {alertMessage.message}
-                </Alert>
-            </Snackbar> */}
         </Container>
     )
 }

@@ -2,65 +2,104 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Typography } from '@mui/material'
 import { IChangeEvent } from '@rjsf/core'
 import { Form } from '@rjsf/mui'
-import { ObjectFieldTemplateProps, RegistryWidgetsType, UiSchema, WidgetProps } from '@rjsf/utils'
+import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema, WidgetProps } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
+import { useEffect, useState } from 'react'
+import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 
 interface Props {
-    formJson: any
+    schemaForm: ISchemaForm[]
     setFilters: (data: any) => void
     customSubmit?: (formItems: IChangeEvent) => void
+    formData: any
 }
 
-export default function AccordionFilter({ formJson, setFilters, customSubmit }: Props) {
+export default function AccordionFilter({ schemaForm, setFilters, customSubmit, formData }: Props) {
     function onSubmit(formItems: IChangeEvent) {
         setFilters(formItems.formData)
     }
 
-    const CustomCheckbox = function (props: WidgetProps) {
-        return (
-            <div style={{ display: 'flex', position: 'relative', top: '25px', paddingLeft: '10px' }}>
-                <input
-                    type="checkbox"
-                    id="custom-checkbox"
-                    className={props.value ? 'checked' : 'unchecked'}
-                    onClick={() => props.onChange(!props.value)}
-                    defaultChecked={props.value ? true : false}
-                />
-                <label htmlFor="custom-checkbox" style={{ paddingLeft: '5px' }}>
-                    {String(props.label)}
-                </label>
-            </div>
-        )
+    function clearFilters() {
+        if (!formData.status) {
+            setFilters({})
+            return
+        }
+        setFilters({ status: true })
     }
 
     const widgets: RegistryWidgetsType = {
-        CheckboxWidget: CustomCheckbox,
         TextWidgetWithMask: TextWidgetWithMask,
     }
 
+    const [schema, setSchema] = useState<RJSFSchema>([])
+    const [uiSchema, setUiSchema] = useState<UiSchema>()
+
+    const loadSchema = () => {
+        const propsSchema = {}
+        if (!schemaForm.length) {
+            return
+        }
+        schemaForm.forEach(schema => {
+            propsSchema[schema.name] = {}
+            for (const [key, value] of Object.entries(schema.props)) {
+                propsSchema[schema.name][key] = value
+            }
+        })
+
+        const uiSchemaForm = {}
+        schemaForm.forEach(schema => {
+            uiSchemaForm[schema.name] = {}
+            for (const [key, value] of Object.entries(schema.uiSchema)) {
+                let keyCustom = `ui:${key}`
+                uiSchemaForm[schema.name][keyCustom] = value
+            }
+        })
+
+        const schemaLoaded: RJSFSchema = {
+            type: 'object',
+            required: schemaForm.filter(sf => sf.required).map(sf => sf.name),
+            properties: propsSchema,
+            uiSchema: uiSchemaForm,
+        }
+        setUiSchema(uiSchemaForm)
+        setSchema(schemaLoaded)
+        return schemaLoaded
+    }
+
+    useEffect(() => {
+        loadSchema()
+    }, [])
+
     return (
         <Grid item xs={12} sx={{ boxShadow: '1px 1px 10px #ccc', borderRadius: 1 }}>
-            <Accordion>
+            <Accordion defaultExpanded={true}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                     <Typography>Filtros</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Grid item xs={12}>
-                        <Form
-                            autoComplete="off"
-                            widgets={widgets}
-                            schema={formJson.schema}
-                            uiSchema={formJson.uiSchema as UiSchema}
-                            validator={validator}
-                            formData={formJson.formData}
-                            templates={{ ObjectFieldTemplate }}
-                            onSubmit={customSubmit ? customSubmit : onSubmit}
-                        >
-                            <Grid container justifyContent={'flex-end'}>
-                                <Button variant="contained">Filtrar</Button>
-                            </Grid>
-                        </Form>
+                        {uiSchema && schema && (
+                            <Form
+                                autoComplete="off"
+                                widgets={widgets}
+                                schema={schema}
+                                uiSchema={uiSchema}
+                                validator={validator}
+                                formData={formData}
+                                templates={{ ObjectFieldTemplate }}
+                                onSubmit={customSubmit ? customSubmit : onSubmit}
+                            >
+                                <Grid container justifyContent={'flex-end'}>
+                                    <Button variant="contained" type="submit">
+                                        Filtrar
+                                    </Button>
+                                    <Button onClick={clearFilters} sx={{ marginLeft: '15px' }} variant="outlined">
+                                        Limpar Filtros
+                                    </Button>
+                                </Grid>
+                            </Form>
+                        )}
                     </Grid>
                 </AccordionDetails>
             </Accordion>
