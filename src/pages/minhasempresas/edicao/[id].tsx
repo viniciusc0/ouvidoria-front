@@ -12,9 +12,10 @@ import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
-import { IBusiness } from 'types'
+import { IBusiness } from 'types/IBusiness'
 import NewEditForm from '../form/NewEditForm'
 import { BusinessEntity } from '../form/businessEntity'
+import { businessInitialValue } from 'src/utils/initialValues'
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +26,7 @@ export default function Edicao() {
     const { themeStretch } = useSettingsContext()
     const { query } = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
-    const [initialValues, setInitialValues] = useState<IBusiness>({})
+    const [initialValues, setInitialValues] = useState<IBusiness>(businessInitialValue)
     // const { formData, loading } = useSingleBusinessFetch()
 
     const loadData = async id => {
