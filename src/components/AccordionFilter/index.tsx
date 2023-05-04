@@ -2,7 +2,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Typography } from '@mui/material'
 import { IChangeEvent } from '@rjsf/core'
 import { Form } from '@rjsf/mui'
-import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema, WidgetProps } from '@rjsf/utils'
+import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import { useEffect, useState } from 'react'
 import { ISchemaForm } from 'types/ISchemaForm'
@@ -51,7 +51,7 @@ export default function AccordionFilter({ schemaForm, setFilters, customSubmit, 
         schemaForm.forEach(schema => {
             uiSchemaForm[schema.name] = {}
             for (const [key, value] of Object.entries(schema.uiSchema)) {
-                let keyCustom = `ui:${key}`
+                const keyCustom = `ui:${key}`
                 uiSchemaForm[schema.name][keyCustom] = value
             }
         })

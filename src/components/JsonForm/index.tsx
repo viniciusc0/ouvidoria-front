@@ -103,7 +103,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
         schemaForm.forEach(schema => {
             uiSchemaForm[schema.name] = {}
             for (const [key, value] of Object.entries(schema.uiSchema)) {
-                let keyCustom = `ui:${key}`
+                const keyCustom = `ui:${key}`
                 uiSchemaForm[schema.name][keyCustom] = value
             }
         })
