@@ -1,21 +1,15 @@
 // next
 import Head from 'next/head'
 // @mui
-import { AlertColor, Card, Container, Grid } from '@mui/material'
+import { Card, Container, Grid } from '@mui/material'
 // layouts
 // components
-import { company } from 'Jsons/Forms/company'
-import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import { createCompany } from 'services/requests/company/createCompany'
+import React from 'react'
 import BackButton from 'src/components/BackButton'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
-import { convertBusinessDataToBackendFormat } from 'src/utils/functions'
-import { businessFormDataInitialValue } from 'src/utils/initialValues'
 import NewEditForm from '../form/NewEditForm'
 import { BusinessEntity } from '../form/businessEntity'
-import { useSnackbar } from 'notistack'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 
 // ----------------------------------------------------------------------
@@ -29,7 +23,7 @@ export default function Cadastro() {
     return (
         <Card>
             <Head>
-                <title>Cadastro de empresa</title> {/* titulo da pagina*/}
+                <title>Cadastro de empresa</title>
             </Head>
 
             <Container maxWidth={themeStretch ? false : 'xl'}>

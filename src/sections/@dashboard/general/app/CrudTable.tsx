@@ -93,7 +93,6 @@ function GenericTableRow({ row, setTableData, tableLabels }: RowProps) {
     const handleDelete = () => {
         handleClosePopover()
         setTableData((data: any) => data.filter((item: any) => item.id !== row.id))
-        //falta requisição de remoção
     }
     const formatValues = (value: any) => {
         if (value) {

@@ -27,7 +27,6 @@ export default function Edicao() {
     const { query } = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
     const [initialValues, setInitialValues] = useState<IBusiness>(businessInitialValue)
-    // const { formData, loading } = useSingleBusinessFetch()
 
     const loadData = async id => {
         setLoading(true)
@@ -49,7 +48,7 @@ export default function Edicao() {
     return (
         <Card>
             <Head>
-                <title>Edição de empresa</title> {/* titulo da pagina*/}
+                <title>Edição de empresa</title>
             </Head>
             <Container maxWidth={themeStretch ? false : 'xl'}>
                 <BackButton />

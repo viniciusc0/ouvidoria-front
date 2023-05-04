@@ -12,5 +12,5 @@ export default function useAuthState() {
         return authController.getUser()
     }
 
-    return { getUser, currentBusiness, business }
+    return { user: getUser(), currentBusiness, business }
 }

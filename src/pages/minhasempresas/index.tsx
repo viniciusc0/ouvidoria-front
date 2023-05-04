@@ -99,7 +99,6 @@ export default function MinhasEmpresas() {
 
                         <Grid item xs={12}>
                             <CrudTable
-                                // title="Empresas"
                                 tableData={businesses}
                                 setTableData={setBusinesses}
                                 tableLabels={[
