@@ -28,7 +28,7 @@ class BusinessController {
         const businessService = new BusinessService()
         business.cnpj = this.regexNumbers(business.cnpj)
         if (business.contactPhone) {
-            business.contactPhone = this.regexNumbers(business.cnpj)
+            business.contactPhone = this.regexNumbers(business.contactPhone)
         }
         return await businessService.update(id, business)
     }
@@ -37,7 +37,7 @@ class BusinessController {
         const businessService = new BusinessService()
         business.cnpj = this.regexNumbers(business.cnpj)
         if (business.contactPhone) {
-            business.contactPhone = this.regexNumbers(business.cnpj)
+            business.contactPhone = this.regexNumbers(business.contactPhone)
         }
         return await businessService.create(business)
     }

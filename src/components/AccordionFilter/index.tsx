@@ -4,12 +4,12 @@ import { IChangeEvent } from '@rjsf/core'
 import { Form } from '@rjsf/mui'
 import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema, WidgetProps } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
-import TextWidgetWithMask from '../TextWidgetWithMask'
 import { useEffect, useState } from 'react'
 import { ISchemaForm } from 'types/ISchemaForm'
+import TextWidgetWithMask from '../TextWidgetWithMask'
 
 interface Props {
-    schemaForm: ISchemaForm[];
+    schemaForm: ISchemaForm[]
     setFilters: (data: any) => void
     customSubmit?: (formItems: IChangeEvent) => void
 }
@@ -77,11 +77,9 @@ export default function AccordionFilter({ schemaForm, setFilters, customSubmit }
         return schemaLoaded
     }
 
-
     useEffect(() => {
         loadSchema()
     }, [])
-
 
     return (
         <Grid item xs={12} sx={{ boxShadow: '1px 1px 10px #ccc', borderRadius: 1 }}>
@@ -91,20 +89,24 @@ export default function AccordionFilter({ schemaForm, setFilters, customSubmit }
                 </AccordionSummary>
                 <AccordionDetails>
                     <Grid item xs={12}>
-                        {uiSchema && schema && (<Form
-                            autoComplete="off"
-                            widgets={widgets}
-                            schema={schema}
-                            uiSchema={uiSchema}
-                            validator={validator}
-                            formData=''
-                            templates={{ ObjectFieldTemplate }}
-                            onSubmit={customSubmit ? customSubmit : onSubmit}
-                        >
-                            <Grid container justifyContent={'flex-end'}>
-                                <Button variant="contained" type="submit">Filtrar</Button>
-                            </Grid>
-                        </Form>
+                        {uiSchema && schema && (
+                            <Form
+                                autoComplete="off"
+                                widgets={widgets}
+                                schema={schema}
+                                uiSchema={uiSchema}
+                                validator={validator}
+                                formData=""
+                                templates={{ ObjectFieldTemplate }}
+                                onSubmit={customSubmit ? customSubmit : onSubmit}
+                            >
+                                <Grid container justifyContent={'flex-end'} spacing={2}>
+                                    <Button variant="contained" type="submit">
+                                        Filtrar
+                                    </Button>
+                                    <Button variant="outlined">Limpar Filtros</Button>
+                                </Grid>
+                            </Form>
                         )}
                     </Grid>
                 </AccordionDetails>

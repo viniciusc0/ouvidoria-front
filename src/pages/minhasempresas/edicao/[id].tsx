@@ -1,7 +1,7 @@
 // next
 import Head from 'next/head'
 // @mui
-import { Container, Grid } from '@mui/material'
+import { Card, Container, Grid } from '@mui/material'
 // layouts
 // components
 import BusinessController from 'controllers/businessController'
@@ -46,11 +46,10 @@ export default function Edicao() {
     if (loading) return <Loading />
 
     return (
-        <>
+        <Card>
             <Head>
                 <title>Edição de empresa</title> {/* titulo da pagina*/}
             </Head>
-
             <Container maxWidth={themeStretch ? false : 'xl'}>
                 <BackButton />
                 <Grid item xs={12}>
@@ -67,6 +66,6 @@ export default function Edicao() {
                 </Grid>
                 <NewEditForm schema={BusinessEntity} values={initialValues} />
             </Container>
-        </>
+        </Card>
     )
 }
