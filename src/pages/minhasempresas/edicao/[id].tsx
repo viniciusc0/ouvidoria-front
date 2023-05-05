@@ -1,13 +1,12 @@
 // next
 import Head from 'next/head'
 // @mui
-import { Card, Container, Grid } from '@mui/material'
+import { Container, Grid } from '@mui/material'
 // layouts
 // components
 import BusinessController from 'controllers/businessController'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import BackButton from 'src/components/BackButton'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
 import { useSettingsContext } from 'src/components/settings'
@@ -16,6 +15,7 @@ import { IBusiness } from 'types/IBusiness'
 import NewEditForm from '../form/NewEditForm'
 import { BusinessEntity } from '../form/businessEntity'
 import { businessInitialValue } from 'src/utils/initialValues'
+import CustomCard from 'src/components/CustomCard'
 
 // ----------------------------------------------------------------------
 
@@ -46,12 +46,11 @@ export default function Edicao() {
     if (loading) return <Loading />
 
     return (
-        <Card>
+        <CustomCard>
             <Head>
                 <title>Edição de empresa</title>
             </Head>
             <Container maxWidth={themeStretch ? false : 'xl'}>
-                <BackButton />
                 <Grid item xs={12}>
                     <HeaderBreadcrumbs
                         heading={'Minhas empresas'}
@@ -66,6 +65,6 @@ export default function Edicao() {
                 </Grid>
                 <NewEditForm schema={BusinessEntity} values={initialValues} />
             </Container>
-        </Card>
+        </CustomCard>
     )
 }

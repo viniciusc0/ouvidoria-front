@@ -107,10 +107,6 @@ export default function MinhasEmpresas() {
                                     { id: 'status', label: 'Status' },
                                     { id: 'contactName', label: 'Contato' },
                                     { id: 'action', label: 'Ações' },
-                                    // { id: 'contactPhone', label: 'Telefone' },
-                                    // { id: 'opening_hours', label: 'Início de expediente' },
-                                    // { id: 'end_working_hours', label: 'Fim de expediente' },
-                                    // { id: 'work_days', label: 'Dias de funcionamento' },
                                 ]}
                             />
                         </Grid>

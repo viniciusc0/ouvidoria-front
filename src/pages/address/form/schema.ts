@@ -60,7 +60,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 4,
+                ui: 3,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -76,7 +76,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 4,
+                ui: 3,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -92,7 +92,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 4,
+                ui: 3,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -108,7 +108,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 4,
+                ui: 3,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',

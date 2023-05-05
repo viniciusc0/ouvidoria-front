@@ -1,8 +1,9 @@
-import { Button } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import Form from '@rjsf/mui'
 import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import AddressController from 'controllers/addressController'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
@@ -44,6 +45,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
     const [schema, setSchema] = useState<RJSFSchema>([])
     const [uiSchema, setUiSchema] = useState<UiSchema>()
     const [formData, setFormData] = useState<any>()
+    const router = useRouter()
 
     function transformErrors(errors: any) {
         return errors.map((error: any) => {
@@ -194,9 +196,14 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                         widgets={widgets}
                         templates={{ ObjectFieldTemplate }}
                     >
-                        <Button variant="contained" type="submit">
-                            Salvar
-                        </Button>
+                        <Grid container justifyContent={'flex-end'} sx={{ padding: '15px 0' }}>
+                            <Button onClick={() => router.back()} variant="outlined">
+                                Voltar
+                            </Button>
+                            <Button variant="contained" sx={{ marginLeft: '15px', marginRight: '20px' }} type="submit">
+                                Salvar
+                            </Button>
+                        </Grid>
                     </Form>
                 )}
             </FormWrapper>

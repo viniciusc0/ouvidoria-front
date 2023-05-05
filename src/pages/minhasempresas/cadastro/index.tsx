@@ -1,16 +1,16 @@
 // next
 import Head from 'next/head'
 // @mui
-import { Card, Container, Grid } from '@mui/material'
+import { Container, Grid } from '@mui/material'
 // layouts
 // components
 import React from 'react'
-import BackButton from 'src/components/BackButton'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import NewEditForm from '../form/NewEditForm'
 import { BusinessEntity } from '../form/businessEntity'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
+import CustomCard from 'src/components/CustomCard'
 
 // ----------------------------------------------------------------------
 
@@ -21,13 +21,12 @@ export default function Cadastro() {
     const { themeStretch } = useSettingsContext()
 
     return (
-        <Card>
+        <CustomCard>
             <Head>
                 <title>Cadastro de empresa</title>
             </Head>
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
-                <BackButton />
                 <Grid item xs={12}>
                     <HeaderBreadcrumbs
                         heading={'Minhas empresas'}
@@ -44,6 +43,6 @@ export default function Cadastro() {
                     <NewEditForm schema={BusinessEntity} />
                 </Grid>
             </Container>
-        </Card>
+        </CustomCard>
     )
 }
