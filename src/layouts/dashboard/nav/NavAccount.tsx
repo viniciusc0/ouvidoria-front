@@ -39,15 +39,11 @@ export default function NavAccount() {
         <NextLink href={'/usuarios'} passHref>
             <Link underline="none" color="inherit">
                 <StyledRoot>
-                    <CustomAvatar src={user?.photoURL} alt={user?.username} name={user?.username} />
+                    <CustomAvatar alt={user?.username} name={user?.username} />
 
                     <Box sx={{ ml: 2, minWidth: 0 }}>
                         <Typography variant="subtitle2" noWrap>
                             {user?.username}
-                        </Typography>
-
-                        <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
-                            {user?.role}
                         </Typography>
                     </Box>
                 </StyledRoot>

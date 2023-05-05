@@ -14,7 +14,8 @@ type IPropertiesSchema = {
 }
 
 type IOptionsUISchema = {
-    mask: string
+    mask?: string
+    ui: number
 }
 
 type IUISchema = {

@@ -24,6 +24,7 @@ export const BusinessEntity: ISchemaForm[] = [
         uiSchema: {
             options: {
                 mask: '99.999.999/9999-99',
+                ui: 6,
             },
             widget: 'TextWidgetWithMask',
             autofocus: true,
@@ -38,6 +39,10 @@ export const BusinessEntity: ISchemaForm[] = [
             title: 'Razão Social',
         },
         uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
             autofocus: false,
         },
     },
@@ -50,6 +55,10 @@ export const BusinessEntity: ISchemaForm[] = [
             title: 'Nome fantasia',
         },
         uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
             autofocus: false,
         },
     },
@@ -62,6 +71,10 @@ export const BusinessEntity: ISchemaForm[] = [
             title: 'Nome de contato',
         },
         uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
             autofocus: false,
         },
     },
@@ -74,6 +87,10 @@ export const BusinessEntity: ISchemaForm[] = [
             title: 'Email de contato',
         },
         uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
             autofocus: false,
         },
     },
@@ -89,11 +106,12 @@ export const BusinessEntity: ISchemaForm[] = [
             autofocus: false,
             options: {
                 mask: '(99) 9 9999-9999',
+                ui: 4,
             },
             widget: 'TextWidgetWithMask',
         },
     },
-    ...AddressFormSchema,
+    // ...AddressFormSchema,
 ]
 
 export const BusinessFiltersEntity: ISchemaForm[] = [
@@ -108,6 +126,7 @@ export const BusinessFiltersEntity: ISchemaForm[] = [
         uiSchema: {
             options: {
                 mask: '99.999.999/9999-99',
+                ui: 4,
             },
             widget: 'TextWidgetWithMask',
         },
@@ -135,7 +154,6 @@ export const BusinessFiltersEntity: ISchemaForm[] = [
         },
         uiSchema: {
             widget: 'select',
-            // widget: 'RadioWidget',
         },
     },
 ]

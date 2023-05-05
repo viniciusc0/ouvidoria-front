@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import Form from '@rjsf/mui'
 import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
@@ -213,24 +213,21 @@ function ObjectFieldTemplate(props: ObjectFieldTemplateProps) {
         <div>
             <h3>{props.title}</h3>
             <p>{props.description}</p>
-            <div
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                }}
-            >
-                {props.properties.map((element: any, index: number) => (
-                    <div
-                        key={index}
-                        style={{
-                            margin: '0px 1% 10px 1%',
-                            // flexBasis: '48%',
-                        }}
-                    >
-                        {element.content}
-                    </div>
-                ))}
-            </div>
+            <Grid container>
+                {props.properties.map(
+                    (element: any, index: number) =>
+                        // <div
+                        //     key={index}
+                        //     style={{
+                        //         margin: '0px 1% 10px 1%',
+                        //         // flexBasis: '48%',
+                        //     }}
+                        // >
+                        element.content,
+
+                    // </div>
+                )}
+            </Grid>
         </div>
     )
 }
