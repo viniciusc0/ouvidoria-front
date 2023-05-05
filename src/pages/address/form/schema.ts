@@ -12,6 +12,7 @@ const AddressFormSchema: ISchemaForm[] = [
         uiSchema: {
             options: {
                 mask: '99.999-999',
+                ui: 4,
             },
             widget: 'TextWidgetWithMask',
             autofocus: false,
@@ -26,7 +27,11 @@ const AddressFormSchema: ISchemaForm[] = [
             title: 'Rua',
         },
         uiSchema: {
+            options: {
+                ui: 4,
+            },
             autofocus: false,
+            widget: 'TextWidgetWithMask',
         },
     },
     {
@@ -38,7 +43,11 @@ const AddressFormSchema: ISchemaForm[] = [
             title: 'Número',
         },
         uiSchema: {
+            options: {
+                ui: 4,
+            },
             autofocus: false,
+            widget: 'TextWidgetWithMask',
         },
     },
     {
@@ -50,7 +59,11 @@ const AddressFormSchema: ISchemaForm[] = [
             title: 'Complemento',
         },
         uiSchema: {
+            options: {
+                ui: 4,
+            },
             autofocus: false,
+            widget: 'TextWidgetWithMask',
         },
     },
     {
@@ -62,7 +75,11 @@ const AddressFormSchema: ISchemaForm[] = [
             title: 'Bairro',
         },
         uiSchema: {
+            options: {
+                ui: 4,
+            },
             autofocus: false,
+            widget: 'TextWidgetWithMask',
         },
     },
     {
@@ -74,7 +91,11 @@ const AddressFormSchema: ISchemaForm[] = [
             title: 'Cidade',
         },
         uiSchema: {
+            options: {
+                ui: 4,
+            },
             autofocus: false,
+            widget: 'TextWidgetWithMask',
         },
     },
     {
@@ -86,7 +107,11 @@ const AddressFormSchema: ISchemaForm[] = [
             title: 'Estado U.F',
         },
         uiSchema: {
+            options: {
+                ui: 4,
+            },
             autofocus: false,
+            widget: 'TextWidgetWithMask',
         },
     },
 ]

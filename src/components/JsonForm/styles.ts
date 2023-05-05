@@ -1,12 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-items: flex-start;
-`;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+`
 
 export const FormWrapper = styled.div`
-  padding-bottom: 20px;
-`;
+    padding-bottom: 20px;
+`

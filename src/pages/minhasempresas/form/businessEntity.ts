@@ -106,12 +106,12 @@ export const BusinessEntity: ISchemaForm[] = [
             autofocus: false,
             options: {
                 mask: '(99) 9 9999-9999',
-                ui: 4,
+                ui: 6,
             },
             widget: 'TextWidgetWithMask',
         },
     },
-    // ...AddressFormSchema,
+    ...AddressFormSchema,
 ]
 
 export const BusinessFiltersEntity: ISchemaForm[] = [

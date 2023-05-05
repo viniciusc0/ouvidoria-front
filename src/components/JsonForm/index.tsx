@@ -1,17 +1,14 @@
-import { Button, Grid } from '@mui/material'
+import { Button } from '@mui/material'
 import Form from '@rjsf/mui'
 import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import AddressController from 'controllers/addressController'
 import { useEffect, useState } from 'react'
-import styles from 'styles/Form.module.css'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
 
 interface Props {
-    // schema: RJSFSchema
-    // uiSchema: UiSchema
     schemaForm: ISchemaForm[]
     values?: any
     onSubmit: (data) => void
@@ -184,7 +181,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
             <FormWrapper>
                 {uiSchema && schema && (
                     <Form
-                        id={styles.form}
                         autoComplete="off"
                         schema={schema}
                         noHtml5Validate
@@ -194,7 +190,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                         uiSchema={uiSchema}
                         onSubmit={submitForm}
                         onChange={onChange}
-                        transformErrors={transformErrors} //customizar mensagem dos erros
+                        transformErrors={transformErrors}
                         widgets={widgets}
                         templates={{ ObjectFieldTemplate }}
                     >
@@ -213,21 +209,15 @@ function ObjectFieldTemplate(props: ObjectFieldTemplateProps) {
         <div>
             <h3>{props.title}</h3>
             <p>{props.description}</p>
-            <Grid container>
-                {props.properties.map(
-                    (element: any, index: number) =>
-                        // <div
-                        //     key={index}
-                        //     style={{
-                        //         margin: '0px 1% 10px 1%',
-                        //         // flexBasis: '48%',
-                        //     }}
-                        // >
-                        element.content,
-
-                    // </div>
-                )}
-            </Grid>
+            <div
+                style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                }}
+            >
+                {props.properties.map((element: any, index: number) => element.content)}
+            </div>
         </div>
     )
 }

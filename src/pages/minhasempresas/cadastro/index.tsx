@@ -40,7 +40,9 @@ export default function Cadastro() {
                         ]}
                     />
                 </Grid>
-                <NewEditForm schema={BusinessEntity} />
+                <Grid item xs={12}>
+                    <NewEditForm schema={BusinessEntity} />
+                </Grid>
             </Container>
         </Card>
     )
