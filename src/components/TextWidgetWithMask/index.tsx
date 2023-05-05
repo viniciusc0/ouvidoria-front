@@ -1,16 +1,15 @@
 import { TextField } from '@mui/material'
 import { WidgetProps } from '@rjsf/utils'
-import { useRef } from 'react'
+import useWindowsSize from 'hooks/useWindowsSize'
 import InputMask from 'react-input-mask'
 
 function TextWidgetWithMask(props: WidgetProps) {
-    const windowSize = useRef([window.innerWidth])
+    const [screenWidth] = useWindowsSize()
 
     const calculateTextFieldWidth = () => {
         if (!props.options.ui) {
             return 'auto'
         }
-        const screenWidth = windowSize.current[0]
         const ui = props.options.ui as number
         if (screenWidth <= 1200) {
             return `${(ui * 90) / 12}vw`
