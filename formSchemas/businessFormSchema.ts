@@ -1,6 +1,6 @@
-import AddressFormSchema from 'src/pages/address/form/schema'
+import { AddressFormSchema } from 'formSchemas/addressFormSchema'
 import { ISchemaForm, TypeSchemaForm } from 'types/ISchemaForm'
-export const BusinessEntity: ISchemaForm[] = [
+const BusinessFormSchema: ISchemaForm[] = [
     {
         name: 'id',
         required: false,
@@ -32,6 +32,7 @@ export const BusinessEntity: ISchemaForm[] = [
     },
     {
         name: 'reasonName',
+        classNames: 'task-title foo-bar',
         required: true,
         label: 'Razão Social',
         props: {
@@ -42,7 +43,6 @@ export const BusinessEntity: ISchemaForm[] = [
             options: {
                 ui: 6,
             },
-            widget: 'TextWidgetWithMask',
             autofocus: false,
         },
     },
@@ -114,7 +114,7 @@ export const BusinessEntity: ISchemaForm[] = [
     ...AddressFormSchema,
 ]
 
-export const BusinessFiltersEntity: ISchemaForm[] = [
+const BusinessFilterFormSchema: ISchemaForm[] = [
     {
         name: 'cnpj',
         required: false,
@@ -157,3 +157,5 @@ export const BusinessFiltersEntity: ISchemaForm[] = [
         },
     },
 ]
+
+export { BusinessFilterFormSchema, BusinessFormSchema }

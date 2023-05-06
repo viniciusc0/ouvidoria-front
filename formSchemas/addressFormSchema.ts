@@ -12,7 +12,7 @@ const AddressFormSchema: ISchemaForm[] = [
         uiSchema: {
             options: {
                 mask: '99.999-999',
-                ui: 4,
+                ui: 12,
             },
             widget: 'TextWidgetWithMask',
             autofocus: false,
@@ -28,7 +28,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 4,
+                ui: 6,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -44,7 +44,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 4,
+                ui: 2,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -60,7 +60,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 3,
+                ui: 4,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -76,7 +76,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 3,
+                ui: 6,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -92,7 +92,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 3,
+                ui: 6,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -108,7 +108,7 @@ const AddressFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 3,
+                ui: 6,
             },
             autofocus: false,
             widget: 'TextWidgetWithMask',
@@ -116,4 +116,4 @@ const AddressFormSchema: ISchemaForm[] = [
     },
 ]
 
-export default AddressFormSchema
+export { AddressFormSchema }

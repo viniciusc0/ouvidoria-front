@@ -7,7 +7,6 @@
     "paths": {
       "src/*":["src/*"],
       "services/*":["services/*"],
-      
       "styles/*":["styles/*"],
     },
     "strict": true,

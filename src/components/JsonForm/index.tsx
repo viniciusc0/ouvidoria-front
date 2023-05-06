@@ -1,10 +1,18 @@
-import { Button, Grid } from '@mui/material'
+import { Button, Grid, GridSize } from '@mui/material'
 import Form from '@rjsf/mui'
-import { ObjectFieldTemplateProps, RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
+import {
+    ObjectFieldTemplatePropertyType,
+    ObjectFieldTemplateProps,
+    RJSFSchema,
+    RegistryWidgetsType,
+    UiSchema,
+} from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import AddressController from 'controllers/addressController'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import 'styles/Form.module.css'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
@@ -212,19 +220,33 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
 }
 
 function ObjectFieldTemplate(props: ObjectFieldTemplateProps) {
+    const getUi = (elementName: string): GridSize => {
+        const ui = props.schema?.uiSchema[elementName]['ui:options']?.ui
+        if (ui) {
+            return ui
+        }
+        return 0
+    }
     return (
         <div>
             <h3>{props.title}</h3>
             <p>{props.description}</p>
-            <div
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                }}
-            >
-                {props.properties.map((element: any, index: number) => element.content)}
-            </div>
+            <Grid container spacing={2}>
+                {props.properties.map((element: ObjectFieldTemplatePropertyType, index: number) => (
+                    <Grid key={index} item xs={12} md={getUi(element.name)}>
+                        {element.content}
+                    </Grid>
+                ))}
+            </Grid>
         </div>
     )
 }
+
+const Content = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    gap: 16px;
+`

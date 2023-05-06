@@ -7,15 +7,14 @@ import { Container, Grid } from '@mui/material'
 import BusinessController from 'controllers/businessController'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import CustomCard from 'src/components/CustomCard'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
+import { businessInitialValue } from 'src/utils/initialValues'
 import { IBusiness } from 'types/IBusiness'
 import NewEditForm from '../form/NewEditForm'
-import { BusinessEntity } from '../form/businessEntity'
-import { businessInitialValue } from 'src/utils/initialValues'
-import CustomCard from 'src/components/CustomCard'
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +62,7 @@ export default function Edicao() {
                         ]}
                     />
                 </Grid>
-                <NewEditForm schema={BusinessEntity} values={initialValues} />
+                <NewEditForm values={initialValues} />
             </Container>
         </CustomCard>
     )

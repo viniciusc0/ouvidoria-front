@@ -2,7 +2,10 @@
 import Head from 'next/head'
 // @mui
 import { Button, Card, Container, Grid } from '@mui/material'
+import BusinessController from 'controllers/businessController'
+import { BusinessFilterFormSchema } from 'formSchemas'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import AccordionFilter from 'src/components/AccordionFilter'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
@@ -10,12 +13,9 @@ import Iconify from 'src/components/iconify'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import CrudTable from 'src/sections/@dashboard/general/app/CrudTable'
-import { BusinessFiltersEntity } from './form/businessEntity'
 import { removeMask } from 'src/utils/functions'
-import { useEffect, useState } from 'react'
-import { IBusiness, IBusinessFilter } from 'types/IBusiness'
 import { businessFiltersInitialValue } from 'src/utils/initialValues'
-import BusinessController from 'controllers/businessController'
+import { IBusiness, IBusinessFilter } from 'types/IBusiness'
 
 // ----------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ export default function MinhasEmpresas() {
                         </Grid>
                         <Grid item xs={12}>
                             <AccordionFilter
-                                schemaForm={BusinessFiltersEntity}
+                                schemaForm={BusinessFilterFormSchema}
                                 setFilters={handleSetBusinessFilters}
                                 formData={businessFilters}
                             />

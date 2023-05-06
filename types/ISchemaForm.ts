@@ -7,7 +7,7 @@ export enum TypeSchemaForm {
 type IPropertiesSchema = {
     type: TypeSchemaForm
     title?: string
-    className?: string
+    classNames?: string
     items?: any
     enum?: any
     oneOf?: any
@@ -15,7 +15,7 @@ type IPropertiesSchema = {
 
 type IOptionsUISchema = {
     mask?: string
-    ui?: number
+    ui: number
 }
 
 type IUISchema = {

@@ -5,12 +5,11 @@ import { Container, Grid } from '@mui/material'
 // layouts
 // components
 import React from 'react'
+import CustomCard from 'src/components/CustomCard'
+import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import NewEditForm from '../form/NewEditForm'
-import { BusinessEntity } from '../form/businessEntity'
-import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
-import CustomCard from 'src/components/CustomCard'
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +39,7 @@ export default function Cadastro() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <NewEditForm schema={BusinessEntity} />
+                    <NewEditForm />
                 </Grid>
             </Container>
         </CustomCard>

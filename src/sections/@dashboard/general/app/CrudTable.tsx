@@ -113,7 +113,9 @@ function GenericTableRow({ row, setTableData, tableLabels }: RowProps) {
         <>
             <TableRow>
                 {Object.keys(row).map(keyRow =>
-                    tableLabels.map(tl => tl.id == keyRow && <TableCell> {formatValues(row[keyRow])} </TableCell>),
+                    tableLabels.map(
+                        tl => tl.id == keyRow && <TableCell key={tl.id}> {formatValues(row[keyRow])} </TableCell>,
+                    ),
                 )}
 
                 <TableCell align="left">
