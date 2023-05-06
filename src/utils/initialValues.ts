@@ -1,42 +1,37 @@
-import { DeliverymanGetProps } from "services/requests/deliveryman/types";
-import { UserGetProps } from "services/requests/user/types";
-import { IUser } from "types/IUser";
-import { IBusiness } from "types/IBusiness";
-import { IBusinessFilter } from "types/IBusiness";
+import { DeliverymanGetProps } from 'services/requests/deliveryman/types'
+import { IBusiness, IBusinessFilter } from 'types/IBusiness'
+import { IUser } from 'types/IUser'
 
 export const userInitialValue = {
     id: 0,
     cpf: '',
-    name:  '',
+    name: '',
     blocked: false,
     confirmed: true,
     email: '',
     provider: '',
-    username: ''
-
-} as IUser;
-
+    username: '',
+} as IUser
 
 export const deliverymanInitialValue = {
     business: 0,
     cpf: '',
     days: [],
     hourFinal: '',
-    hourStart:  '',
+    hourStart: '',
     name: '',
     phone: '',
     tenant: 0,
-} as DeliverymanGetProps;
+} as DeliverymanGetProps
 
 export const businessInitialValue = {
-    cnpj:  '',
+    cnpj: '',
     contactName: '',
     contactPhone: '',
     fantasyName: '',
     reasonName: '',
     status: true,
-
-} as IBusiness;
+} as IBusiness
 
 export const businessFormDataInitialValue = {
     fantasyName: '',
@@ -53,10 +48,10 @@ export const businessFormDataInitialValue = {
     city: '',
     uf: '',
     cep: '',
-};
+}
 
 export const businessFiltersInitialValue = {
     reasonName: '',
     cnpj: '',
     status: true,
-} as IBusinessFilter;
+} as IBusinessFilter

@@ -1,26 +1,21 @@
-import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
-import NextLink from 'next/link';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Link, Stack, Alert, IconButton, InputAdornment, Box, Tooltip, Typography } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
-import Iconify from 'src/components/iconify';
-import LoginLayout from 'src/layouts/login';
-import { login } from 'services/requests/usersAuth/login';
-import { LoginProps } from 'services/requests/usersAuth/types';
-import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
-import { useAuthContext } from 'src/auth/useAuthContext';
-import { AuthTypes } from 'src/auth/JwtContext';
-
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Alert, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { LoginProps } from 'services/requests/usersAuth/types'
+import { AuthTypes } from 'src/auth/JwtContext'
+import { useAuthContext } from 'src/auth/useAuthContext'
+import FormProvider, { RHFTextField } from 'src/components/hook-form'
+import Iconify from 'src/components/iconify'
+import LoginLayout from 'src/layouts/login'
+import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-
 export default function Login() {
-
     return (
         <LoginLayout>
             <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
@@ -37,64 +32,58 @@ export default function Login() {
             </Alert> */}
             <AuthLoginForm />
         </LoginLayout>
-    );
+    )
 }
 
-
-
-
-
-
 interface FormValuesProps extends LoginProps {
-    afterSubmit?: string;
-};
+    afterSubmit?: string
+}
 
 function AuthLoginForm() {
+    const [showPassword, setShowPassword] = useState(false)
 
-    const [showPassword, setShowPassword] = useState(false);
-
-    const {loginUser} = useAuthContext();
+    const { loginUser } = useAuthContext()
 
     const LoginSchema = Yup.object().shape({
         identifier: Yup.string().required('Email ou  nome de usuário é obrigatório'),
         password: Yup.string().required('Senha é obrigatória'),
-    });
+    })
 
     const methods = useForm<FormValuesProps>({
         resolver: yupResolver(LoginSchema),
-    });
+    })
 
     const {
         reset,
         setError,
         handleSubmit,
         formState: { errors, isSubmitting, isSubmitSuccessful },
-    } = methods;
+    } = methods
 
-    const router = useRouter();
+    const router = useRouter()
 
     const onSubmit = async (data: FormValuesProps) => {
         try {
-           loginUser(data);
+            loginUser(data)
         } catch (error) {
-            console.error('error');
+            console.error('error')
 
-            reset();
+            reset()
 
             setError('afterSubmit', {
                 ...error,
                 message: error.message,
-            });
+            })
         }
-    };
-    
-    const {dispatch} = useAuthContext();
+    }
 
-    useEffect(()=>{
+    const { dispatch } = useAuthContext()
+
+    useEffect(() => {
         dispatch({
-            type: AuthTypes.LOGOUT
-        });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+            type: AuthTypes.LOGOUT,
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -137,15 +126,15 @@ function AuthLoginForm() {
                 loading={false}
                 sx={{
                     bgcolor: 'text.primary',
-                    color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+                    color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
                     '&:hover': {
                         bgcolor: 'text.primary',
-                        color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+                        color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
                     },
                 }}
             >
                 Login
             </LoadingButton>
         </FormProvider>
-    );
+    )
 }

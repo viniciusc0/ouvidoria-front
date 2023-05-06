@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 //
 import AuthController from 'controllers/authController'
 import LoadingScreen from 'src/components/loading-screen'
-import { LoginResponse } from 'types/login/interface'
 import { useAuthContext } from './useAuthContext'
+import { IUser } from 'types/IUser'
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     const { pathname, push } = useRouter()
 
     const [requestedLocation, setRequestedLocation] = useState<string | null>(null)
-    const [user, setUser] = useState<LoginResponse>()
+    const [user, setUser] = useState<IUser>()
 
     useEffect(() => {
         // if (requestedLocation && pathname !== requestedLocation) {

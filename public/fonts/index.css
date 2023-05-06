@@ -19,4 +19,7 @@
   src: local('CircularStd'), url('CircularStd-Bold.otf') format('opentype');
 }
 
+.form-group{
+  width: 100%;
+}
  

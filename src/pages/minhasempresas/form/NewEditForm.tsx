@@ -1,15 +1,13 @@
 import BusinessController from 'controllers/businessController'
+import { BusinessFormSchema } from 'formSchemas'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import JsonForm, { formError } from 'src/components/JsonForm'
-import { ISchemaForm } from 'types/ISchemaForm'
-
 type BusinessNewEditForm = {
-    schema: ISchemaForm[]
     values?: any
 }
 
-const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
+const NewEditForm = ({ values }: BusinessNewEditForm) => {
     const router = useRouter()
     const id = router.query.id
 
@@ -31,7 +29,14 @@ const NewEditForm = ({ schema, values }: BusinessNewEditForm) => {
         }
     }
 
-    return <JsonForm schemaForm={schema} values={values} onSubmit={onSubmit} msgSuccess={'Oba! Salvo com sucesso'} />
+    return (
+        <JsonForm
+            schemaForm={BusinessFormSchema}
+            values={values}
+            onSubmit={onSubmit}
+            msgSuccess={'Oba! Salvo com sucesso'}
+        />
+    )
 }
 
 export default NewEditForm

@@ -1,17 +1,23 @@
-import { Button } from '@mui/material'
+import { Button, Grid, GridSize } from '@mui/material'
 import Form from '@rjsf/mui'
-import { RJSFSchema, RegistryWidgetsType, UiSchema } from '@rjsf/utils'
+import {
+    ObjectFieldTemplatePropertyType,
+    ObjectFieldTemplateProps,
+    RJSFSchema,
+    RegistryWidgetsType,
+    UiSchema,
+} from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import AddressController from 'controllers/addressController'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import styles from 'styles/Form.module.css'
+import styled from 'styled-components'
+import 'styles/Form.module.css'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
 
 interface Props {
-    // schema: RJSFSchema
-    // uiSchema: UiSchema
     schemaForm: ISchemaForm[]
     values?: any
     onSubmit: (data) => void
@@ -47,6 +53,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
     const [schema, setSchema] = useState<RJSFSchema>([])
     const [uiSchema, setUiSchema] = useState<UiSchema>()
     const [formData, setFormData] = useState<any>()
+    const router = useRouter()
 
     function transformErrors(errors: any) {
         return errors.map((error: any) => {
@@ -184,7 +191,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
             <FormWrapper>
                 {uiSchema && schema && (
                     <Form
-                        id={styles.form}
                         autoComplete="off"
                         schema={schema}
                         noHtml5Validate
@@ -194,15 +200,53 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
                         uiSchema={uiSchema}
                         onSubmit={submitForm}
                         onChange={onChange}
-                        transformErrors={transformErrors} //customizar mensagem dos erros
+                        transformErrors={transformErrors}
                         widgets={widgets}
+                        templates={{ ObjectFieldTemplate }}
                     >
-                        <Button variant="contained" type="submit">
-                            Salvar
-                        </Button>
+                        <Grid container justifyContent={'flex-end'} sx={{ padding: '15px 0' }}>
+                            <Button onClick={() => router.back()} variant="outlined">
+                                Voltar
+                            </Button>
+                            <Button variant="contained" sx={{ marginLeft: '15px', marginRight: '20px' }} type="submit">
+                                Salvar
+                            </Button>
+                        </Grid>
                     </Form>
                 )}
             </FormWrapper>
         </Container>
     )
 }
+
+function ObjectFieldTemplate(props: ObjectFieldTemplateProps) {
+    const getUi = (elementName: string): GridSize => {
+        const ui = props.schema?.uiSchema[elementName]['ui:options']?.ui
+        if (ui) {
+            return ui
+        }
+        return 0
+    }
+    return (
+        <div>
+            <h3>{props.title}</h3>
+            <p>{props.description}</p>
+            <Grid container spacing={2}>
+                {props.properties.map((element: ObjectFieldTemplatePropertyType, index: number) => (
+                    <Grid key={index} item xs={12} md={getUi(element.name)}>
+                        {element.content}
+                    </Grid>
+                ))}
+            </Grid>
+        </div>
+    )
+}
+
+const Content = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    gap: 16px;
+`

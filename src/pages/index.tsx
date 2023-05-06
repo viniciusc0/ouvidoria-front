@@ -1,13 +1,17 @@
 // next
 import { Container, Grid, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import AuthController from 'controllers/authController'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
-import { AnalyticsConversionRates, AnalyticsCurrentSubject, AnalyticsCurrentVisits, AnalyticsTasks, AnalyticsWebsiteVisits, AnalyticsWidgetSummary } from 'src/sections/@dashboard/general/analytics'
-import { UserEntity } from 'types/user/interface'
+import {
+    AnalyticsConversionRates,
+    AnalyticsCurrentSubject,
+    AnalyticsCurrentVisits,
+    AnalyticsTasks,
+    AnalyticsWebsiteVisits,
+    AnalyticsWidgetSummary,
+} from 'src/sections/@dashboard/general/analytics'
 
 // ----------------------------------------------------------------------
 
@@ -19,10 +23,6 @@ export default function GeneralAnalyticsPage() {
     const theme = useTheme()
 
     const { themeStretch } = useSettingsContext()
-    const [user, setUser] = useState<UserEntity>()
-    useEffect(() => {
-        setUser(new AuthController().getUser()?.user)
-    }, [])
 
     return (
         <>
@@ -32,24 +32,43 @@ export default function GeneralAnalyticsPage() {
 
             <Container maxWidth={themeStretch ? false : 'xl'}>
                 <Typography variant="h4" sx={{ mb: 5 }}>
-                    Oi, {user?.username.toUpperCase()}
+                    Oi, fulano
                 </Typography>
 
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AnalyticsWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+                        <AnalyticsWidgetSummary
+                            title="Weekly Sales"
+                            total={714000}
+                            icon={'ant-design:android-filled'}
+                        />
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={3}>
-                        <AnalyticsWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+                        <AnalyticsWidgetSummary
+                            title="New Users"
+                            total={1352831}
+                            color="info"
+                            icon={'ant-design:apple-filled'}
+                        />
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={3}>
-                        <AnalyticsWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+                        <AnalyticsWidgetSummary
+                            title="Item Orders"
+                            total={1723315}
+                            color="warning"
+                            icon={'ant-design:windows-filled'}
+                        />
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={3}>
-                        <AnalyticsWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+                        <AnalyticsWidgetSummary
+                            title="Bug Reports"
+                            total={234}
+                            color="error"
+                            icon={'ant-design:bug-filled'}
+                        />
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={8}>
@@ -57,7 +76,19 @@ export default function GeneralAnalyticsPage() {
                             title="Website Visits"
                             subheader="(+43%) than last year"
                             chart={{
-                                labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003', '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'],
+                                labels: [
+                                    '01/01/2003',
+                                    '02/01/2003',
+                                    '03/01/2003',
+                                    '04/01/2003',
+                                    '05/01/2003',
+                                    '06/01/2003',
+                                    '07/01/2003',
+                                    '08/01/2003',
+                                    '09/01/2003',
+                                    '10/01/2003',
+                                    '11/01/2003',
+                                ],
                                 series: [
                                     {
                                         name: 'Team A',
@@ -92,7 +123,12 @@ export default function GeneralAnalyticsPage() {
                                     { label: 'Europe', value: 1443 },
                                     { label: 'Africa', value: 4443 },
                                 ],
-                                colors: [theme.palette.primary.main, theme.palette.info.main, theme.palette.error.main, theme.palette.warning.main],
+                                colors: [
+                                    theme.palette.primary.main,
+                                    theme.palette.info.main,
+                                    theme.palette.error.main,
+                                    theme.palette.warning.main,
+                                ],
                             }}
                         />
                     </Grid>

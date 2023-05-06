@@ -7,14 +7,15 @@ export enum TypeSchemaForm {
 type IPropertiesSchema = {
     type: TypeSchemaForm
     title?: string
-    className?: string
+    classNames?: string
     items?: any
     enum?: any
     oneOf?: any
 }
 
 type IOptionsUISchema = {
-    mask: string
+    mask?: string
+    ui: number
 }
 
 type IUISchema = {
