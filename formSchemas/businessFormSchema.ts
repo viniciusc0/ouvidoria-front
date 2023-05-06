@@ -32,7 +32,6 @@ const BusinessFormSchema: ISchemaForm[] = [
     },
     {
         name: 'reasonName',
-        classNames: 'task-title foo-bar',
         required: true,
         label: 'Razão Social',
         props: {
