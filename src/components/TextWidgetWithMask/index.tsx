@@ -1,11 +1,8 @@
 import { Grid, TextField } from '@mui/material'
 import { WidgetProps } from '@rjsf/utils'
-import useWindowsSize from 'hooks/useWindowsSize'
 import InputMask from 'react-input-mask'
 
 function TextWidgetWithMask(props: WidgetProps) {
-    const [screenWidth] = useWindowsSize()
-
     return (
         <Grid item xs={12}>
             <InputMask

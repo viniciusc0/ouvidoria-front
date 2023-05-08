@@ -16,6 +16,7 @@ import 'styles/Form.module.css'
 import { ISchemaForm } from 'types/ISchemaForm'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
+import SelectWithCheckboxes from '../SelectWithCheckboxes'
 
 interface Props {
     schemaForm: ISchemaForm[]
@@ -70,6 +71,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
 
     const widgets: RegistryWidgetsType = {
         TextWidgetWithMask: TextWidgetWithMask,
+        SelectWithCheckboxes: SelectWithCheckboxes,
     }
 
     const getAddressByCep = async (cep: string) => {
