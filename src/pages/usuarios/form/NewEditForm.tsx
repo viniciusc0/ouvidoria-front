@@ -1,42 +1,36 @@
 import BusinessController from 'controllers/businessController'
+import UserController from 'controllers/userController'
 import { UserFormSchema } from 'formSchemas/userFormSchema'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
-import JsonForm from 'src/components/JsonForm'
+import JsonForm, { formError } from 'src/components/JsonForm'
 import Loading from 'src/components/Loading'
 import { IBusiness } from 'types/IBusiness'
+import { IBusinessEnum } from 'types/IBusinessEnum'
 type UserNewEditForm = {
     values?: any
 }
 
-type BusinessEnum = { id: string; name: string }
-
 const NewEditForm = ({ values }: UserNewEditForm) => {
     const router = useRouter()
-    const id = router.query.id
 
     const { enqueueSnackbar } = useSnackbar()
 
     const onSubmit = async data => {
-        //     try {
-        //         const businessController = new BusinessController()
-        //         if (data.id) {
-        //             await businessController.update(data.id, data)
-        //             enqueueSnackbar('Oba! Empresa alterada com sucesso!', { variant: 'success' })
-        //         } else {
-        //             await businessController.create(data)
-        //             enqueueSnackbar('Oba! Empresa criada com sucesso', { variant: 'success' })
-        //         }
-        //         router.push('/minhasempresas')
-        //     } catch (error) {
-        //         formError(error, enqueueSnackbar)
-        //     }
-
-        const businessesIdsArray = [] as BusinessEnum[]
-        data.businesses.map(item => businessesIdsArray.push(item.id))
-        data.businesses = businessesIdsArray
-        console.log(data)
+        try {
+            const userController = new UserController()
+            if (data.id) {
+                await userController.update(data.id, data)
+                enqueueSnackbar('Oba! Usuário editado com sucesso!', { variant: 'success' })
+            } else {
+                await userController.create(data)
+                enqueueSnackbar('Oba! Usuário criado com sucesso', { variant: 'success' })
+            }
+            router.push('/usuarios')
+        } catch (error) {
+            formError(error, enqueueSnackbar)
+        }
     }
 
     const [loading, setLoading] = useState(false)
@@ -49,8 +43,8 @@ const NewEditForm = ({ values }: UserNewEditForm) => {
         setBusinesses(businesses)
         setLoading(false)
 
-        const businessesEnum = [] as BusinessEnum[]
-        let obj: BusinessEnum
+        const businessesEnum = [] as IBusinessEnum[]
+        let obj: IBusinessEnum
         businesses.map((business, index) => {
             obj = {
                 id: business.id!,

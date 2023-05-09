@@ -2,6 +2,18 @@ import { ISchemaForm, TypeSchemaForm } from 'types/ISchemaForm'
 
 export const UserFormSchema: ISchemaForm[] = [
     {
+        name: 'id',
+        required: false,
+        label: 'id',
+        props: {
+            type: TypeSchemaForm.NUMBER,
+            title: 'id',
+        },
+        uiSchema: {
+            widget: 'hidden',
+        },
+    },
+    {
         name: 'name',
         required: true,
         label: 'Nome',
