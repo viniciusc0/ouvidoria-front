@@ -33,6 +33,9 @@ const NewEditForm = ({ values }: UserNewEditForm) => {
         //         formError(error, enqueueSnackbar)
         //     }
 
+        const businessesIdsArray = [] as BusinessEnum[]
+        data.businesses.map(item => businessesIdsArray.push(item.id))
+        data.businesses = businessesIdsArray
         console.log(data)
     }
 
@@ -45,6 +48,7 @@ const NewEditForm = ({ values }: UserNewEditForm) => {
         const businesses = await businessControler.getAll()
         setBusinesses(businesses)
         setLoading(false)
+
         const businessesEnum = [] as BusinessEnum[]
         let obj: BusinessEnum
         businesses.map((business, index) => {
@@ -54,7 +58,8 @@ const NewEditForm = ({ values }: UserNewEditForm) => {
             }
             businessesEnum.push(obj)
         })
-        UserFormSchema[UserFormSchema.length - 1].props.items.enum = businessesEnum
+        const businessSchema = UserFormSchema.find(item => item.props.items !== undefined && item.name === 'businesses')
+        UserFormSchema[UserFormSchema.indexOf(businessSchema!)].props.items.enum = businessesEnum
     }
 
     useEffect(() => {
