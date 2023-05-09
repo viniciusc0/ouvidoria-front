@@ -25,7 +25,13 @@ const NewEditForm = ({ values }: UserNewEditForm) => {
                 enqueueSnackbar('Oba! Usuário editado com sucesso!', { variant: 'success' })
             } else {
                 await userController.create(data)
-                enqueueSnackbar('Oba! Usuário criado com sucesso', { variant: 'success' })
+                enqueueSnackbar(
+                    'Oba! Cadastro realizado com sucesso! Um email de confirmação foi enviado para o usuário',
+                    {
+                        variant: 'success',
+                        autoHideDuration: null,
+                    },
+                )
             }
             router.push('/usuarios')
         } catch (error) {
