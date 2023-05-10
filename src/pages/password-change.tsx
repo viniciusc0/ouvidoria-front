@@ -1,12 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Alert, Card, Container, Grid, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
-import AuthController from 'controllers/authController'
-import NextLink from 'next/link'
-import { useEffect, useState } from 'react'
+import { Alert, Card, Container, Grid, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LoginProps } from 'services/requests/usersAuth/types'
-import { AuthTypes } from 'src/auth/JwtContext'
 import { useAuthContext } from 'src/auth/useAuthContext'
 import FormProvider, { RHFTextField } from 'src/components/hook-form'
 import Iconify from 'src/components/iconify'
@@ -14,12 +11,12 @@ import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function PasswordChange() {
     return (
         <Container sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
             <Grid container justifyContent={'center'} alignItems={'center'}>
                 <Grid item>
-                    <AuthLoginForm />
+                    <Form />
                 </Grid>
             </Grid>
         </Container>
@@ -30,18 +27,19 @@ interface FormValuesProps extends LoginProps {
     afterSubmit?: string
 }
 
-function AuthLoginForm() {
+function Form() {
     const [showPassword, setShowPassword] = useState(false)
+    const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false)
 
     const { dispatch } = useAuthContext()
 
-    const LoginSchema = Yup.object().shape({
-        identifier: Yup.string().required('Email ou  nome de usuário é obrigatório'),
+    const FormSchema = Yup.object().shape({
         password: Yup.string().required('Senha é obrigatória'),
+        passwordConfirmartion: Yup.string().required('Senha é obrigatória'),
     })
 
     const methods = useForm<FormValuesProps>({
-        resolver: yupResolver(LoginSchema),
+        resolver: yupResolver(FormSchema),
     })
 
     const {
@@ -52,37 +50,38 @@ function AuthLoginForm() {
     } = methods
 
     const onSubmit = async (data: FormValuesProps) => {
-        const authController = new AuthController()
-        const res = await authController.login(data)
-        if (!res) {
-            return
-        }
-        if (res.response.status == 400) {
-            setError('afterSubmit', {
-                ...res,
-                message: 'Usuário ou senha incorretos ',
-            })
-        }
+        // const authController = new AuthController()
+        // const res = await authController.login(data)
+        // if (!res) {
+        //     return
+        // }
+        // if (res.response.status == 400) {
+        //     setError('afterSubmit', {
+        //         ...res,
+        //         message: 'Usuário ou senha incorretos ',
+        //     })
+        // }
     }
 
-    useEffect(() => {
-        dispatch({
-            type: AuthTypes.LOGOUT,
-        })
-    }, [])
-
     return (
-        <Card sx={{ width: '100%', padding: '50px', height: '100%', boxShadow: '1px 1px 10px #cecece' }}>
+        <Card
+            sx={{
+                maxWidth: '550px',
+                width: '100vw',
+                padding: '50px',
+                height: '100%',
+                boxShadow: '1px 1px 10px #cecece',
+            }}
+        >
             <Grid item sx={{ textAlign: 'center', padding: '20px 0' }}>
-                <Typography variant="h4">Bem vindo ao Latlong App</Typography>
-                <Typography variant="body2">Dando sentido ao seu negócio</Typography>
+                <Typography variant="h4">Mudança de senha</Typography>
+                <Typography variant="body1" sx={{ marginTop: '10px' }}>
+                    Digite a nova senha abaixo
+                </Typography>
             </Grid>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={3}>
                     {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
-
-                    <RHFTextField name="identifier" label="Email" />
-
                     <RHFTextField
                         name="password"
                         label="Senha"
@@ -97,16 +96,26 @@ function AuthLoginForm() {
                             ),
                         }}
                     />
+                    <RHFTextField
+                        name="passwordConfirmation"
+                        label="Confirmação de senha"
+                        type={showPassword ? 'text' : 'password'}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                                        edge="end"
+                                    >
+                                        <Iconify
+                                            icon={showPasswordConfirmation ? 'eva:eye-fill' : 'eva:eye-off-fill'}
+                                        />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
                 </Stack>
-
-                <Stack alignItems="flex-end" sx={{ my: 2 }}>
-                    <NextLink href={'/forgot-password'} passHref>
-                        <Link variant="body2" color="inherit" underline="always">
-                            Esqueceu sua senha?
-                        </Link>
-                    </NextLink>
-                </Stack>
-
                 <LoadingButton
                     fullWidth
                     color="inherit"
@@ -115,6 +124,7 @@ function AuthLoginForm() {
                     variant="contained"
                     loading={false}
                     sx={{
+                        marginTop: '20px',
                         bgcolor: 'primary.main',
                         color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
                         '&:hover': {
@@ -123,7 +133,7 @@ function AuthLoginForm() {
                         },
                     }}
                 >
-                    Login
+                    Enviar
                 </LoadingButton>
             </FormProvider>
         </Card>
