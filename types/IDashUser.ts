@@ -8,7 +8,5 @@ export type IDashUser = {
 }
 export type IDashUserFilter = {
     name: string
-    cpf: string
     email: string
-    phone: string
 }

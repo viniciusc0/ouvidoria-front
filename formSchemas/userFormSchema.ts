@@ -97,3 +97,37 @@ export const UserFormSchema: ISchemaForm[] = [
         },
     },
 ]
+
+export const UserFiltersFormSchema: ISchemaForm[] = [
+    {
+        name: 'name',
+        required: false,
+        label: 'Nome',
+        props: {
+            type: TypeSchemaForm.STRING,
+            title: 'Nome',
+        },
+        uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
+            autofocus: true,
+        },
+    },
+    {
+        name: 'email',
+        required: false,
+        label: 'Email',
+        props: {
+            type: TypeSchemaForm.STRING,
+            title: 'Email',
+        },
+        uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
+        },
+    },
+]

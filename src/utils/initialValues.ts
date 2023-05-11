@@ -1,5 +1,6 @@
 import { DeliverymanGetProps } from 'services/requests/deliveryman/types'
 import { IBusiness, IBusinessFilter } from 'types/IBusiness'
+import { IDashUserFilter } from 'types/IDashUser'
 import { IUser } from 'types/IUser'
 
 export const userInitialValue = {
@@ -55,3 +56,8 @@ export const businessFiltersInitialValue = {
     cnpj: '',
     status: true,
 } as IBusinessFilter
+
+export const dashUserFiltersInitialValue = {
+    name: '',
+    email: '',
+} as IDashUserFilter

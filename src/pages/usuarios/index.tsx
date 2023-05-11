@@ -10,7 +10,10 @@ import Iconify from 'src/components/iconify'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import CrudTable from 'src/sections/@dashboard/general/app/CrudTable'
-import { IDashUser } from 'types/IDashUser'
+import { IDashUser, IDashUserFilter } from 'types/IDashUser'
+import AccordionFilter from 'src/components/AccordionFilter'
+import { dashUserFiltersInitialValue } from 'src/utils/initialValues'
+import { UserFiltersFormSchema } from 'formSchemas/userFormSchema'
 
 // ----------------------------------------------------------------------
 
@@ -22,14 +25,11 @@ export default function Usuarios() {
     const router = useRouter()
     const { themeStretch } = useSettingsContext()
 
-    // const [businessFilters, setBusinessFilters] = useState<IBusinessFilter>(businessFiltersInitialValue)
+    const [userFilters, setUserFilters] = useState<IDashUserFilter>(dashUserFiltersInitialValue)
 
-    // function handleSetBusinessFilters(data: IBusinessFilter) {
-    //     if (data.cnpj) {
-    //         data.cnpj = removeMask(data.cnpj)
-    //     }
-    //     setBusinessFilters(data)
-    // }
+    function handleSetUserFilters(data: IDashUserFilter) {
+        setUserFilters(data)
+    }
 
     const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState<IDashUser[]>([
@@ -44,8 +44,8 @@ export default function Usuarios() {
 
     // const getUsers = async () => {
     //     setLoading(true)
-    //     const businessControler = new BusinessController()
-    //     const users = await businessControler.getAll(businessFilters)
+    //     const userController = new UserController()
+    //     const users = await userController.getAll(userFilters)
     //     setUsers(users)
     //     setLoading(false)
     // }
@@ -92,13 +92,13 @@ export default function Usuarios() {
                                 }
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
+                        <Grid item xs={12}>
                             <AccordionFilter
-                                schemaForm={BusinessFilterFormSchema}
-                                setFilters={handleSetBusinessFilters}
-                                formData={businessFilters}
+                                schemaForm={UserFiltersFormSchema}
+                                setFilters={handleSetUserFilters}
+                                formData={userFilters}
                             />
-                        </Grid> */}
+                        </Grid>
 
                         <Grid item xs={12}>
                             <CrudTable
