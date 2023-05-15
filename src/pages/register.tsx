@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Alert, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RegisterProps } from 'services/requests/usersAuth/types'
@@ -83,14 +84,14 @@ function AuthRegisterForm() {
         formState: { errors, isSubmitting },
     } = methods
 
+    const { push } = useRouter()
+
     const onSubmit = async (data: FormValuesProps) => {
         try {
             registerUser(data)
+            push('/login')
         } catch (error) {
             console.error(error)
-
-            reset()
-
             setError('afterSubmit', {
                 ...error,
                 message: error.message,

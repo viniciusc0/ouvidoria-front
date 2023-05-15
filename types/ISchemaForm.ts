@@ -2,6 +2,7 @@ export enum TypeSchemaForm {
     'BOOLEAN' = 'boolean',
     'STRING' = 'string',
     'NUMBER' = 'number',
+    'ARRAY' = 'array',
 }
 
 type IPropertiesSchema = {
@@ -11,11 +12,13 @@ type IPropertiesSchema = {
     items?: any
     enum?: any
     oneOf?: any
+    uniqueItems?: boolean
 }
 
 type IOptionsUISchema = {
     mask?: string
     ui: number
+    items?: string[]
 }
 
 type IUISchema = {

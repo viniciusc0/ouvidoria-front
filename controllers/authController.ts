@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import AuthService from 'services/authService'
-import { ILogin, ILoginForm } from 'types/IAuth'
+import { ILogin, ILoginForgotPassword, ILoginForm, INewPassword } from 'types/IAuth'
 import { IUser } from 'types/IUser'
 
 class AuthController {
@@ -41,6 +41,16 @@ class AuthController {
         Cookies.remove('token')
         localStorage.clear()
         location.href = '/login'
+    }
+
+    async sendPasswordRecoveryEmail(data: ILoginForgotPassword) {
+        const authService = new AuthService()
+        return await authService.forgotPassword(data)
+    }
+
+    async changePassword(data: INewPassword) {
+        const authService = new AuthService()
+        return await authService.resetPassword(data)
     }
 }
 

@@ -13,3 +13,9 @@ export type ILoginForm = {
 export type ILoginForgotPassword = {
     email: string
 }
+
+export type INewPassword = {
+    password: string
+    passwordConfirmation: string
+    code: string
+}

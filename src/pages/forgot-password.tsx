@@ -1,47 +1,39 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Alert, Card, Container, Grid, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
+import { Alert, Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import AuthController from 'controllers/authController'
 import NextLink from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { LoginProps } from 'services/requests/usersAuth/types'
-import { AuthTypes } from 'src/auth/JwtContext'
-import { useAuthContext } from 'src/auth/useAuthContext'
 import FormProvider, { RHFTextField } from 'src/components/hook-form'
-import Iconify from 'src/components/iconify'
+import { ILoginForgotPassword } from 'types/IAuth'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function ForgotPassword() {
     return (
         <Container sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
             <Grid container justifyContent={'center'} alignItems={'center'}>
                 <Grid item>
-                    <AuthLoginForm />
+                    <Form />
                 </Grid>
             </Grid>
         </Container>
     )
 }
 
-interface FormValuesProps extends LoginProps {
+interface FormValuesProps extends ILoginForgotPassword {
     afterSubmit?: string
 }
 
-function AuthLoginForm() {
-    const [showPassword, setShowPassword] = useState(false)
-
-    const { dispatch } = useAuthContext()
-
-    const LoginSchema = Yup.object().shape({
-        identifier: Yup.string().required('Email ou  nome de usuário é obrigatório'),
-        password: Yup.string().required('Senha é obrigatória'),
+function Form() {
+    const FormSchema = Yup.object().shape({
+        email: Yup.string().email('Email inválido').required('Campo email é obrigatório'),
     })
 
     const methods = useForm<FormValuesProps>({
-        resolver: yupResolver(LoginSchema),
+        resolver: yupResolver(FormSchema),
     })
 
     const {
@@ -51,58 +43,42 @@ function AuthLoginForm() {
         formState: { errors, isSubmitting, isSubmitSuccessful },
     } = methods
 
+    const [successMessage, setSuccessMessage] = useState(false)
+
     const onSubmit = async (data: FormValuesProps) => {
         const authController = new AuthController()
-        const res = await authController.login(data)
-        if (!res) {
-            return
-        }
-        if (res.response.status == 400) {
+        try {
+            await authController.sendPasswordRecoveryEmail(data)
+            setSuccessMessage(true)
+        } catch (error) {
+            setSuccessMessage(false)
             setError('afterSubmit', {
-                ...res,
-                message: 'Usuário ou senha incorretos ',
+                message: 'Um erro ocorreu ao enviar o email',
             })
         }
     }
 
-    useEffect(() => {
-        dispatch({
-            type: AuthTypes.LOGOUT,
-        })
-    }, [])
-
     return (
-        <Card sx={{ width: '100%', padding: '50px', height: '100%', boxShadow: '1px 1px 10px #cecece' }}>
+        <Card sx={{ maxWidth: '550px', padding: '50px', height: '100%', boxShadow: '1px 1px 10px #cecece' }}>
             <Grid item sx={{ textAlign: 'center', padding: '20px 0' }}>
-                <Typography variant="h4">Bem vindo ao Latlong App</Typography>
-                <Typography variant="body2">Dando sentido ao seu negócio</Typography>
+                <Typography variant="h4">Esqueci minha senha</Typography>
+                <Typography sx={{ marginTop: '10px' }} variant="body1">
+                    Para redefinir sua senha, informe o email cadastrado na sua conta e lhe enviaremos um link com as
+                    instruções
+                </Typography>
             </Grid>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={3}>
                     {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
-
-                    <RHFTextField name="identifier" label="Email" />
-
-                    <RHFTextField
-                        name="password"
-                        label="Senha"
-                        type={showPassword ? 'text' : 'password'}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
+                    {!errors.afterSubmit && successMessage && (
+                        <Alert severity="success">O email foi enviado. Cheque sua caixa de entrada</Alert>
+                    )}
+                    <RHFTextField name="email" label="Digite seu email" />
                 </Stack>
-
                 <Stack alignItems="flex-end" sx={{ my: 2 }}>
-                    <NextLink href={'/forgot-password'} passHref>
+                    <NextLink href={'/login'} passHref>
                         <Link variant="body2" color="inherit" underline="always">
-                            Esqueceu sua senha?
+                            Página de Login
                         </Link>
                     </NextLink>
                 </Stack>
@@ -123,7 +99,7 @@ function AuthLoginForm() {
                         },
                     }}
                 >
-                    Login
+                    Enviar
                 </LoadingButton>
             </FormProvider>
         </Card>

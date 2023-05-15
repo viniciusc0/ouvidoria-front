@@ -23,8 +23,11 @@ import Iconify from '../../../components/iconify'
 import Logo from '../../../components/logo'
 import { useSettingsContext } from '../../../components/settings'
 //
-import { useState } from 'react'
+import BusinessController from 'controllers/businessController'
+import { useEffect, useState } from 'react'
+import { businessInitialValue } from 'src/utils/initialValues'
 import AccountPopover from './AccountPopover'
+import { useStorageContext } from 'src/storage/useStorageContext'
 
 // ----------------------------------------------------------------------
 
@@ -44,10 +47,28 @@ export default function Header({ onOpenNav }: Props) {
     const isDesktop = useResponsive('up', 'lg')
 
     const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal
-    const [age, setAge] = useState('')
+
     const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value as string)
+        setCurrentBusinessId(event.target.value as string)
     }
+
+    const [businesses, setBusinesses] = useState([businessInitialValue])
+
+    const { currentBusinessId, setCurrentBusinessId } = useStorageContext()
+
+    useEffect(() => {
+        const listBusinesses = async () => {
+            const businessController = new BusinessController()
+            try {
+                const data = await businessController.getAll()
+                setBusinesses(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        listBusinesses()
+    }, [])
 
     const renderContent = (
         <>
@@ -66,24 +87,22 @@ export default function Header({ onOpenNav }: Props) {
                 justifyContent="flex-end"
                 spacing={{ xs: 0.5, sm: 1.5 }}
             >
-                {/* <NotificationsPopover /> */}
-                {/* <Grid item xs={12}> */}
                 <FormControl sx={{ width: '40%' }}>
-                    {/* Exemplo de listagem de empresas */}
                     <InputLabel id="demo-simple-select-label">Empresa</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={age}
+                        value={currentBusinessId}
                         label="Empresa"
                         onChange={handleChange}
                     >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {businesses.map(business => (
+                            <MenuItem key={business.id} value={business.id!}>
+                                {business.reasonName}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
-                {/* </Grid> */}
 
                 <AccountPopover />
             </Stack>
