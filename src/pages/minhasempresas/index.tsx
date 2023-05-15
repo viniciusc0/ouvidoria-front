@@ -42,8 +42,12 @@ export default function MinhasEmpresas() {
     const getBusinesses = async () => {
         setLoading(true)
         const businessControler = new BusinessController()
-        const businesses = await businessControler.getAll(businessFilters)
-        setBusinesses(businesses)
+        try {
+            const businesses = await businessControler.getAll(businessFilters)
+            setBusinesses(businesses)
+        } catch (error) {
+            console.log(error)
+        }
         setLoading(false)
     }
 

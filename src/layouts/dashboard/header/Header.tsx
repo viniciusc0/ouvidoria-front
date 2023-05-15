@@ -59,8 +59,12 @@ export default function Header({ onOpenNav }: Props) {
     useEffect(() => {
         const listBusinesses = async () => {
             const businessController = new BusinessController()
-            const data = await businessController.getAll()
-            setBusinesses(data)
+            try {
+                const data = await businessController.getAll()
+                setBusinesses(data)
+            } catch (error) {
+                console.log(error)
+            }
         }
 
         listBusinesses()

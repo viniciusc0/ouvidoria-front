@@ -1,11 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Alert, Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
+import AuthController from 'controllers/authController'
 import NextLink from 'next/link'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { LoginProps } from 'services/requests/usersAuth/types'
-import { useAuthContext } from 'src/auth/useAuthContext'
 import FormProvider, { RHFTextField } from 'src/components/hook-form'
+import { ILoginForgotPassword } from 'types/IAuth'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
@@ -22,15 +23,13 @@ export default function ForgotPassword() {
     )
 }
 
-interface FormValuesProps extends LoginProps {
+interface FormValuesProps extends ILoginForgotPassword {
     afterSubmit?: string
 }
 
 function Form() {
-    const { dispatch } = useAuthContext()
-
     const FormSchema = Yup.object().shape({
-        identifier: Yup.string().email('Email inválido').required('Campo email é obrigatório'),
+        email: Yup.string().email('Email inválido').required('Campo email é obrigatório'),
     })
 
     const methods = useForm<FormValuesProps>({
@@ -44,18 +43,19 @@ function Form() {
         formState: { errors, isSubmitting, isSubmitSuccessful },
     } = methods
 
+    const [successMessage, setSuccessMessage] = useState(false)
+
     const onSubmit = async (data: FormValuesProps) => {
-        // const authController = new AuthController()
-        // const res = await authController.login(data)
-        // if (!res) {
-        //     return
-        // }
-        // if (res.response.status == 400) {
-        //     setError('afterSubmit', {
-        //         ...res,
-        //         message: 'Usuário ou senha incorretos ',
-        //     })
-        // }
+        const authController = new AuthController()
+        try {
+            await authController.sendPasswordRecoveryEmail(data)
+            setSuccessMessage(true)
+        } catch (error) {
+            setSuccessMessage(false)
+            setError('afterSubmit', {
+                message: 'Um erro ocorreu ao enviar o email',
+            })
+        }
     }
 
     return (
@@ -70,7 +70,10 @@ function Form() {
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={3}>
                     {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
-                    <RHFTextField name="identifier" label="Digite seu email" />
+                    {!errors.afterSubmit && successMessage && (
+                        <Alert severity="success">O email foi enviado. Cheque sua caixa de entrada</Alert>
+                    )}
+                    <RHFTextField name="email" label="Digite seu email" />
                 </Stack>
                 <Stack alignItems="flex-end" sx={{ my: 2 }}>
                     <NextLink href={'/login'} passHref>

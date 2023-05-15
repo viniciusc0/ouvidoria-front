@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Alert, Card, Container, Grid, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import AuthController from 'controllers/authController'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { LoginProps } from 'services/requests/usersAuth/types'
-import { useAuthContext } from 'src/auth/useAuthContext'
+import { Controller, useForm } from 'react-hook-form'
 import FormProvider, { RHFTextField } from 'src/components/hook-form'
 import Iconify from 'src/components/iconify'
+import { INewPassword } from 'types/IAuth'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
@@ -23,7 +24,7 @@ export default function PasswordChange() {
     )
 }
 
-interface FormValuesProps extends LoginProps {
+interface FormValuesProps extends INewPassword {
     afterSubmit?: string
 }
 
@@ -31,11 +32,14 @@ function Form() {
     const [showPassword, setShowPassword] = useState(false)
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false)
 
-    const { dispatch } = useAuthContext()
+    const [password, setPassword] = useState('')
+    const [passwordConfirmation, setPasswordConfirmation] = useState('')
+
+    const { register } = useForm()
 
     const FormSchema = Yup.object().shape({
         password: Yup.string().required('Senha é obrigatória'),
-        passwordConfirmartion: Yup.string().required('Senha é obrigatória'),
+        passwordConfirmation: Yup.string().required('Confirmação de senha é obrigatória'),
     })
 
     const methods = useForm<FormValuesProps>({
@@ -49,18 +53,30 @@ function Form() {
         formState: { errors, isSubmitting, isSubmitSuccessful },
     } = methods
 
+    const router = useRouter()
+    const { code } = router.query
+
+    const [successMessage, setSuccessMessage] = useState(false)
+
     const onSubmit = async (data: FormValuesProps) => {
-        // const authController = new AuthController()
-        // const res = await authController.login(data)
-        // if (!res) {
-        //     return
-        // }
-        // if (res.response.status == 400) {
-        //     setError('afterSubmit', {
-        //         ...res,
-        //         message: 'Usuário ou senha incorretos ',
-        //     })
-        // }
+        if (typeof code === 'string') {
+            data = { ...data, code: code }
+        }
+        const authController = new AuthController()
+        try {
+            await authController.changePassword(data)
+            setSuccessMessage(true)
+            router.push('/login')
+        } catch (error) {
+            setSuccessMessage(false)
+            setError('afterSubmit', {
+                message: 'Erro ao resetar senha',
+            })
+        }
+    }
+
+    function arePasswordsEqual() {
+        return password === passwordConfirmation
     }
 
     return (
@@ -82,38 +98,61 @@ function Form() {
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={3}>
                     {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
-                    <RHFTextField
+                    {!errors.afterSubmit && successMessage && (
+                        <Alert severity="success">Senha alterada com sucesso!</Alert>
+                    )}
+                    <Controller
                         name="password"
-                        label="Senha"
-                        type={showPassword ? 'text' : 'password'}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
+                        render={({ field }) => (
+                            <RHFTextField
+                                label="Senha"
+                                type={showPassword ? 'text' : 'password'}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                                <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                {...field}
+                                onChange={e => {
+                                    setPassword(e.target.value)
+                                    field.onChange(e)
+                                }}
+                            />
+                        )}
                     />
-                    <RHFTextField
+                    <Controller
                         name="passwordConfirmation"
-                        label="Confirmação de senha"
-                        type={showPassword ? 'text' : 'password'}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
-                                        edge="end"
-                                    >
-                                        <Iconify
-                                            icon={showPasswordConfirmation ? 'eva:eye-fill' : 'eva:eye-off-fill'}
-                                        />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
+                        render={({ field }) => (
+                            <RHFTextField
+                                label="Confirmação de senha"
+                                type={showPasswordConfirmation ? 'text' : 'password'}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                                                edge="end"
+                                            >
+                                                <Iconify
+                                                    icon={
+                                                        showPasswordConfirmation ? 'eva:eye-fill' : 'eva:eye-off-fill'
+                                                    }
+                                                />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                {...field}
+                                onChange={e => {
+                                    setPasswordConfirmation(e.target.value)
+                                    field.onChange(e)
+                                }}
+                            />
+                        )}
                     />
                 </Stack>
                 <LoadingButton
@@ -122,6 +161,7 @@ function Form() {
                     size="large"
                     type="submit"
                     variant="contained"
+                    disabled={!arePasswordsEqual()}
                     loading={false}
                     sx={{
                         marginTop: '20px',
@@ -133,7 +173,7 @@ function Form() {
                         },
                     }}
                 >
-                    Enviar
+                    {arePasswordsEqual() ? 'Enviar' : 'As senhas não coincidem'}
                 </LoadingButton>
             </FormProvider>
         </Card>
