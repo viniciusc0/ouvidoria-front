@@ -20,4 +20,19 @@ module.exports = withTM({
         },
         HOST_API_KEY: '',
     },
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'firebasestorage.googleapis.com',
+          port: '',
+        },
+        {
+          protocol: 'https',
+          hostname: 'canal.ouvidordigital.com.br',
+          port: '',
+        },
+      ],
+    },
 })
+

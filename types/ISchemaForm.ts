@@ -13,6 +13,7 @@ type IPropertiesSchema = {
     enum?: any
     oneOf?: any
     uniqueItems?: boolean
+    format?: string
 }
 
 type IOptionsUISchema = {
