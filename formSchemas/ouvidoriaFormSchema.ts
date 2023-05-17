@@ -268,16 +268,16 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
     {
         name: 'moreDetails',
         required: true,
-        label: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possíve',
+        label: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possível',
         props: {
             type: TypeSchemaForm.STRING,
-            title: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possíve',
+            title: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possível',
         },
         uiSchema: {
             options: {
                 ui: 6,
             },
-            widget: 'TextWidgetWithMask',
+            widget: 'CustomTextarea',
             autofocus: true,
         },
     },

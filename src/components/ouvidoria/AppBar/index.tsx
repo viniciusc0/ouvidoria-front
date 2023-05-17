@@ -19,9 +19,11 @@ import Image from 'next/image'
 
 const drawerWidth = 240
 
-export default function DrawerAppBar(props: { window?: () => Window; navItems: string[] }) {
-    const { window, navItems } = props
+export default function DrawerAppBar(props: { window?: () => Window }) {
+    const { window } = props
     const [mobileOpen, setMobileOpen] = React.useState(false)
+
+    const navItems = ['ACESSO DO CLIENTE', 'STATUS DA DENÚNCIA', 'CÓDIGO DE CONDUTA']
 
     const handleDrawerToggle = () => {
         setMobileOpen(prevState => !prevState)

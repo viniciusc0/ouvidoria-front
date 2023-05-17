@@ -7,7 +7,7 @@ import { ButtonsGroup } from 'src/components/ouvidoria/ButtonsGroup'
 function Home() {
     return (
         <>
-            <AppBar navItems={['ACESSO DO CLIENTE', 'STATUS DA DENÚNCIA', 'CÓDIGO DE CONDUTA']} />
+            <AppBar />
             <Grid container alignItems="center" justifyContent="center" style={styles.imageContainer}>
                 <Grid
                     item

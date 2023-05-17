@@ -1,15 +1,20 @@
 import { Fab, Grid } from '@mui/material'
+import { useRouter } from 'next/router'
 
 export function ButtonsGroup({ size }: { size?: 'regular' | 'small' }) {
     const width = size === 'small' ? '230px' : '280px'
     const fontSize = '17px'
     const fontWeight = '300'
+
+    const { push } = useRouter()
+
     return (
         <Grid
             item
             sx={{ display: 'flex', gap: '10px', margin: '30px 0 70px 0', flexWrap: 'wrap', justifyContent: 'center' }}
         >
             <Fab
+                onClick={() => push('/ouvidoria/formulario')}
                 variant="extended"
                 sx={{ width: width, backgroundColor: '#FF2F2F', fontSize: fontSize, fontWeight: fontWeight }}
             >
