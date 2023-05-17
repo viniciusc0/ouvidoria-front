@@ -5,25 +5,22 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const { push } = useRouter()
+
     function handleYesButtonClick() {
         Cookies.set('termoAceito', 'sim')
         if (setTermAccepted) {
             setTermAccepted(true)
+        } else {
+            push('/ouvidoria/formulario')
         }
     }
-
-    const { push } = useRouter()
 
     function handleNoButtonClick() {
         push('/ouvidoria')
     }
 
     return (
-        // <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        //     <div className="embed-responsive" style={{ height: '100vh', width: '40%' }}>
-        //         <embed src="https://www.orimi.com/pdf-test.pdf" type="application/pdf" width="100%" height="100%" />
-        //     </div>
-        // </div>
         <Grid
             container
             sx={{
@@ -40,7 +37,7 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                     flexDirection: 'column',
                     rowGap: '20px',
                     padding: '30px',
-                    boxShadow: '4px 4px 60px -12px rgba(0,0,0,0.20)',
+                    boxShadow: '4px 4px 40px -12px rgba(0,0,0,0.20)',
                     marginTop: '30px',
                 }}
             >
