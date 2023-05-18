@@ -2,14 +2,25 @@ import { ISchemaForm, TypeSchemaForm } from 'types/ISchemaForm'
 
 export const OuvidoriaFormSchema: ISchemaForm[] = [
     {
-        name: 'identificar',
+        name: 'identification',
         required: false,
         label: 'Você deseja se identificar?',
         props: {
-            type: TypeSchemaForm.STRING,
+            type: TypeSchemaForm.ARRAY,
             title: 'Você deseja se identificar?',
+            items: {
+                // type: 'object',
+                type: 'string',
+                enum: ['Sim', 'Não'],
+            },
+            uniqueItems: true,
         },
-        uiSchema: {},
+        uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'CustomSelect',
+        },
     },
     {
         name: 'name',
@@ -54,6 +65,7 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         uiSchema: {
             options: {
                 ui: 6,
+                mask: '(99) 9 9999-9999',
             },
             widget: 'TextWidgetWithMask',
             autofocus: true,
@@ -91,9 +103,9 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 12,
+                ui: 6,
             },
-            widget: 'select',
+            widget: 'CustomSelect',
         },
     },
     {
@@ -154,9 +166,9 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 12,
+                ui: 6,
             },
-            widget: 'select',
+            widget: 'CustomSelect',
         },
     },
     {
@@ -208,7 +220,7 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         },
     },
     {
-        name: 'continue',
+        name: 'continuity',
         required: true,
         label: 'Esse fato continua ocorrendo?',
         props: {
@@ -225,7 +237,7 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
             options: {
                 ui: 6,
             },
-            widget: 'select',
+            widget: 'CustomSelect',
         },
     },
     {
@@ -246,7 +258,7 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
             options: {
                 ui: 6,
             },
-            widget: 'select',
+            widget: 'CustomSelect',
         },
     },
     {
@@ -299,12 +311,12 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
             options: {
                 ui: 6,
             },
-            widget: 'select',
+            widget: 'CustomSelect',
         },
     },
     {
         name: 'file',
-        required: true,
+        required: false,
         label: 'Caso você tenha evidências sobre o fato video, foto, documento etc) faça o upload do arquivo aqui o tamanho máximo do arquivo 1GB',
         props: {
             type: TypeSchemaForm.STRING,

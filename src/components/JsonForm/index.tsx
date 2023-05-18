@@ -18,6 +18,7 @@ import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
 import SelectWithCheckboxes from '../SelectWithCheckboxes'
 import CustomTextarea from '../CustomTextarea'
+import CustomSelect from '../CustomSelect'
 
 interface Props {
     schemaForm: ISchemaForm[]
@@ -74,6 +75,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess }: P
         TextWidgetWithMask: TextWidgetWithMask,
         SelectWithCheckboxes: SelectWithCheckboxes,
         CustomTextarea: CustomTextarea,
+        CustomSelect: CustomSelect,
     }
 
     const getAddressByCep = async (cep: string) => {

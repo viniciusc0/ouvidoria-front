@@ -14,7 +14,9 @@ const Form = ({ values }) => {
 
     const { enqueueSnackbar } = useSnackbar()
 
-    const onSubmit = async data => {}
+    const onSubmit = async data => {
+        console.log(data)
+    }
 
     const [termAccepted, setTermAccepted] = useState(false)
 
