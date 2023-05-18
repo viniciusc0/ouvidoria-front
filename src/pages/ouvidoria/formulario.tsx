@@ -4,15 +4,18 @@ import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
-import JsonForm from 'src/components/JsonForm'
+import JsonForm from 'src/components/ouvidoria/JsonForm'
 import AppBar from 'src/components/ouvidoria/AppBar'
 import TermosAceite from 'src/components/ouvidoria/TermoAceite'
+import { ISchemaForm } from 'types/ISchemaForm'
 
 const Form = ({ values }) => {
     const router = useRouter()
     const id = router.query.id
 
     const { enqueueSnackbar } = useSnackbar()
+
+    const [schema, setSchema] = useState<ISchemaForm[]>(OuvidoriaFormSchema)
 
     const onSubmit = async data => {
         console.log(data)
@@ -40,7 +43,7 @@ const Form = ({ values }) => {
             <AppBar />
             <Grid sx={{ width: '80%', margin: '30px auto' }}>
                 <JsonForm
-                    schemaForm={OuvidoriaFormSchema}
+                    schemaForm={schema}
                     values={values}
                     onSubmit={onSubmit}
                     msgSuccess={'Oba! Salvo com sucesso'}

@@ -17,74 +17,9 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 6,
+                ui: 12,
             },
             widget: 'CustomSelect',
-        },
-    },
-    {
-        name: 'name',
-        required: true,
-        label: 'Nome',
-        props: {
-            type: TypeSchemaForm.STRING,
-            title: 'Qual é o seu nome?',
-        },
-        uiSchema: {
-            options: {
-                ui: 6,
-            },
-            widget: 'TextWidgetWithMask',
-            autofocus: true,
-        },
-    },
-    {
-        name: 'role',
-        required: true,
-        label: 'Cargo',
-        props: {
-            type: TypeSchemaForm.STRING,
-            title: 'Qual é o seu cargo?',
-        },
-        uiSchema: {
-            options: {
-                ui: 6,
-            },
-            widget: 'TextWidgetWithMask',
-            autofocus: true,
-        },
-    },
-    {
-        name: 'phone',
-        required: true,
-        label: 'Telefone',
-        props: {
-            type: TypeSchemaForm.STRING,
-            title: 'Qual é o seu telefone?',
-        },
-        uiSchema: {
-            options: {
-                ui: 6,
-                mask: '(99) 9 9999-9999',
-            },
-            widget: 'TextWidgetWithMask',
-            autofocus: true,
-        },
-    },
-    {
-        name: 'email',
-        required: true,
-        label: 'Email',
-        props: {
-            type: TypeSchemaForm.STRING,
-            title: 'Qual é o seu email?',
-        },
-        uiSchema: {
-            options: {
-                ui: 6,
-            },
-            widget: 'TextWidgetWithMask',
-            autofocus: true,
         },
     },
     {
@@ -256,41 +191,9 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         },
         uiSchema: {
             options: {
-                ui: 6,
+                ui: 12,
             },
             widget: 'CustomSelect',
-        },
-    },
-    {
-        name: 'witnessesNames',
-        required: true,
-        label: 'Cite o nome das testemunhas que estavam presentes',
-        props: {
-            type: TypeSchemaForm.STRING,
-            title: 'Cite o nome das testemunhas que estavam presentes',
-        },
-        uiSchema: {
-            options: {
-                ui: 6,
-            },
-            widget: 'TextWidgetWithMask',
-            autofocus: true,
-        },
-    },
-    {
-        name: 'moreDetails',
-        required: true,
-        label: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possível',
-        props: {
-            type: TypeSchemaForm.STRING,
-            title: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possível',
-        },
-        uiSchema: {
-            options: {
-                ui: 6,
-            },
-            widget: 'CustomTextarea',
-            autofocus: true,
         },
     },
     {
@@ -326,3 +229,105 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         uiSchema: {},
     },
 ]
+
+export const identificationArray: ISchemaForm[] = [
+    {
+        name: 'name',
+        required: true,
+        label: 'Nome',
+        props: {
+            type: TypeSchemaForm.STRING,
+            title: 'Qual é o seu nome?',
+        },
+        uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
+            autofocus: true,
+        },
+    },
+    {
+        name: 'role',
+        required: true,
+        label: 'Cargo',
+        props: {
+            type: TypeSchemaForm.STRING,
+            title: 'Qual é o seu cargo?',
+        },
+        uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
+            autofocus: true,
+        },
+    },
+    {
+        name: 'phone',
+        required: true,
+        label: 'Telefone',
+        props: {
+            type: TypeSchemaForm.STRING,
+            title: 'Qual é o seu telefone?',
+        },
+        uiSchema: {
+            options: {
+                ui: 6,
+                mask: '(99) 9 9999-9999',
+            },
+            widget: 'TextWidgetWithMask',
+            autofocus: true,
+        },
+    },
+    {
+        name: 'email',
+        required: true,
+        label: 'Email',
+        props: {
+            type: TypeSchemaForm.STRING,
+            title: 'Qual é o seu email?',
+        },
+        uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
+            autofocus: true,
+        },
+    },
+]
+
+export const thereWereWitnesses = {
+    name: 'witnessesNames',
+    required: true,
+    label: 'Cite o nome das testemunhas que estavam presentes',
+    props: {
+        type: TypeSchemaForm.STRING,
+        title: 'Cite o nome das testemunhas que estavam presentes',
+    },
+    uiSchema: {
+        options: {
+            ui: 6,
+        },
+        widget: 'TextWidgetWithMask',
+        autofocus: true,
+    },
+}
+
+export const thereWerentWitnesses = {
+    name: 'moreDetails',
+    required: true,
+    label: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possível',
+    props: {
+        type: TypeSchemaForm.STRING,
+        title: 'Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possível',
+    },
+    uiSchema: {
+        options: {
+            ui: 6,
+        },
+        widget: 'CustomTextarea',
+        autofocus: true,
+    },
+}

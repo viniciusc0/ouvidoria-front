@@ -8,17 +8,17 @@ import {
     UiSchema,
 } from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
-import AddressController from 'controllers/addressController'
+import { identificationArray, thereWereWitnesses, thereWerentWitnesses } from 'formSchemas/ouvidoriaFormSchema'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import CustomSelect from 'src/components/CustomSelect'
+import CustomTextarea from 'src/components/CustomTextarea'
+import SelectWithCheckboxes from 'src/components/SelectWithCheckboxes'
+import TextWidgetWithMask from 'src/components/TextWidgetWithMask'
 import styled from 'styled-components'
 import 'styles/Form.module.css'
 import { ISchemaForm } from 'types/ISchemaForm'
-import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
-import SelectWithCheckboxes from '../SelectWithCheckboxes'
-import CustomTextarea from '../CustomTextarea'
-import CustomSelect from '../CustomSelect'
 
 interface Props {
     schemaForm: ISchemaForm[]
@@ -79,29 +79,37 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess, cus
         CustomSelect: CustomSelect,
     }
 
-    const getAddressByCep = async (cep: string) => {
-        try {
-            const addressController = new AddressController()
-            const res = await addressController.getCep(cep)
-            setFormData(old => ({
-                ...old,
-                cep: res.cep,
-                street: res.street,
-                district: res.district,
-                city: res.city,
-                uf: res.uf,
-            }))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    function onChange(formItems: any) {
-        if (formItems.formData.cep != undefined && formItems.formData.cep.length == 10) {
-            getAddressByCep(formItems.formData.cep)
-        }
-
+    function onChange(formItems: any, id: string | undefined) {
         setFormData(formItems.formData)
+        const data = formItems.formData
+        if (id === 'root_identification') {
+            if (data.identification[0] === 'Sim') {
+                const initialPosition = schemaForm.findIndex(item => item.name === 'identification') + 1
+                identificationArray.map((item, index) => {
+                    schemaForm.splice(initialPosition + index, 0, item)
+                })
+            } else {
+                identificationArray.map(item => {
+                    const position = schemaForm.findIndex(value => value.name === item.name)
+                    if (position > 0) schemaForm.splice(position, 1)
+                })
+            }
+            loadSchema()
+        }
+
+        if (id === 'root_witnesses') {
+            const position = schemaForm.findIndex(item => item.name === 'witnesses') + 1
+            if (data.witnesses[0] === 'Sim') {
+                schemaForm.splice(position, 0, thereWereWitnesses)
+                const otherFieldPosition = schemaForm.findIndex(item => item.name === 'moreDetails')
+                if (otherFieldPosition > 0) schemaForm.splice(otherFieldPosition, 1)
+            } else {
+                const fieldPosition = schemaForm.findIndex(value => value.name === 'witnessesNames')
+                if (fieldPosition > 0) schemaForm.splice(fieldPosition, 1)
+                schemaForm.splice(position, 0, thereWerentWitnesses)
+            }
+            loadSchema()
+        }
     }
 
     const loadSchema = () => {
@@ -145,39 +153,12 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess, cus
         }
     }
 
-    const formatAddressObjectSubmit = () => {
-        if (!formData.cep) {
-            return formData
-        }
-        const payload = {
-            ...formData,
-            address: {
-                cep: formData.cep,
-                street: formData.street,
-                district: formData.district,
-                city: formData.city,
-                uf: formData.uf,
-                complement: formData.complement || '',
-                number: formData.number,
-            },
-        }
-
-        Object.keys(payload).forEach(key => {
-            if (!payload[key]) {
-                payload[key] = ''
-            }
-        })
-
-        return payload
-    }
-
     const submitForm = () => {
         if (!formData) {
             return
         }
 
-        const payload = formatAddressObjectSubmit()
-        onSubmit(payload)
+        onSubmit(formData)
     }
 
     useEffect(() => {
