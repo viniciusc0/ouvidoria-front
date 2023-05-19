@@ -1,23 +1,20 @@
 import { Grid, TextField } from '@mui/material'
 import { WidgetProps } from '@rjsf/utils'
 
-function CustomTextarea(props: WidgetProps) {
+function CustomDateField(props: WidgetProps) {
     return (
         <Grid item xs={12}>
             <TextField
                 sx={{ width: '100%' }}
-                aria-label="empty textarea"
+                aria-label="empty"
                 value={props.value || ''}
                 required={props.required}
-                multiline
-                minRows={1}
-                maxRows={15}
                 label={props.label}
-                placeholder={props.label}
+                type="date"
                 onChange={(event: any) => props.onChange(event.target.value)}
             />
         </Grid>
     )
 }
 
-export default CustomTextarea
+export default CustomDateField

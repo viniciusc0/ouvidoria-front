@@ -24,13 +24,11 @@ module.exports = withTM({
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: 'firebasestorage.googleapis.com',
-          port: '',
+          hostname: 'strapi-adv-doc-s3.s3.amazonaws.com',
         },
         {
           protocol: 'https',
           hostname: 'canal.ouvidordigital.com.br',
-          port: '',
         },
       ],
     },

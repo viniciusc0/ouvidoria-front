@@ -23,16 +23,39 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         },
     },
     {
+        name: 'email',
+        required: true,
+        label: 'Email',
+        props: {
+            type: TypeSchemaForm.STRING,
+            title: 'Qual é o seu email?',
+        },
+        uiSchema: {
+            options: {
+                ui: 6,
+            },
+            widget: 'TextWidgetWithMask',
+            autofocus: true,
+        },
+    },
+    {
         name: 'relation',
         required: true,
-        label: 'Qual é a sua relação com a Patrus?',
+        label: 'Qual é a sua relação com a Meta?',
         props: {
             type: TypeSchemaForm.ARRAY,
-            title: 'Qual é a sua relação com a Patrus?',
+            title: 'Qual é a sua relação com a Meta?',
             items: {
                 // type: 'object',
                 type: 'string',
-                enum: ['Agregado', 'Cliente', 'Colaborador', 'Fornecedor', 'Prestador de serviços', 'Outros'],
+                enum: [
+                    'Colaborador da empresa',
+                    'Ex colaborador da empresa',
+                    'Cliente da empresa',
+                    'Fornecedor / Prestador/ Credenciado da empresa',
+                    'Comunidade no entorno da empresa',
+                    'Outros - especificar',
+                ],
             },
             uniqueItems: true,
         },
@@ -86,15 +109,35 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
                 // type: 'object',
                 type: 'string',
                 enum: [
-                    'Assédio Sexual',
+                    'Assédio (Moral e/ou sexual)',
+                    'Agressões físicas',
+                    'Discriminação',
+                    'Favorecimento de fornecedores',
+                    'Favorecimento em processo de recrutamento e seleção',
+                    'Favorecimento em Processo de Recrutamento e Utilização indevida de Bens e recursos da empresa',
+                    'Criar/ignorar perigos ambientais ou de segurança',
+                    'Subtração de bens ou dinheiro',
+                    'Utilização indevida de informações privilegiadas',
+                    'Vazamento de dados pessoais',
                     'Corrupção',
-                    'Conflito de interesses',
+                    'Conflitos de interesse',
                     'Fraude',
                     'Infração aos direitos humanos e discriminação',
-                    'Roubos, furtos e qualquer destruição de ativos',
-                    'Uso indevido de informações privilegiadas ou confidenciais',
                     'Conduta inadequada dos nossos motoristas de trânsito',
-                    'Outros incidentes',
+                    'Agressão física',
+                    'Conduta do colaborador',
+                    'Conduta do gestor',
+                    'Descumprimento de Políticas, normas, ou Procedimentos Internos',
+                    'Destruição ou danos de ativos da empresa',
+                    'Relações com a comunidade',
+                    'Relações com o setor público',
+                    'Relações com o sindicato',
+                    'Trabalho infantil, escravo, ou forçado',
+                    'Uso de álcool, drogas ou porte e comércio de armas',
+                    'Uso indevido da marca',
+                    'Uso indevido de recursos da empresa',
+                    'Violação de Leis Ambientais',
+                    'Outros',
                 ],
             },
             uniqueItems: true,
@@ -129,12 +172,13 @@ export const OuvidoriaFormSchema: ISchemaForm[] = [
         props: {
             type: TypeSchemaForm.STRING,
             title: 'Quando esse fato ocorreu?',
+            format: 'date',
         },
         uiSchema: {
             options: {
                 ui: 6,
             },
-            widget: 'TextWidgetWithMask',
+            widget: 'CustomDateField',
             autofocus: true,
         },
     },
@@ -281,12 +325,12 @@ export const identificationArray: ISchemaForm[] = [
         },
     },
     {
-        name: 'email',
+        name: 'contactTime',
         required: true,
-        label: 'Email',
+        label: 'Contato',
         props: {
             type: TypeSchemaForm.STRING,
-            title: 'Qual é o seu email?',
+            title: 'Qual é o melhor horário para contato?',
         },
         uiSchema: {
             options: {
@@ -329,5 +373,90 @@ export const thereWerentWitnesses = {
         },
         widget: 'CustomTextarea',
         autofocus: true,
+    },
+}
+
+export const tipoDiscriminacao = {
+    name: 'discriminacao',
+    required: true,
+    label: 'Tipo de discriminação',
+    props: {
+        type: TypeSchemaForm.ARRAY,
+        title: 'Tipo de discriminação',
+        items: {
+            // type: 'object',
+            type: 'string',
+            enum: ['Étnica', 'Racial', 'Social', 'Sexual', 'Física', 'Outros'],
+        },
+        uniqueItems: true,
+    },
+    uiSchema: {
+        options: {
+            ui: 12,
+        },
+        widget: 'CustomSelect',
+    },
+}
+
+export const tipoFavorecimentoFornecedores = {
+    name: 'favorecimentoFornecedores',
+    required: true,
+    label: 'Tipo de favorecimento de fornecedores',
+    props: {
+        type: TypeSchemaForm.ARRAY,
+        title: 'Tipo de favorecimento de fornecedores',
+        items: {
+            type: 'string',
+            enum: ['Concorrência desleal', 'Suborno', 'Irregularidades financeiras', 'Outros'],
+        },
+        uniqueItems: true,
+    },
+    uiSchema: {
+        options: {
+            ui: 12,
+        },
+        widget: 'CustomSelect',
+    },
+}
+
+export const tipoUtilizacaoIndevidaBens = {
+    name: 'tipoUtilizacaoIndevidaBens',
+    required: true,
+    label: 'Tipo de utilização indevida de bens e recursos da empresa',
+    props: {
+        type: TypeSchemaForm.ARRAY,
+        title: 'Tipo de utilização indevida de bens e recursos da empresa',
+        items: {
+            type: 'string',
+            enum: ['Depreciação', 'Utilização indevida do patrimônio'],
+        },
+        uniqueItems: true,
+    },
+    uiSchema: {
+        options: {
+            ui: 12,
+        },
+        widget: 'CustomSelect',
+    },
+}
+
+export const tipoSubtracaoBensDinheiro = {
+    name: 'tipoSubtracaoBensDinheiro',
+    required: true,
+    label: 'Tipo de subtração de bens ou dinheiro',
+    props: {
+        type: TypeSchemaForm.ARRAY,
+        title: 'Tipo de subtração de bens ou dinheiro',
+        items: {
+            type: 'string',
+            enum: ['Pessoais', 'Da empresa'],
+        },
+        uniqueItems: true,
+    },
+    uiSchema: {
+        options: {
+            ui: 12,
+        },
+        widget: 'CustomSelect',
     },
 }

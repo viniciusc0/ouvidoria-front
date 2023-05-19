@@ -6,7 +6,7 @@ export function ButtonsGroup({ size }: { size?: 'regular' | 'small' }) {
     const fontSize = '17px'
     const fontWeight = '300'
 
-    const { push } = useRouter()
+    const { push, query } = useRouter()
 
     return (
         <Grid
@@ -14,7 +14,7 @@ export function ButtonsGroup({ size }: { size?: 'regular' | 'small' }) {
             sx={{ display: 'flex', gap: '10px', margin: '30px 0 70px 0', flexWrap: 'wrap', justifyContent: 'center' }}
         >
             <Fab
-                onClick={() => push('/ouvidoria/formulario')}
+                onClick={() => push(`/ouvidoria/formulario?company=${query.company}`)}
                 variant="extended"
                 sx={{ width: width, backgroundColor: '#FF2F2F', fontSize: fontSize, fontWeight: fontWeight }}
             >

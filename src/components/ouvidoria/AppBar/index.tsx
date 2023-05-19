@@ -1,3 +1,4 @@
+import MenuIcon from '@mui/icons-material/Menu'
 import {
     AppBar,
     Box,
@@ -10,41 +11,44 @@ import {
     List,
     ListItem,
     ListItemButton,
-    ListItemText,
     Toolbar,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React from 'react'
 
 const drawerWidth = 240
 
-export default function DrawerAppBar(props: { window?: () => Window }) {
-    const { window } = props
+export default function DrawerAppBar(props: { window?: () => Window; logoUrl: string }) {
+    const { window, logoUrl } = props
     const [mobileOpen, setMobileOpen] = React.useState(false)
 
-    const navItems = ['ACESSO DO CLIENTE', 'STATUS DA DENÚNCIA', 'CÓDIGO DE CONDUTA']
+    const navItems = [
+        { label: 'ACESSO DO CLIENTE', path: '/ouvidoria' },
+        { label: 'STATUS DA DENÚNCIA', path: '/ouvidoria/status-denuncia' },
+        { label: 'CÓDIGO DE CONDUTA', path: '/ouvidoria' },
+    ]
 
     const handleDrawerToggle = () => {
         setMobileOpen(prevState => !prevState)
     }
 
+    const { query } = useRouter()
+
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Grid>
-                <Image
-                    src="https://firebasestorage.googleapis.com/v0/b/ouvidor-digital-br.appspot.com/o/d302435c-c8e5-4d36-bc9c-9f5a59d540d4%2Fpublic%2Flogo?alt=media&token=286cfa4e-6721-42b5-bcc8-8525b3c42b8a"
-                    alt="logo"
-                    width="118px"
-                    height="60px"
-                />
+                <Image src={logoUrl} alt="logo" width="118px" height="60px" />
             </Grid>
             <Divider />
             <List>
-                {navItems.map(item => (
-                    <ListItem key={item} disablePadding>
+                {navItems.map((item, index) => (
+                    <ListItem key={index} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item} />
+                            <Link href={item.path}>
+                                <a style={{ textDecoration: 'none', color: '#4D595A' }}> {item.label}</a>
+                            </Link>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -69,15 +73,14 @@ export default function DrawerAppBar(props: { window?: () => Window }) {
                         <MenuIcon />
                     </IconButton>
                     <Grid sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        <img
-                            src="https://firebasestorage.googleapis.com/v0/b/ouvidor-digital-br.appspot.com/o/d302435c-c8e5-4d36-bc9c-9f5a59d540d4%2Fpublic%2Flogo?alt=media&token=286cfa4e-6721-42b5-bcc8-8525b3c42b8a"
-                            alt="logo"
-                        />
+                        <img src={logoUrl} alt="logo" />
                     </Grid>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        {navItems.map(item => (
-                            <Button key={item} sx={{ color: '#4D595A' }}>
-                                {item}
+                        {navItems.map((item, index) => (
+                            <Button key={index}>
+                                <Link href={item.path + `?company=${query.company}`} passHref>
+                                    <a style={{ textDecoration: 'none', color: '#4D595A' }}>{item.label}</a>
+                                </Link>
                             </Button>
                         ))}
                     </Box>

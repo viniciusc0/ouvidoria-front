@@ -5,25 +5,28 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const { push } = useRouter()
+    const { push, query } = useRouter()
 
     function handleYesButtonClick() {
         Cookies.set('termoAceito', 'sim')
         if (setTermAccepted) {
             setTermAccepted(true)
         } else {
-            push('/ouvidoria/formulario')
+            push('/ouvidoria/formulario?company=' + query.company)
         }
     }
 
     function handleNoButtonClick() {
-        push('/ouvidoria')
+        push('/ouvidoria/' + query.company)
     }
 
     return (
         <Grid
             container
+            lg={8}
+            xs={12}
             sx={{
+                margin: '0 auto',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -32,7 +35,6 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
             <Grid
                 item
                 sx={{
-                    width: '70%',
                     display: 'flex',
                     flexDirection: 'column',
                     rowGap: '20px',
@@ -72,10 +74,12 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                 </Grid>
             </Grid>
             <Grid
-                sx={{ margin: '30px 0', width: '70%', display: 'flex', flexDirection: 'column', rowGap: '30px' }}
+                lg={8}
+                xs={12}
+                sx={{ margin: '30px 0', display: 'flex', flexDirection: 'column', rowGap: '30px' }}
                 item
             >
-                <Grid sx={{ display: 'flex', margin: '0 auto' }}>
+                <Grid sx={{ display: 'flex', margin: '0 auto', alignItems: 'center' }}>
                     <Typography variant="body1" fontWeight="bold">
                         Número de protocolo:
                     </Typography>
@@ -88,7 +92,7 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                         Anote este número para acompanhar o andamento da sua denúncia. Para consultar o status do
                         registro da denúncia basta inserir o número do protocolo no site:
                     </Typography>
-                    <Link href="/" style={{ textAlign: 'center' }}>
+                    <Link href={'/ouvidoria/status-denuncia?company=' + query.company} style={{ textAlign: 'center' }}>
                         Página de status
                     </Link>
                 </Grid>

@@ -24,7 +24,7 @@ function CustomSelect(props: WidgetProps) {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 sx={{ width: '100%' }}
-                value={value}
+                value={value || ''}
                 onChange={handleChange}
                 label={props.label}
             >

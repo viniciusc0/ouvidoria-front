@@ -59,7 +59,7 @@ function SelectWithCheckboxes(props: WidgetProps) {
                 id="demo-multiple-checkbox"
                 multiple
                 sx={{ width: '100%' }}
-                value={itemLabel}
+                value={itemLabel || ''}
                 onChange={handleChange}
                 input={<OutlinedInput label={props.label} />}
                 renderValue={selected => selected.join(', ')}

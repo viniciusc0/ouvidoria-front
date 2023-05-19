@@ -19,6 +19,7 @@ import styled from 'styled-components'
 import 'styles/Form.module.css'
 import { ISchemaForm } from 'types/ISchemaForm'
 import { Container, FormWrapper } from './styles'
+import CustomDateField from 'src/components/CustomDateField'
 
 interface Props {
     schemaForm: ISchemaForm[]
@@ -77,6 +78,7 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess, cus
         SelectWithCheckboxes: SelectWithCheckboxes,
         CustomTextarea: CustomTextarea,
         CustomSelect: CustomSelect,
+        CustomDateField: CustomDateField,
     }
 
     function onChange(formItems: any, id: string | undefined) {
@@ -109,6 +111,13 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess, cus
                 schemaForm.splice(position, 0, thereWerentWitnesses)
             }
             loadSchema()
+        }
+
+        if (id === 'root_complaintType') {
+            const position = schemaForm.findIndex(item => item.name === 'complaintType') + 1
+            // if(data.complaintType[0] === ''){
+
+            // }
         }
     }
 

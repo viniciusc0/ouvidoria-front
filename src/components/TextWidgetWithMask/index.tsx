@@ -9,7 +9,7 @@ function TextWidgetWithMask(props: WidgetProps) {
                 mask={props.options.mask as string}
                 type="text"
                 className="custom"
-                value={props.value}
+                value={props.value || ''}
                 maskPlaceholder={null}
                 required={props.required}
                 onChange={(event: any) => props.onChange(event.target.value)}
