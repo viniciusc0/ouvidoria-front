@@ -81,7 +81,7 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                     sx={{ margin: '30px 0', display: 'flex', flexDirection: 'column', rowGap: '30px' }}
                     item
                 >
-                    <Grid sx={{ display: 'flex', margin: '0 auto', alignItems: 'center' }}>
+                    <Grid sx={{ display: 'flex', margin: '0 auto', alignItems: 'center', columnGap: '5px' }}>
                         <Typography variant="body1" fontWeight="bold">
                             Número de protocolo:
                         </Typography>
@@ -92,7 +92,7 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                     <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography variant="body1" fontWeight="normal" textAlign="center">
                             Anote este número para acompanhar o andamento da sua denúncia. Para consultar o status do
-                            registro da denúncia basta inserir o número do protocolo no site:
+                            registro da denúncia basta inserir o número do protocolo na página:
                         </Typography>
                         <Link
                             href={'/ouvidoria/status-denuncia?company=' + query.company}
