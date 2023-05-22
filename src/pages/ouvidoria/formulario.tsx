@@ -70,13 +70,15 @@ const Form = ({ values }) => {
     return (
         <>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
-            <Grid container lg={8} xs={12} sx={{ margin: '30px auto' }}>
-                <JsonForm
-                    schemaForm={schema}
-                    values={values}
-                    onSubmit={onSubmit}
-                    msgSuccess={'Oba! Salvo com sucesso'}
-                />
+            <Grid container>
+                <Grid item lg={8} xs={12} sx={{ margin: '30px auto' }}>
+                    <JsonForm
+                        schemaForm={schema}
+                        values={values}
+                        onSubmit={onSubmit}
+                        msgSuccess={'Oba! Salvo com sucesso'}
+                    />
+                </Grid>
             </Grid>
         </>
     )
