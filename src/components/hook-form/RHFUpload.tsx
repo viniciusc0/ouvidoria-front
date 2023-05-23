@@ -1,115 +1,114 @@
-// form
-import { useFormContext, Controller } from 'react-hook-form';
-// @mui
-import { FormHelperText } from '@mui/material';
-//
-import { UploadAvatar, Upload, UploadBox, UploadProps } from '../upload';
+import { Controller, useFormContext } from 'react-hook-form'
 
-// ----------------------------------------------------------------------
+import { FormHelperText } from '@mui/material'
+// type
+import {
+    UploadAvatar,
+    UploadMultiFile,
+    UploadMultiFileProps,
+    UploadProps,
+    UploadSingleFile,
+} from '../upload'
 
 interface Props extends Omit<UploadProps, 'file'> {
-  name: string;
-  multiple?: boolean;
+    name: string
 }
-
-// ----------------------------------------------------------------------
 
 export function RHFUploadAvatar({ name, ...other }: Props) {
-  const { control } = useFormContext();
+    const { control } = useFormContext()
 
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState: { error } }) => {
-        const isError = !!error && !field.value;
+    return (
+        <Controller
+            name={name}
+            control={control}
+            render={({ field, fieldState: { error } }) => {
+                const checkError = !!error && !field.value
 
-        return (
-          <div>
-            <UploadAvatar
-              accept={{
-                'image/*': [],
-              }}
-              error={isError}
-              file={field.value}
-              {...other}
-            />
-
-            {isError && (
-              <FormHelperText error sx={{ px: 2, textAlign: 'center' }}>
-                {error.message}
-              </FormHelperText>
-            )}
-          </div>
-        );
-      }}
-    />
-  );
+                return (
+                    <div>
+                        <UploadAvatar
+                            error={checkError}
+                            {...other}
+                            file={field.value}
+                        />
+                        {checkError && (
+                            <FormHelperText
+                                error
+                                sx={{ px: 2, textAlign: 'center' }}
+                            >
+                                {error.message}
+                            </FormHelperText>
+                        )}
+                    </div>
+                )
+            }}
+        />
+    )
 }
 
-// ----------------------------------------------------------------------
+export function RHFUploadSingleFile({ name, ...other }: Props) {
+    const { control } = useFormContext()
 
-export function RHFUploadBox({ name, ...other }: Props) {
-  const { control } = useFormContext();
+    return (
+        <Controller
+            name={name}
+            control={control}
+            render={({ field, fieldState: { error } }) => {
+                const checkError = !!error && !field.value
 
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState: { error } }) => {
-        const isError = !!error && !field.value?.length;
-
-        return <UploadBox error={isError} files={field.value} {...other} />;
-      }}
-    />
-  );
+                return (
+                    <UploadSingleFile
+                        accept="image/*"
+                        file={field.value}
+                        error={checkError}
+                        helperText={
+                            checkError && (
+                                <FormHelperText error sx={{ px: 2 }}>
+                                    {error.message}
+                                </FormHelperText>
+                            )
+                        }
+                        {...other}
+                    />
+                )
+            }}
+        />
+    )
 }
 
-// ----------------------------------------------------------------------
+interface RHFUploadMultiFileProps extends Omit<UploadMultiFileProps, 'files'> {
+    name: string
+}
 
-export function RHFUpload({ name, multiple, ...other }: Props) {
-  const { control } = useFormContext();
+export function RHFUploadMultiFile({
+    name,
+    ...other
+}: RHFUploadMultiFileProps) {
+    const { control } = useFormContext()
 
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState: { error } }) => {
-        const isErrorWithSingle = !!error && !field.value;
+    return (
+        <Controller
+            name={name}
+            control={control}
+            render={({ field, fieldState: { error } }) => {
+                const checkError = !!error && field.value?.length === 0
 
-        const isErrorWithMultiple = !!error && !field.value?.length;
-
-        return multiple ? (
-          <Upload
-            multiple
-            accept={{ 'image/*': [] }}
-            files={field.value}
-            error={isErrorWithMultiple}
-            helperText={
-              isErrorWithMultiple && (
-                <FormHelperText error sx={{ px: 2 }}>
-                  {error?.message}
-                </FormHelperText>
-              )
-            }
-            {...other}
-          />
-        ) : (
-          <Upload
-            accept={{ 'image/*': [] }}
-            file={field.value}
-            error={isErrorWithSingle}
-            helperText={
-              isErrorWithSingle && (
-                <FormHelperText error sx={{ px: 2 }}>
-                  {error?.message}
-                </FormHelperText>
-              )
-            }
-            {...other}
-          />
-        );
-      }}
-    />
-  );
+                return (
+                    <UploadMultiFile
+                        accept="image/*"
+                        files={field.value}
+                        error={checkError}
+                        helperText={
+                            checkError && (
+                                <FormHelperText error sx={{ px: 2 }}>
+                                    {error?.message}
+                                </FormHelperText>
+                            )
+                        }
+                        {...other}
+                    />
+                )
+            }}
+        />
+    )
 }

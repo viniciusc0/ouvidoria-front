@@ -1,37 +1,37 @@
-// form
-import { useFormContext, Controller } from 'react-hook-form';
-// @mui
-import { FormHelperText } from '@mui/material';
-//
-import Editor, { EditorProps } from '../editor';
+import { Controller, useFormContext } from 'react-hook-form'
 
-// ----------------------------------------------------------------------
+import { FormHelperText } from '@mui/material'
+//
+import Editor, { Props as EditorProps } from '../editor'
 
 interface Props extends EditorProps {
-  name: string;
+    name: string
 }
 
 export default function RHFEditor({ name, ...other }: Props) {
-  const { control } = useFormContext();
+    const { control } = useFormContext()
 
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState: { error } }) => (
-        <Editor
-          id={name}
-          value={field.value}
-          onChange={field.onChange}
-          error={!!error}
-          helperText={
-            <FormHelperText error sx={{ px: 2, textTransform: 'capitalize' }}>
-              {error?.message}
-            </FormHelperText>
-          }
-          {...other}
+    return (
+        <Controller
+            name={name}
+            control={control}
+            render={({ field, fieldState: { error } }) => (
+                <Editor
+                    id={name}
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!error}
+                    helperText={
+                        <FormHelperText
+                            error
+                            sx={{ px: 2, textTransform: 'capitalize' }}
+                        >
+                            {error?.message}
+                        </FormHelperText>
+                    }
+                    {...other}
+                />
+            )}
         />
-      )}
-    />
-  );
+    )
 }

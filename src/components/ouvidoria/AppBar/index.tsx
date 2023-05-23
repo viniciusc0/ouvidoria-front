@@ -38,9 +38,7 @@ export default function DrawerAppBar(props: { window?: () => Window; logoUrl: st
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Grid>
-                <Image src={logoUrl} alt="logo" width="118px" height="60px" />
-            </Grid>
+            <Grid>{logoUrl && <Image src={logoUrl} alt="logo" width="118px" height="60px" />}</Grid>
             <Divider />
             <List>
                 {navItems.map((item, index) => (
@@ -73,7 +71,7 @@ export default function DrawerAppBar(props: { window?: () => Window; logoUrl: st
                         <MenuIcon />
                     </IconButton>
                     <Grid sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        <img src={logoUrl} alt="logo" />
+                        {logoUrl && <img src={logoUrl} alt="logo" />}
                     </Grid>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item, index) => (
