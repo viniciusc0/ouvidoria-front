@@ -11,7 +11,7 @@ type IPng = {
 }
 
 export type ICompanyInfo = {
-    id: number
+    id: string
     description: string
     status: true
     identity: string

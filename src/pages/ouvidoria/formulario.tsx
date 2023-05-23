@@ -1,7 +1,8 @@
 import { Grid, InputLabel, TextField } from '@mui/material'
+import ComplaintController from 'controllers/complaintController'
 import TenantController from 'controllers/tenantController'
-import { OuvidoriaFormSchema } from 'formSchemas/ouvidoriaFormSchema'
 import Cookies from 'js-cookie'
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
@@ -15,15 +16,13 @@ import AppBar from 'src/components/ouvidoria/AppBar'
 import NoCompany from 'src/components/ouvidoria/NoCompany'
 import TermosAceite from 'src/components/ouvidoria/TermoAceite'
 import { ICompanyInfo } from 'types/ICompanyInfo'
-import { ISchemaForm } from 'types/ISchemaForm'
+import { IComplaint } from 'types/IComplaint'
 
 const Form = ({ values }) => {
     const { enqueueSnackbar } = useSnackbar()
-    const [schema, setSchema] = useState<ISchemaForm[]>(OuvidoriaFormSchema)
 
-    const onSubmit = async data => {
-        console.log(data)
-    }
+    const [fileFieldValue, setFileFieldValue] = useState<File>()
+
     const [termAccepted, setTermAccepted] = useState(false)
 
     const router = useRouter()
@@ -34,6 +33,78 @@ const Form = ({ values }) => {
     const [checkIdentification, setCheckIdentification] = useState<string>('')
     const [initialValues, setInitialValues] = useState<any>([])
     const [checkTestemunhas, setCheckTestemunhas] = useState<string>()
+    const [checkTipoDenuncia, setCheckTipoDenuncia] = useState<string>()
+    const [checkRelacao, setCheckRelacao] = useState<string>()
+
+    const onSubmit = async data => {
+        if (!companyInfo) return
+        const complaintController = new ComplaintController()
+
+        const formData = {
+            ...data,
+            'data-ocorrencia': moment(data['data-ocorrencia']).format('YYYY-MM-DD'),
+        }
+
+        if (fileFieldValue) {
+            try {
+                const uploadImageResponse = await complaintController.uploadFile(fileFieldValue)
+                const filesIds = [] as string[]
+                uploadImageResponse.map(item => filesIds.push(item.id))
+                try {
+                    const formattedData: IComplaint = {
+                        tenant: companyInfo?.id,
+                        email: data.email,
+                        media: filesIds,
+                        response: formData,
+                    }
+                    const response = await complaintController.sendComplaint(formattedData)
+                    enqueueSnackbar('O protocolo é:  ' + response.data.protocol, {
+                        autoHideDuration: null,
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            try {
+                const formattedData: IComplaint = {
+                    tenant: companyInfo?.id,
+                    email: data.email,
+                    response: formData,
+                }
+                await complaintController.sendComplaint(formattedData)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (!router.isReady) return
+        setLoading(true)
+        const getInfo = async () => {
+            const tenantController = new TenantController()
+            try {
+                if (typeof company === 'string') {
+                    const data = await tenantController.getBasicInformation(company)
+                    setCompanyInfo(data)
+                } else {
+                    throw Error('invalid company')
+                }
+                setNoCompany(false)
+            } catch (error) {
+                setNoCompany(true)
+            }
+        }
+        getInfo()
+
+        if (Cookies.get('termoAceito') === 'sim') {
+            setTermAccepted(true)
+        }
+        setLoading(false)
+    }, [router.isReady])
 
     const relateTypes = [
         {
@@ -92,14 +163,134 @@ const Form = ({ values }) => {
             group: 'Favorecimento',
         },
         {
+            value: 'subtracao-de-bens-ou-dinheiro-pessoais',
+            label: 'Pessoais',
+            group: 'Subtração de bens ou dinheiro',
+        },
+        {
+            value: 'subtracao-de-bens-ou-dinheiro-da-empresa',
+            label: 'da Empresa',
+            group: 'Subtração de bens ou dinheiro',
+        },
+        {
             value: 'utilizacao-indevida-de-bens-depreciacao',
             label: 'Depreciação',
-            group: 'Indevido',
+            group: 'Utilização indevida',
         },
         {
             value: 'utilizacao-indevida-de-bens-patrimonio',
-            label: 'Utilização indevida do patrimonio Empresa',
-            group: 'Indevido',
+            label: 'Uso indevido do patrimônio da empresa',
+            group: 'Utilização indevida',
+        },
+        {
+            value: 'uso-indevido-da-marca',
+            label: 'Uso indevido da marca',
+            group: 'Utilização indevida',
+        },
+        {
+            value: 'uso-indevido-de-recursos-da-empresa',
+            label: 'Uso indevido de recursos da empresa',
+            group: 'Utilização indevida',
+        },
+        {
+            value: 'utilizacao-indevida-de-informacoes privilegiadas',
+            label: 'Utilização indevida de informações privilegiadas',
+            group: 'Utilização indevida',
+        },
+        {
+            value: 'violacao-de-leis-ambientais',
+            label: 'Violação de Leis Ambientais',
+            group: 'Meio ambiente',
+        },
+        {
+            value: 'falsificacao-de-documento-da-empresa',
+            label: 'Falsificação de documento da empresa',
+            group: 'Falsificação',
+        },
+        {
+            value: 'criar-ou-ignorar-perigos-ambientais-ou-de seguranca',
+            label: 'Criar/Ignorar perigos ambientais ou de segurança',
+            group: 'Perigos',
+        },
+        {
+            value: 'conduta-inadequada-dos-nossos-motoristas-de-transito',
+            label: 'Conduta inadequada dos nossos motoristas de trânsito',
+            group: 'Conduta',
+        },
+        {
+            value: 'conduta-do-colaborador',
+            label: 'Conduta do colaborador',
+            group: 'Conduta',
+        },
+        {
+            value: 'conduta-do-gestor',
+            label: 'Conduta do gestor',
+            group: 'Conduta',
+        },
+        {
+            value: 'relacoes-com-a-comunidade',
+            label: 'Relações com a comunidade',
+            group: 'Relações',
+        },
+        {
+            value: 'relacoes-com-o-setor-publico',
+            label: 'Relações com o Setor Público',
+            group: 'Relações',
+        },
+        {
+            value: 'relacoes-com-o-sindicato',
+            label: 'Relações com o Sindicato',
+            group: 'Relações',
+        },
+        {
+            value: 'vazamento-de-dados-pessoais',
+            label: 'Vazamento de dados Pessoais',
+            group: 'Outros',
+        },
+        {
+            value: 'corrupcao',
+            label: 'Corrupção',
+            group: 'Outros',
+        },
+        {
+            value: 'conflito-de-interesses',
+            label: 'Conflito de interesses',
+            group: 'Outros',
+        },
+        {
+            value: 'fraude',
+            label: 'Fraude',
+            group: 'Outros',
+        },
+        {
+            value: 'infracao-aos-direitos-humanos-e-discriminacao',
+            label: 'Infração aos direitos humanos e discriminação',
+            group: 'Outros',
+        },
+        {
+            value: 'descumprimento-de-politicas-normas-ou-procedimentos internos',
+            label: 'Descumprimento de Políticas, Normas ou Procedimentos Internos',
+            group: 'Outros',
+        },
+        {
+            value: 'destruicao-ou-danos-de-ativos-da-empresa',
+            label: 'Destruição ou danos de ativos da empresa',
+            group: 'Outros',
+        },
+        {
+            value: 'trabalho-infantil-escravo-ou-forçado',
+            label: 'Trabalho infantil, escravo ou forçado',
+            group: 'Outros',
+        },
+        {
+            value: 'uso-de-alcool-drogas-ou-porte-e-comercio-de-armas',
+            label: 'Uso de alcool, drogas ou porte e comércio de armas',
+            group: 'Outros',
+        },
+        {
+            value: 'especificar',
+            label: 'Outro - especificar',
+            group: 'Outros',
         },
     ]
 
@@ -197,7 +388,7 @@ const Form = ({ values }) => {
         },
         {
             name: 'email',
-            label: 'Qual o seu melhor horário para contato',
+            label: 'Qual o seu melhor horário para contato?',
             ui: { grid: 6 },
             groupKey: 'personalData',
             required: true,
@@ -244,10 +435,6 @@ const Form = ({ values }) => {
                     label: 'Ex-colaborador da empresa',
                 },
                 {
-                    value: 'exColaborador',
-                    label: 'Ex-colaborador da empresa',
-                },
-                {
                     value: 'cliente',
                     label: 'Cliente da empresa',
                 },
@@ -260,14 +447,28 @@ const Form = ({ values }) => {
                     label: 'Comunidade no entorno da empresa',
                 },
                 {
-                    value: 'outro',
+                    value: 'especificar',
                     label: 'Outro - Especificar',
                 },
             ],
+            onChange(e) {
+                setCheckRelacao(e.target.value)
+            },
+        },
+        {
+            name: 'teste',
+            label: 'Especifique o tipo de denúncia',
+            groupKey: 'relationForBusiness',
+            ui: { grid: 12 },
+            required: true,
+            componenttype:
+                checkRelacao && checkRelacao == 'especificar'
+                    ? ApolloFormSchemaComponentType.TEXT
+                    : ApolloFormSchemaComponentType.HIDDEN,
         },
         {
             name: 'infracao',
-            label: 'Qual infração do código de ética ocorreu? Link Código de ética',
+            label: 'Qual infração do código de ética ocorreu? Link do Código de ética',
             groupKey: 'raleteInfration',
             ui: { grid: 12 },
             required: true,
@@ -289,6 +490,21 @@ const Form = ({ values }) => {
             required: true,
             componenttype: ApolloFormSchemaComponentType.SELECTSEARCH,
             options: relateTypes,
+            onChange(e) {
+                console.log(e)
+                setCheckTipoDenuncia(e.target.value)
+            },
+        },
+        {
+            name: 'especificar-tipo-denuncia',
+            label: 'Especifique o tipo de denúncia',
+            groupKey: 'infoRelate',
+            ui: { grid: 12 },
+            required: true,
+            componenttype:
+                checkTipoDenuncia === 'especificar'
+                    ? ApolloFormSchemaComponentType.TEXT
+                    : ApolloFormSchemaComponentType.HIDDEN,
         },
         {
             name: 'local-ocorrencia',
@@ -403,8 +619,8 @@ Escreva o máximo de detalhes possível`,
             ],
         },
         {
-            name: 'evidência',
-            label: 'Caso você tenha evidências sobre o fato video, foto, documento etc) faça o upload do arquivo aqui o tamanho máximo do arquivo 1GB',
+            name: 'evidencia',
+            label: '',
             groupKey: 'infoRelate',
             ui: { grid: 12 },
             required: true,
@@ -412,40 +628,23 @@ Escreva o máximo de detalhes possível`,
                 return (
                     <Grid item>
                         <Grid item xs={12}>
-                            <InputLabel id="demo-simple-select-label">Escolha seu arquivo:</InputLabel>
+                            <InputLabel id="demo-simple-select-label">
+                                Caso você tenha evidências sobre o fato, faça o upload do arquivo aqui. Tamanho máximo:
+                                1GB
+                            </InputLabel>
                         </Grid>
-                        <TextField type="file" />
+                        <TextField
+                            type="file"
+                            multiple
+                            onChange={e => {
+                                setFileFieldValue(e.target.files[0])
+                            }}
+                        />
                     </Grid>
                 )
             },
         },
     ]
-
-    useEffect(() => {
-        if (!router.isReady) return
-
-        const getInfo = async () => {
-            setLoading(true)
-            const tenantController = new TenantController()
-            try {
-                if (typeof company === 'string') {
-                    const data = await tenantController.getBasicInformation(company)
-                    setCompanyInfo(data)
-                } else {
-                    throw Error('invalid company')
-                }
-                setNoCompany(false)
-            } catch (error) {
-                setNoCompany(true)
-            }
-            setLoading(false)
-        }
-        getInfo()
-
-        if (Cookies.get('termoAceito') === 'sim') {
-            setTermAccepted(true)
-        }
-    }, [router.isReady])
 
     if (loading) return <Loading />
 
