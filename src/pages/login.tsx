@@ -1,15 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { LoadingButton } from '@mui/lab'
-import { Alert, Card, Container, Grid, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
+import { Card, Container, Grid, Stack, Typography } from '@mui/material'
 import AuthController from 'controllers/authController'
-import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LoginProps } from 'services/requests/usersAuth/types'
 import { AuthTypes } from 'src/auth/JwtContext'
 import { useAuthContext } from 'src/auth/useAuthContext'
-import FormProvider, { RHFTextField } from 'src/components/hook-form'
-import Iconify from 'src/components/iconify'
+import ApolloForm, {
+    ApolloFormSchemaComponentType,
+    ApolloFormSchemaItem,
+} from 'src/components/apollo-form/ApolloForm.component'
 import * as Yup from 'yup'
 
 // ----------------------------------------------------------------------
@@ -65,6 +65,25 @@ function AuthLoginForm() {
         }
     }
 
+    const formSchema: ApolloFormSchemaItem[] = [
+        {
+            name: 'identifier',
+            label: 'E-mail',
+            ui: { grid: 12 },
+            componenttype: ApolloFormSchemaComponentType.TEXT,
+
+            required: true,
+        },
+        {
+            name: 'password',
+            label: 'Senha',
+            ui: { grid: 12 },
+            componenttype: ApolloFormSchemaComponentType.PASSWORD,
+
+            required: true,
+        },
+    ]
+
     useEffect(() => {
         dispatch({
             type: AuthTypes.LOGOUT,
@@ -74,58 +93,46 @@ function AuthLoginForm() {
     return (
         <Card sx={{ width: '100%', padding: '50px', height: '100%', boxShadow: '1px 1px 10px #cecece' }}>
             <Grid item sx={{ textAlign: 'center', padding: '20px 0' }}>
-                <Typography variant="h4">Bem vindo ao Latlong App</Typography>
-                <Typography variant="body2">Dando sentido ao seu negócio</Typography>
+                <Typography variant="h4">Bem vindo ao Lorem ipsum</Typography>
+                <Typography variant="body2">Lorem ipsum</Typography>
             </Grid>
-            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing={3}>
-                    {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-                    <RHFTextField name="identifier" label="Email" />
+            <Stack spacing={3}>
+                <ApolloForm
+                    schema={formSchema}
+                    onSubmit={onSubmit}
+                    submitButtonText="Login"
+                    defaultExpandedGroup={false}
+                />
+            </Stack>
 
-                    <RHFTextField
-                        name="password"
-                        label="Senha"
-                        type={showPassword ? 'text' : 'password'}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Stack>
+            {/* <Stack alignItems="flex-end" sx={{ my: 2 }}>
+                <NextLink href={'/forgot-password'} passHref>
+                    <Link variant="body2" color="inherit" underline="always">
+                        Esqueceu sua senha?
+                    </Link>
+                </NextLink>
+            </Stack> */}
 
-                <Stack alignItems="flex-end" sx={{ my: 2 }}>
-                    <NextLink href={'/forgot-password'} passHref>
-                        <Link variant="body2" color="inherit" underline="always">
-                            Esqueceu sua senha?
-                        </Link>
-                    </NextLink>
-                </Stack>
-
-                <LoadingButton
-                    fullWidth
-                    color="inherit"
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    loading={false}
-                    sx={{
-                        bgcolor: 'primary.main',
+            {/* <LoadingButton
+                fullWidth
+                color="inherit"
+                size="large"
+                type="submit"
+                variant="contained"
+                loading={false}
+                sx={{
+                    bgcolor: 'primary.main',
+                    color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+                    '&:hover': {
+                        bgcolor: 'primary.dark',
                         color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-                        '&:hover': {
-                            bgcolor: 'primary.dark',
-                            color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-                        },
-                    }}
-                >
-                    Login
-                </LoadingButton>
-            </FormProvider>
+                    },
+                }}
+            >
+                Login
+            </LoadingButton> */}
+            {/* </FormProvider> */}
         </Card>
     )
 }
