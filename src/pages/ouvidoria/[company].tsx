@@ -57,15 +57,12 @@ function Home() {
                     width: '100%',
                 }}
             >
-                <Grid
-                    lg={8}
-                    xs={12}
-                    item
-                    sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', rowGap: '25px' }}
-                >
+                <Grid item xs={12}>
                     <Typography variant="h1" color={'white'}>
                         {companyInfo?.title_banner}
                     </Typography>
+                </Grid>
+                <Grid item xs={12}>
                     <Typography variant="h4" color={'white'} fontWeight="300">
                         {companyInfo?.subtitle_banner}
                     </Typography>
