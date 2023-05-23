@@ -1,6 +1,6 @@
-import { TableRow, TableCell } from '@mui/material'
+import { TableCell, TableRow } from '@mui/material'
 //
-import EmptyContent from '../EmptyContent'
+import EmptyContent from '../empty-content'
 
 type Props = {
     isNotFound: boolean
@@ -14,9 +14,7 @@ export default function TableNoData({ isNotFound }: Props) {
                     <TableCell colSpan={9}>
                         <EmptyContent
                             title="Ops! Nenhuma informação encontrada."
-                            img={
-                                'https://minimals.cc/assets/illustrations/illustration_empty_content.svg'
-                            }
+                            img={'https://minimals.cc/assets/illustrations/illustration_empty_content.svg'}
                             sx={{
                                 '& span.MuiBox-root': { height: 160 },
                             }}

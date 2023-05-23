@@ -1,95 +1,95 @@
-import { useState } from 'react';
+import { useState } from 'react'
 // @mui
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 // hooks
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from '../../hooks/useResponsive'
 // auth
-import AuthGuard from '../../auth/AuthGuard';
+import AuthGuard from '../../auth/AuthGuard'
 // components
-import { useSettingsContext } from '../../components/settings';
+import { useSettingsContext } from '../../components/settings'
 //
-import Main from './Main';
-import Header from './header';
-import NavMini from './nav/NavMini';
-import NavVertical from './nav/NavVertical';
-import NavHorizontal from './nav/NavHorizontal';
+import Main from './Main'
+import Header from './header'
+import NavHorizontal from './nav/NavHorizontal'
+import NavMini from './nav/NavMini'
+import NavVertical from './nav/NavVertical'
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  children?: React.ReactNode;
-};
+    children?: React.ReactNode
+}
 
 export default function DashboardLayout({ children }: Props) {
-  const { themeLayout } = useSettingsContext();
+    const { themeLayout } = useSettingsContext()
 
-  const isDesktop = useResponsive('up', 'lg');
+    const isDesktop = useResponsive('up', 'lg')
 
-  const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
 
-  const isNavHorizontal = themeLayout === 'horizontal';
+    const isNavHorizontal = themeLayout === 'horizontal'
 
-  const isNavMini = themeLayout === 'mini';
+    const isNavMini = themeLayout === 'mini'
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const renderNavVertical = <NavVertical openNav={open} onCloseNav={handleClose} />;
-
-  const renderContent = () => {
-    if (isNavHorizontal) {
-      return (
-        <>
-          <Header onOpenNav={handleOpen} />
-
-          {isDesktop ? <NavHorizontal /> : renderNavVertical}
-
-          <Main>{children}</Main>
-        </>
-      );
+    const handleOpen = () => {
+        setOpen(true)
     }
 
-    if (isNavMini) {
-      return (
-        <>
-          <Header onOpenNav={handleOpen} />
-
-          <Box
-            sx={{
-              display: { lg: 'flex' },
-              minHeight: { lg: 1 },
-            }}
-          >
-            {isDesktop ? <NavMini /> : renderNavVertical}
-
-            <Main>{children}</Main>
-          </Box>
-        </>
-      );
+    const handleClose = () => {
+        setOpen(false)
     }
 
-    return (
-      <>
-        <Header onOpenNav={handleOpen} />
+    const renderNavVertical = <NavVertical openNav={open} onCloseNav={handleClose} />
 
-        <Box
-          sx={{
-            display: { lg: 'flex' },
-            minHeight: { lg: 1 },
-          }}
-        >
-          {renderNavVertical}
+    const renderContent = () => {
+        if (isNavHorizontal) {
+            return (
+                <>
+                    <Header onOpenNav={handleOpen} />
 
-          <Main>{children}</Main>
-        </Box>
-      </>
-    );
-  };
+                    {isDesktop ? <NavHorizontal /> : renderNavVertical}
 
-  return <AuthGuard> {renderContent()} </AuthGuard>;
+                    <Main>{children}</Main>
+                </>
+            )
+        }
+
+        if (isNavMini) {
+            return (
+                <>
+                    <Header onOpenNav={handleOpen} />
+
+                    <Box
+                        sx={{
+                            display: { lg: 'flex' },
+                            minHeight: { lg: 1 },
+                        }}
+                    >
+                        {isDesktop ? <NavMini /> : renderNavVertical}
+
+                        <Main>{children}</Main>
+                    </Box>
+                </>
+            )
+        }
+
+        return (
+            <>
+                <Header onOpenNav={handleOpen} />
+
+                <Box
+                    sx={{
+                        display: { lg: 'flex' },
+                        minHeight: { lg: 1 },
+                    }}
+                >
+                    {renderNavVertical}
+
+                    <Main>{children}</Main>
+                </Box>
+            </>
+        )
+    }
+
+    return <AuthGuard> {renderContent()} </AuthGuard>
 }

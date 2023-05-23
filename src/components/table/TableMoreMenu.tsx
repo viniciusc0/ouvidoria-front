@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material'
 //
 import Iconify from '../Iconify'
-import MenuPopover from '../MenuPopover'
+import MenuPopover from '../menu-popover'
 
 type Props = {
     actions: React.ReactNode | any
@@ -10,21 +10,12 @@ type Props = {
     onOpen?: (event: React.MouseEvent<HTMLElement>) => void
 }
 
-export default function TableMoreMenu({
-    actions,
-    open,
-    onClose,
-    onOpen,
-}: Props) {
+export default function TableMoreMenu({ actions, open, onClose, onOpen }: Props) {
     return (
         <>
             {actions != undefined && (
                 <IconButton onClick={onOpen}>
-                    <Iconify
-                        icon={'eva:more-vertical-fill'}
-                        width={20}
-                        height={20}
-                    />
+                    <Iconify icon={'eva:more-vertical-fill'} width={20} height={20} />
                 </IconButton>
             )}
 
