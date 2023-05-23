@@ -1,11 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import {
-    Autocomplete,
-    autocompleteClasses,
-    TextField,
-    TextFieldProps,
-} from '@mui/material'
+import { Autocomplete, autocompleteClasses, TextField, TextFieldProps } from '@mui/material'
 import { ApolloFormSchemaOptions } from '../apollo-form/ApolloForm.component'
 import Iconify from '../Iconify'
 
@@ -15,12 +10,7 @@ interface IProps {
     defaultValue: ApolloFormSchemaOptions
 }
 
-export default function RHFAutoComplete({
-    name,
-    options,
-    defaultValue,
-    ...other
-}: IProps & TextFieldProps) {
+export default function RHFAutoComplete({ name, options, defaultValue, ...other }: IProps & TextFieldProps) {
     const { control } = useFormContext()
     const { label } = other
     //@TODO Atualmente o reactHookForm não trata esse campo como required, logo
@@ -37,21 +27,12 @@ export default function RHFAutoComplete({
                     multiple={false}
                     freeSolo={false}
                     options={options}
-                    getOptionLabel={(option: ApolloFormSchemaOptions) =>
-                        option?.label || ''
+                    getOptionLabel={(option: ApolloFormSchemaOptions) => option?.label || ''}
+                    isOptionEqualToValue={(option: ApolloFormSchemaOptions, value: ApolloFormSchemaOptions) =>
+                        option ? option.value === value.value : false
                     }
-                    isOptionEqualToValue={(
-                        option: ApolloFormSchemaOptions,
-                        value: ApolloFormSchemaOptions,
-                    ) => (option ? option.value === value.value : false)}
                     groupBy={option => option?.group || 'Sem Grupo'}
-                    popupIcon={
-                        <Iconify
-                            icon={'ic:baseline-search'}
-                            width={25}
-                            height={25}
-                        />
-                    }
+                    popupIcon={<Iconify icon={'ic:baseline-search'} width={25} height={25} />}
                     sx={{
                         [`& .${autocompleteClasses.popupIndicator}`]: {
                             transform: 'none',
@@ -66,17 +47,12 @@ export default function RHFAutoComplete({
                                 ...params.inputProps,
                                 autoComplete: 'disabled',
                             }}
-                            {...other}
                             required={other.required}
-                            error={
-                                control._formState.submitCount > 0 &&
-                                other.required
-                            }
+                            error={control._formState.submitCount > 0 && other.required}
                             helperText={
-                                control._formState.submitCount > 0 &&
-                                other.required &&
-                                `${other.label} é obrigatório`
+                                control._formState.submitCount > 0 && other.required && `${other.label} é obrigatório`
                             }
+                            autoComplete="false"
                         />
                     )}
                     onChange={(event, values, reason) => onChange(values)}

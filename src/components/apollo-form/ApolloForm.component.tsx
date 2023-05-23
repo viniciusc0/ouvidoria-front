@@ -124,6 +124,20 @@ export enum ApolloFormSchemaComponentType {
     PERCENTAGE,
 }
 
+export interface CustomButtonsForm {
+    label: string
+    action: () => void
+    disabled?: boolean
+    variant?: 'contained' | 'outlined'
+    order?: number
+    color?: 'inherit' | 'error' | 'warning' | 'success' | 'info' | 'primary' | 'secondary'
+}
+
+export interface OrderDisplayButtonsForm {
+    identity: 'submitButton' | 'cancelButton'
+    order: number
+}
+
 export interface ApolloFormProps {
     groups?: ApolloFormSchemaGroup[]
     schema: ApolloFormSchemaItem[]
@@ -145,6 +159,8 @@ export interface ApolloFormProps {
     cancelButtonTitle?: string
     filterClean?: () => void
     cancelAction?: () => void
+    customButtons?: CustomButtonsForm[]
+    orderButtons?: OrderDisplayButtonsForm[]
 }
 
 export function formError(error: any, enqueueSnackbar: any) {
@@ -204,7 +220,7 @@ export function formError(error: any, enqueueSnackbar: any) {
             autoHideDuration: 9000,
         })
     } else {
-        enqueueSnackbar('Ocorreu um erro não esperado, por favor tente novamente mais tarde.', {
+        enqueueSnackbar('Ops! É necessário preencher todos os campos destacados antes de enviar.', {
             variant: 'error',
             autoHideDuration: 9000,
         })
@@ -279,9 +295,11 @@ const ApolloForm: React.FC<ApolloFormProps> = ({
     cancelPath,
     showCancelButtom,
     cancelButtonTitle,
-    defaultExpandedGroup = true,
+    defaultExpandedGroup = false,
     filterClean,
     cancelAction,
+    customButtons,
+    orderButtons,
 }) => {
     const isDesktop = useResponsive('up', 'lg')
 
@@ -427,7 +445,12 @@ const ApolloForm: React.FC<ApolloFormProps> = ({
     )
 
     const templateRenderField = (itemGroup: ApolloFormSchemaGroup, index: number) => (
-        <Grid item xs={12} visibility={itemGroup.visible == false ? 'hidden' : 'visible'}>
+        <Grid
+            item
+            xs={12}
+            visibility={itemGroup.visible == false ? 'hidden' : 'visible'}
+            sx={{ display: itemGroup.visible == false ? 'none' : 'block' }}
+        >
             <Box
                 sx={{
                     display: 'flex',
@@ -561,15 +584,26 @@ const ApolloForm: React.FC<ApolloFormProps> = ({
                                         </Button>
                                     </Grid>
                                 )}
+
                                 {!isFilter && showCancelButtom && (
-                                    <Grid item>
+                                    <Grid
+                                        item
+                                        order={
+                                            orderButtons?.find(button => button.identity == 'cancelButton')?.order || 0
+                                        }
+                                    >
                                         <Button onClick={() => handleCancel()} variant="contained" color="inherit">
                                             {cancelButtonTitle ? cancelButtonTitle : 'Cancelar'}
                                         </Button>
                                     </Grid>
                                 )}
                                 {onSubmit && (
-                                    <Grid item>
+                                    <Grid
+                                        item
+                                        order={
+                                            orderButtons?.find(button => button.identity == 'submitButton')?.order || 0
+                                        }
+                                    >
                                         <LoadingButton
                                             onClick={handleSubmit(onSubmitCustom, onError)}
                                             type="submit"
@@ -581,6 +615,20 @@ const ApolloForm: React.FC<ApolloFormProps> = ({
                                         </LoadingButton>
                                     </Grid>
                                 )}
+                                {customButtons &&
+                                    customButtons.length &&
+                                    customButtons.map(customButtom => (
+                                        <Grid item order={customButtom.order || 0}>
+                                            <Button
+                                                variant={customButtom.variant || 'contained'}
+                                                color={customButtom.color || 'primary'}
+                                                onClick={customButtom.action}
+                                                disabled={customButtom.disabled || false}
+                                            >
+                                                {customButtom.label}
+                                            </Button>
+                                        </Grid>
+                                    ))}
                             </Grid>
                         </Box>
                     </Box>

@@ -15,6 +15,9 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 
 // lazy image
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { ptBR } from 'date-fns/locale'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
 // ----------------------------------------------------------------------
@@ -66,21 +69,23 @@ export default function MyApp(props: MyAppProps) {
             </Head>
 
             <AuthProvider>
-                <StorageProvider>
-                    <SettingsProvider>
-                        <MotionLazyContainer>
-                            <ThemeProvider>
-                                <ThemeSettings>
-                                    <SnackbarProvider>
-                                        <StyledChart />
-                                        <ProgressBar />
-                                        {getLayout(<Component {...pageProps} />)}
-                                    </SnackbarProvider>
-                                </ThemeSettings>
-                            </ThemeProvider>
-                        </MotionLazyContainer>
-                    </SettingsProvider>
-                </StorageProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ptBR}>
+                    <StorageProvider>
+                        <SettingsProvider>
+                            <MotionLazyContainer>
+                                <ThemeProvider>
+                                    <ThemeSettings>
+                                        <SnackbarProvider>
+                                            <StyledChart />
+                                            <ProgressBar />
+                                            {getLayout(<Component {...pageProps} />)}
+                                        </SnackbarProvider>
+                                    </ThemeSettings>
+                                </ThemeProvider>
+                            </MotionLazyContainer>
+                        </SettingsProvider>
+                    </StorageProvider>
+                </LocalizationProvider>
             </AuthProvider>
         </CacheProvider>
     )
