@@ -491,7 +491,7 @@ const Form = ({ values }) => {
             componenttype: ApolloFormSchemaComponentType.SELECTSEARCH,
             options: relateTypes,
             onChangeSelectSearch(e) {
-                setCheckTipoDenuncia(e)
+                if (e) setCheckTipoDenuncia(e.value)
             },
         },
         {
