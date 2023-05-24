@@ -94,13 +94,13 @@ function StatusDenunciaPage() {
                             id="outlined-basic"
                             fullWidth
                         />
-                        <Grid display="flex" flexDirection="column" rowGap="10px">
-                            <LoadingButton loading={loadingComplaints} variant="contained" onClick={handleSubmitButton}>
-                                Consultar
-                            </LoadingButton>
+                        <Grid display="flex" flexDirection="row" gap="10px" justifyContent={'right'}>
                             <Button variant="outlined" onClick={() => router.back()}>
                                 Voltar
                             </Button>
+                            <LoadingButton loading={loadingComplaints} variant="contained" onClick={handleSubmitButton}>
+                                Consultar
+                            </LoadingButton>
                         </Grid>
                     </Card>
                 </Grid>
