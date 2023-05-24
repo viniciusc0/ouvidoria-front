@@ -457,7 +457,7 @@ const Form = ({ values }) => {
         },
         {
             name: 'especificar-tipo-relacao',
-            label: 'Especifique o tipo de denúncia',
+            label: 'Especifique o tipo de relação',
             groupKey: 'relationForBusiness',
             ui: { grid: 12 },
             required: true,
