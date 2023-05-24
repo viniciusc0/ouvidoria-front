@@ -13,6 +13,7 @@ const withTM = require('next-transpile-modules')([
 module.exports = withTM({
     swcMinify: false,
     trailingSlash: true,
+
     env: {
         // HOST
         envs: {
@@ -21,16 +22,16 @@ module.exports = withTM({
         HOST_API_KEY: '',
     },
     images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'strapi-adv-doc-s3.s3.amazonaws.com',
-        },
-        {
-          protocol: 'https',
-          hostname: 'canal.ouvidordigital.com.br',
-        },
-      ],
+        unoptimized: true,
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'strapi-adv-doc-s3.s3.amazonaws.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'canal.ouvidordigital.com.br',
+            },
+        ],
     },
 })
-
