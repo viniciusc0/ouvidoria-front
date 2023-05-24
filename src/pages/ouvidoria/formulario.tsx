@@ -14,6 +14,7 @@ import ApolloForm, {
 } from 'src/components/apollo-form/ApolloForm.component'
 import AppBar from 'src/components/ouvidoria/AppBar'
 import NoCompany from 'src/components/ouvidoria/NoCompany'
+import { SuccessMessageModal } from 'src/components/ouvidoria/SuccessMessageModal'
 import TermosAceite from 'src/components/ouvidoria/TermoAceite'
 import { ICompanyInfo } from 'types/ICompanyInfo'
 import { IComplaint } from 'types/IComplaint'
@@ -35,6 +36,8 @@ const Form = ({ values }) => {
     const [checkTestemunhas, setCheckTestemunhas] = useState<string>()
     const [checkTipoDenuncia, setCheckTipoDenuncia] = useState<string>()
     const [checkRelacao, setCheckRelacao] = useState<string>()
+    const [protocol, setProtocol] = useState<string>('')
+    const [openSuccesMessageModal, setOpenSuccessMessageModal] = useState<boolean>(false)
 
     const onSubmit = async data => {
         if (!companyInfo) return
@@ -58,14 +61,13 @@ const Form = ({ values }) => {
                         response: formData,
                     }
                     const response = await complaintController.sendComplaint(formattedData)
-                    enqueueSnackbar('O protocolo é:  ' + response.data.protocol, {
-                        autoHideDuration: null,
-                    })
+                    setProtocol(response.data.protocol)
+                    setOpenSuccessMessageModal(true)
                 } catch (error) {
                     console.log(error)
                 }
             } catch (error) {
-                console.log(error)
+                enqueueSnackbar('Erro ao enviar formulário', { variant: 'error' })
             }
         } else {
             try {
@@ -74,9 +76,11 @@ const Form = ({ values }) => {
                     email: data.email,
                     response: formData,
                 }
-                await complaintController.sendComplaint(formattedData)
+                const response = await complaintController.sendComplaint(formattedData)
+                setProtocol(response.data.protocol)
+                setOpenSuccessMessageModal(true)
             } catch (error) {
-                console.log(error)
+                enqueueSnackbar('Erro ao enviar formulário', { variant: 'error' })
             }
         }
     }
@@ -663,13 +667,6 @@ Escreva o máximo de detalhes possível`,
         <>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
             <Grid container lg={8} xs={12} sx={{ margin: '30px auto' }}>
-                {/* <JsonForm
-                    schemaForm={schema}
-                    values={values}
-                    onSubmit={onSubmit}
-                    msgSuccess={'Oba! Salvo com sucesso'}
-                /> */}
-
                 <ApolloForm
                     schema={formSchema}
                     onSubmit={onSubmit}
@@ -679,6 +676,11 @@ Escreva o máximo de detalhes possível`,
                     defaultExpandedGroup={true}
                 />
             </Grid>
+            <SuccessMessageModal
+                protocol={protocol}
+                open={openSuccesMessageModal}
+                setOpen={setOpenSuccessMessageModal}
+            />
         </>
     )
 }
