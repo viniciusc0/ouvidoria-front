@@ -31,7 +31,7 @@ export function HistoryofOccurencesModal({
                         xs={12}
                         margin="0 auto"
                         minHeight={'auto'}
-                        minWidth={'500px'}
+                        sx={{ minWidth: { xs: '100%', md: '500px' } }}
                     >
                         {(history &&
                             history.length > 0 &&
