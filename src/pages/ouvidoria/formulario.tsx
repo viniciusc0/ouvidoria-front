@@ -431,7 +431,7 @@ const Form = ({ values }) => {
                     label: 'Colaborador empresa',
                 },
                 {
-                    value: 'exColaborador',
+                    value: 'ex-colaborador',
                     label: 'Ex-colaborador da empresa',
                 },
                 {
@@ -439,7 +439,7 @@ const Form = ({ values }) => {
                     label: 'Cliente da empresa',
                 },
                 {
-                    value: 'fornecedor/prestador/credenciado',
+                    value: 'fornecedor-prestador-credenciado',
                     label: 'Fornecedor / Prestador/ Credenciado da empresa',
                 },
                 {
@@ -456,7 +456,7 @@ const Form = ({ values }) => {
             },
         },
         {
-            name: 'teste',
+            name: 'especificar-tipo-relacao',
             label: 'Especifique o tipo de denúncia',
             groupKey: 'relationForBusiness',
             ui: { grid: 12 },

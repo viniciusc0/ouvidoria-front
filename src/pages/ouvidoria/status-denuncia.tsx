@@ -1,12 +1,16 @@
+import { LoadingButton } from '@mui/lab'
 import { Button, Card, Grid, TextField, Typography } from '@mui/material'
+import ComplaintController from 'controllers/complaintController'
 import TenantController from 'controllers/tenantController'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
 import Loading from 'src/components/Loading'
 import AppBar from 'src/components/ouvidoria/AppBar'
-import ComplaintHistoryCard from 'src/components/ouvidoria/ComplaintHistoryCard'
+import { HistoryofOccurencesModal } from 'src/components/ouvidoria/HistoryOfOccurencesModal'
 import NoCompany from 'src/components/ouvidoria/NoCompany'
 import { ICompanyInfo } from 'types/ICompanyInfo'
+import { IPostHistory } from 'types/IPostHistory'
 
 function StatusDenunciaPage() {
     const [protocol, setProtocol] = useState('')
@@ -15,8 +19,10 @@ function StatusDenunciaPage() {
     const [companyInfo, setCompanyInfo] = useState<ICompanyInfo>()
     const [noCompany, setNoCompany] = useState(false)
     const [loading, setLoading] = useState(false)
-
-    const [historyOfOccurences, setHistoryOfOccurences] = useState('null')
+    const [loadingComplaints, setLoadingComplaints] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+    const [historyOfOccurences, setHistoryOfOccurences] = useState<IPostHistory[]>()
+    const { enqueueSnackbar } = useSnackbar()
 
     useEffect(() => {
         if (!router.isReady) return
@@ -40,8 +46,19 @@ function StatusDenunciaPage() {
         getInfo()
     }, [router.isReady])
 
-    function handleSubmitButton() {
-        console.log('protoclo')
+    async function handleSubmitButton() {
+        setLoadingComplaints(true)
+        const complaintController = new ComplaintController()
+        try {
+            const response = await complaintController.getHistoryOfComplaint(protocol)
+            setHistoryOfOccurences(response.posthistories)
+            setOpenModal(true)
+        } catch (error) {
+            enqueueSnackbar('Protocolo não encontrado!', {
+                variant: 'error',
+            })
+        }
+        setLoadingComplaints(false)
     }
 
     if (loading) return <Loading />
@@ -51,7 +68,7 @@ function StatusDenunciaPage() {
     return (
         <>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
-            <Grid container rowGap="30px" paddingBottom="50px">
+            <Grid container paddingBottom="50px">
                 <Grid item lg={8} xs={12} sx={{ margin: '80px auto 0 auto' }}>
                     <Card
                         sx={{
@@ -78,22 +95,19 @@ function StatusDenunciaPage() {
                             fullWidth
                         />
                         <Grid display="flex" flexDirection="column" rowGap="10px">
-                            <Button variant="contained" onClick={handleSubmitButton}>
+                            <LoadingButton loading={loadingComplaints} variant="contained" onClick={handleSubmitButton}>
                                 Consultar
-                            </Button>
+                            </LoadingButton>
                             <Button variant="outlined" onClick={() => router.back()}>
                                 Voltar
                             </Button>
                         </Grid>
                     </Card>
                 </Grid>
-                {historyOfOccurences && (
-                    <ComplaintHistoryCard
-                        data="18/12/20"
-                        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed ipsa sunt officia adipisci hic optio ex, minus nihil tempora odio a ad perferendis aliquam cumque minima atque. Nostrum, saepe?"
-                    />
-                )}
             </Grid>
+            {historyOfOccurences && (
+                <HistoryofOccurencesModal history={historyOfOccurences} open={openModal} setOpen={setOpenModal} />
+            )}
         </>
     )
 }

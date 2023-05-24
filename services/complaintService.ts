@@ -1,6 +1,7 @@
 import { IComplaint } from 'types/IComplaint'
-import api from './requests/api'
+import { IComplaintStatus } from 'types/IComplaintHistory'
 import { IImageUpload } from 'types/IImageUpload'
+import api from './requests/api'
 
 export default class ComplaintService {
     async sendComplaint(data: IComplaint) {
@@ -18,5 +19,9 @@ export default class ComplaintService {
                 },
             },
         )
+    }
+
+    async getHistoryOfComplaint(protocol: string): Promise<IComplaintStatus> {
+        return await api.get(`/posthistorybyprotocol/${protocol}`)
     }
 }

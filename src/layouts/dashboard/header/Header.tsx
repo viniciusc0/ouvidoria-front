@@ -147,14 +147,6 @@ export default function Header({ onOpenNav }: Props) {
                     px: { lg: 5 },
                 }}
             >
-                {/* <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    sx={{ display: { xs: 'none', sm: 'block' }, color: '#000' }}
-                >
-                    
-                </Typography> */}
                 {renderContent}
             </Toolbar>
         </AppBar>
