@@ -91,6 +91,7 @@ export interface ApolloFormSchemaItem {
     captionTranslateKey?: string
     disabled?: boolean
     hide?: boolean
+    onChangeSelectSearch?: (e: any) => void
 }
 
 export interface ApolloFormSchemaItemAdditionalProperties {

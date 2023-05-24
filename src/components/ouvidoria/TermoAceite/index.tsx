@@ -81,26 +81,6 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                     sx={{ margin: '30px 0', display: 'flex', flexDirection: 'column', rowGap: '30px' }}
                     item
                 >
-                    <Grid sx={{ display: 'flex', margin: '0 auto', alignItems: 'center', columnGap: '5px' }}>
-                        <Typography variant="body1" fontWeight="bold">
-                            Número de protocolo:
-                        </Typography>
-                        <Typography variant="body1" fontWeight="normal">
-                            1684331129697
-                        </Typography>
-                    </Grid>
-                    <Grid sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Typography variant="body1" fontWeight="normal" textAlign="center">
-                            Anote este número para acompanhar o andamento da sua denúncia. Para consultar o status do
-                            registro da denúncia basta inserir o número do protocolo na página:
-                        </Typography>
-                        <Link
-                            href={'/ouvidoria/status-denuncia?company=' + query.company}
-                            style={{ textAlign: 'center' }}
-                        >
-                            Página de status
-                        </Link>
-                    </Grid>
                     <Grid sx={{ display: 'flex' }}>
                         <Typography variant="body1" fontWeight="normal" textAlign="center">
                             Status disponível após 72 horas exclusivo para denúncias registradas. Casos de dúvida,

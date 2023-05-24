@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Autocomplete, autocompleteClasses, TextField, TextFieldProps } from '@mui/material'
-import { ApolloFormSchemaOptions } from '../apollo-form/ApolloForm.component'
+import { ApolloFormSchemaItem, ApolloFormSchemaOptions } from '../apollo-form/ApolloForm.component'
 import Iconify from '../Iconify'
 
 interface IProps {
@@ -10,7 +10,12 @@ interface IProps {
     defaultValue: ApolloFormSchemaOptions
 }
 
-export default function RHFAutoComplete({ name, options, defaultValue, ...other }: IProps & TextFieldProps) {
+export default function RHFAutoComplete({
+    name,
+    options,
+    defaultValue,
+    ...other
+}: IProps & TextFieldProps & ApolloFormSchemaItem) {
     const { control } = useFormContext()
     const { label } = other
     //@TODO Atualmente o reactHookForm não trata esse campo como required, logo
@@ -55,7 +60,12 @@ export default function RHFAutoComplete({ name, options, defaultValue, ...other 
                             autoComplete="false"
                         />
                     )}
-                    onChange={(event, values, reason) => onChange(values)}
+                    onChange={(event, values, reason) => {
+                        onChange(values)
+                        if (other.onChangeSelectSearch) {
+                            other.onChangeSelectSearch(values)
+                        }
+                    }}
                     value={value}
                     defaultValue={defaultValue}
                 />
