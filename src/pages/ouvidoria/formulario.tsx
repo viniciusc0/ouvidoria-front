@@ -635,9 +635,10 @@ Escreva o máximo de detalhes possível`,
                         </Grid>
                         <TextField
                             type="file"
-                            multiple
                             onChange={e => {
-                                setFileFieldValue(e.target.files[0])
+                                const target = e.target as HTMLInputElement
+                                const files = target.files as FileList
+                                setFileFieldValue(files[0])
                             }}
                         />
                     </Grid>

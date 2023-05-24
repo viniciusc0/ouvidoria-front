@@ -1,14 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { LoadingButton } from '@mui/lab'
-import { Alert, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
+import { Link, Stack, Typography } from '@mui/material'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RegisterProps } from 'services/requests/usersAuth/types'
 import { useAuthContext } from 'src/auth/useAuthContext'
-import FormProvider, { RHFTextField } from 'src/components/hook-form'
-import Iconify from 'src/components/iconify'
 import LoginLayout from 'src/layouts/login'
 import * as Yup from 'yup'
 
@@ -100,49 +97,50 @@ function AuthRegisterForm() {
     }
 
     return (
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2.5}>
-                {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+        <></>
+        // <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        //     <Stack spacing={2.5}>
+        //         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                    <RHFTextField name="username" label="Nome de usuário" />
-                    <RHFTextField name="email" label="Email" />
-                </Stack>
+        //         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+        //             <RHFTextField name="username" label="Nome de usuário" />
+        //             <RHFTextField name="email" label="Email" />
+        //         </Stack>
 
-                <RHFTextField
-                    name="password"
-                    label="Senha"
-                    type={showPassword ? 'text' : 'password'}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                />
+        //         <RHFTextField
+        //             name="password"
+        //             label="Senha"
+        //             type={showPassword ? 'text' : 'password'}
+        //             InputProps={{
+        //                 endAdornment: (
+        //                     <InputAdornment position="end">
+        //                         <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+        //                             <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+        //                         </IconButton>
+        //                     </InputAdornment>
+        //                 ),
+        //             }}
+        //         />
 
-                <LoadingButton
-                    fullWidth
-                    color="inherit"
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    loading={isSubmitting}
-                    sx={{
-                        bgcolor: 'text.primary',
-                        color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-                        '&:hover': {
-                            bgcolor: 'text.primary',
-                            color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-                        },
-                    }}
-                >
-                    Criar conta
-                </LoadingButton>
-            </Stack>
-        </FormProvider>
+        //         <LoadingButton
+        //             fullWidth
+        //             color="inherit"
+        //             size="large"
+        //             type="submit"
+        //             variant="contained"
+        //             loading={isSubmitting}
+        //             sx={{
+        //                 bgcolor: 'text.primary',
+        //                 color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+        //                 '&:hover': {
+        //                     bgcolor: 'text.primary',
+        //                     color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+        //                 },
+        //             }}
+        //         >
+        //             Criar conta
+        //         </LoadingButton>
+        //     </Stack>
+        // </FormProvider>
     )
 }

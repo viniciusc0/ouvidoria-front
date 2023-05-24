@@ -27,20 +27,10 @@ export default function ApolloGridTableToolbar({
     style,
 }: Props) {
     return (
-        <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ py: 2.5, px: 3 }}
-            style={style}
-        >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 2.5, px: 3 }} style={style}>
             {filterSchema && (
                 <ApolloForm
-                    onSubmit={
-                        filterSubmit
-                            ? (values: any) => filterSubmit(values)
-                            : null
-                    }
+                    onSubmit={filterSubmit ? (values: any) => filterSubmit(values) : null}
                     submitButtonText="Filtrar"
                     schema={filterSchema}
                     isFilter={false}

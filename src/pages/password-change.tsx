@@ -1,12 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { LoadingButton } from '@mui/lab'
-import { Alert, Card, Container, Grid, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { Card, Container, Grid, Typography } from '@mui/material'
 import AuthController from 'controllers/authController'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import FormProvider, { RHFTextField } from 'src/components/hook-form'
-import Iconify from 'src/components/iconify'
+import { useForm } from 'react-hook-form'
 import { INewPassword } from 'types/IAuth'
 import * as Yup from 'yup'
 
@@ -95,7 +92,7 @@ function Form() {
                     Digite a nova senha abaixo
                 </Typography>
             </Grid>
-            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            {/* <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={3}>
                     {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
                     {!errors.afterSubmit && successMessage && (
@@ -175,7 +172,7 @@ function Form() {
                 >
                     {arePasswordsEqual() ? 'Enviar' : 'As senhas não coincidem'}
                 </LoadingButton>
-            </FormProvider>
+            </FormProvider> */}
         </Card>
     )
 }

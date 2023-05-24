@@ -5,11 +5,8 @@ import { MenuItem, TableCell, TableRow } from '@mui/material'
 // import {Iconify} from '@iob360/shared'
 // import {Table} from '@iob360/shared'
 import { get } from 'lodash'
-import { Iconify } from '../../../components'
-import {
-    TableMoreMenu,
-    TableSchemaColumnProps,
-} from '../../../components/table'
+import Iconify from '../../../components/Iconify'
+import { TableMoreMenu, TableSchemaColumnProps } from '../../../components/table'
 
 type Props = {
     row: any
@@ -50,17 +47,11 @@ export default function ApolloGridTableRow({
         rowSchema.forEach((column: TableSchemaColumnProps) => {
             if (column.id != '') {
                 if (column.valueGetter) {
-                    returnedRows.push(
-                        <TableCell>{column.valueGetter(row)}</TableCell>,
-                    )
+                    returnedRows.push(<TableCell>{column.valueGetter(row)}</TableCell>)
                 } else if (column.renderCell) {
-                    returnedRows.push(
-                        <TableCell>{column.renderCell(row)}</TableCell>,
-                    )
+                    returnedRows.push(<TableCell>{column.renderCell(row)}</TableCell>)
                 } else {
-                    returnedRows.push(
-                        <TableCell>{get(row, column.id)}</TableCell>,
-                    )
+                    returnedRows.push(<TableCell>{get(row, column.id)}</TableCell>)
                 }
             }
         })
@@ -88,9 +79,7 @@ export default function ApolloGridTableRow({
                                             }}
                                             sx={{ color: 'error.main' }}
                                         >
-                                            <Iconify
-                                                icon={'eva:trash-2-outline'}
-                                            />
+                                            <Iconify icon={'eva:trash-2-outline'} />
                                             Remover
                                         </MenuItem>
                                     )}
@@ -113,9 +102,7 @@ export default function ApolloGridTableRow({
                                                 handleCloseMenu()
                                             }}
                                         >
-                                            <Iconify
-                                                icon={'eva:external-link-fill'}
-                                            />
+                                            <Iconify icon={'eva:external-link-fill'} />
                                             Acessar
                                         </MenuItem>
                                     )}

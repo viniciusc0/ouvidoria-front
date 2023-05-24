@@ -1,11 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { LoadingButton } from '@mui/lab'
-import { Alert, Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
+import { Card, Container, Grid, Typography } from '@mui/material'
 import AuthController from 'controllers/authController'
-import NextLink from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import FormProvider, { RHFTextField } from 'src/components/hook-form'
 import { ILoginForgotPassword } from 'types/IAuth'
 import * as Yup from 'yup'
 
@@ -67,7 +64,7 @@ function Form() {
                     instruções
                 </Typography>
             </Grid>
-            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            {/* <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={3}>
                     {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
                     {!errors.afterSubmit && successMessage && (
@@ -101,7 +98,7 @@ function Form() {
                 >
                     Enviar
                 </LoadingButton>
-            </FormProvider>
+            </FormProvider> */}
         </Card>
     )
 }
