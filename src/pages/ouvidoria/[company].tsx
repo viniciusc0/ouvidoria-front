@@ -45,17 +45,11 @@ function Home() {
         <>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
             <Box sx={{ padding: '30px 10px' }}>
-                <Grid container alignItems="center" justifyContent="center">
-                    <Grid item xs={6}>
+                <Grid container alignItems="center" justifyContent="center" rowGap={'10px'}>
+                    <Grid item xs={12} lg={6}>
                         <img src={companyInfo?.banner.url} alt="" />
-                        {/* height: 650,
-                        backgroundImage: `url($)`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        width: '100%', */}
-                        {/* }} */}
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} lg={6}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Typography variant="h4" color={'black'} textAlign={'center'}>
@@ -78,7 +72,7 @@ function Home() {
                         <Typography variant="h3" color="#555555" textAlign="center" sx={{ margin: '25px 0' }}>
                             Como funciona
                         </Typography>
-                        <Typography variant="h6" fontWeight="normal" textAlign={'center'} padding={'0 100px'}>
+                        <Typography variant="h6" fontWeight="normal" textAlign={'center'} paddingX={'6%'}>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
                             been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                             galley of type and scrambled it to make a type specimen book. It has survived not only five
@@ -87,7 +81,7 @@ function Home() {
                             passages, and more recently with desktop publishing software like Aldus PageMaker including
                             versions of Lorem Ipsum.
                         </Typography>
-                        <ButtonsGroup size="small" />
+                        <ButtonsGroup />
                     </Grid>
                 </Grid>
                 <Grid container sx={{ backgroundColor: '#666666', padding: '60px 0 ' }}>

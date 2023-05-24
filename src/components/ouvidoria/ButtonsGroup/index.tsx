@@ -1,19 +1,13 @@
 import { Button, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
 
-export function ButtonsGroup({ size }: { size?: 'regular' | 'small' }) {
-    const width = size === 'small' ? '230px' : '280px'
-    const fontSize = '17px'
-    const fontWeight = '300'
-
+export function ButtonsGroup() {
     const { push, query } = useRouter()
-    const CustomButtom = ({ onClick, children }) => {
-        return (
-            <Button variant="contained" onClick={onClick} sx={{ padding: '20px', fontSize: '16px' }}>
-                {children}
-            </Button>
-        )
-    }
+    const CustomButtom = ({ onClick, children }) => (
+        <Button variant="contained" onClick={onClick} sx={{ padding: '10px 20px', fontSize: '16px' }}>
+            {children}
+        </Button>
+    )
 
     return (
         <Grid
@@ -23,25 +17,6 @@ export function ButtonsGroup({ size }: { size?: 'regular' | 'small' }) {
             <CustomButtom onClick={() => push(`/ouvidoria/formulario?company=${query.company}`)}>
                 Registre pela web
             </CustomButtom>
-            {/* <Fab
-                onClick={() => push(`/ouvidoria/formulario?company=${query.company}`)}
-                variant="extended"
-                sx={{ width: width, backgroundColor: '#FF2F2F', fontSize: fontSize, fontWeight: fontWeight }}
-            >
-                Registre pela web
-            </Fab> */}
-            {/* <Fab
-                variant="extended"
-                sx={{ width: width, backgroundColor: '#4D595A', fontSize: fontSize, fontWeight: fontWeight }}
-            >
-                Registre pelo whatsapp
-            </Fab>
-            <Fab
-                variant="extended"
-                sx={{ width: width, backgroundColor: '#748081', fontSize: fontSize, fontWeight: fontWeight }}
-            >
-                0800 591 1872
-            </Fab> */}
         </Grid>
     )
 }
