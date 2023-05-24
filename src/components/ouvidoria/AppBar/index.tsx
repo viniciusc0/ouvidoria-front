@@ -23,11 +23,12 @@ const drawerWidth = 240
 export default function DrawerAppBar(props: { window?: () => Window; logoUrl: string }) {
     const { window, logoUrl } = props
     const [mobileOpen, setMobileOpen] = React.useState(false)
+    const router = useRouter()
 
     const navItems = [
-        { label: 'ACESSO DO CLIENTE', path: '/ouvidoria' },
+        // { label: 'ACESSO DO CLIENTE', path: '/ouvidoria' },
         { label: 'STATUS DA DENÚNCIA', path: '/ouvidoria/status-denuncia' },
-        { label: 'CÓDIGO DE CONDUTA', path: '/ouvidoria' },
+        // { label: 'CÓDIGO DE CONDUTA', path: '/ouvidoria' },
     ]
 
     const handleDrawerToggle = () => {
@@ -70,16 +71,19 @@ export default function DrawerAppBar(props: { window?: () => Window; logoUrl: st
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Grid sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+                    <Grid
+                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
+                        onClick={() => router.push(`/ouvidoria/${query.company}`)}
+                    >
                         {logoUrl && <img src={logoUrl} alt="logo" />}
                     </Grid>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item, index) => (
-                            <Button key={index}>
-                                <Link href={item.path + `?company=${query.company}`} passHref>
-                                    <a style={{ textDecoration: 'none', color: '#4D595A' }}>{item.label}</a>
-                                </Link>
-                            </Button>
+                            <Link key={index} href={item.path + `?company=${query.company}`} passHref>
+                                <a style={{ textDecoration: 'none', color: '#4D595A' }}>
+                                    <Button>{item.label}</Button>
+                                </a>
+                            </Link>
                         ))}
                     </Box>
                 </Toolbar>

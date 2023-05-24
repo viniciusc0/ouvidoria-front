@@ -617,8 +617,8 @@ const ApolloForm: React.FC<ApolloFormProps> = ({
                                 )}
                                 {customButtons &&
                                     customButtons.length &&
-                                    customButtons.map(customButtom => (
-                                        <Grid item order={customButtom.order || 0}>
+                                    customButtons.map((customButtom, index) => (
+                                        <Grid item order={customButtom.order || 0} key={index}>
                                             <Button
                                                 variant={customButtom.variant || 'contained'}
                                                 color={customButtom.color || 'primary'}

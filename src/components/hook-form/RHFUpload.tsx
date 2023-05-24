@@ -2,13 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import { FormHelperText } from '@mui/material'
 // type
-import {
-    UploadAvatar,
-    UploadMultiFile,
-    UploadMultiFileProps,
-    UploadProps,
-    UploadSingleFile,
-} from '../upload'
+import { UploadAvatar, UploadMultiFile, UploadMultiFileProps, UploadProps, UploadSingleFile } from '../upload'
 
 interface Props extends Omit<UploadProps, 'file'> {
     name: string
@@ -26,16 +20,9 @@ export function RHFUploadAvatar({ name, ...other }: Props) {
 
                 return (
                     <div>
-                        <UploadAvatar
-                            error={checkError}
-                            {...other}
-                            file={field.value}
-                        />
+                        <UploadAvatar error={checkError} {...other} file={field.value} />
                         {checkError && (
-                            <FormHelperText
-                                error
-                                sx={{ px: 2, textAlign: 'center' }}
-                            >
+                            <FormHelperText error sx={{ px: 2, textAlign: 'center' }}>
                                 {error.message}
                             </FormHelperText>
                         )}
@@ -58,7 +45,7 @@ export function RHFUploadSingleFile({ name, ...other }: Props) {
 
                 return (
                     <UploadSingleFile
-                        accept="image/*"
+                        accept={{ image: ['image/*'] }}
                         file={field.value}
                         error={checkError}
                         helperText={
@@ -80,10 +67,7 @@ interface RHFUploadMultiFileProps extends Omit<UploadMultiFileProps, 'files'> {
     name: string
 }
 
-export function RHFUploadMultiFile({
-    name,
-    ...other
-}: RHFUploadMultiFileProps) {
+export function RHFUploadMultiFile({ name, ...other }: RHFUploadMultiFileProps) {
     const { control } = useFormContext()
 
     return (
@@ -95,7 +79,7 @@ export function RHFUploadMultiFile({
 
                 return (
                     <UploadMultiFile
-                        accept="image/*"
+                        accept={{ image: ['image/*'] }}
                         files={field.value}
                         error={checkError}
                         helperText={

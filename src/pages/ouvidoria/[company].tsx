@@ -1,6 +1,5 @@
-import { Fab, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import TenantController from 'controllers/tenantController'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Loading from 'src/components/Loading'
@@ -45,83 +44,67 @@ function Home() {
     return (
         <>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
-            <Grid
-                container
-                alignItems="center"
-                justifyContent="center"
-                style={{
-                    height: 650,
-                    backgroundImage: `url(${companyInfo?.banner.url})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    width: '100%',
-                }}
-            >
-                <Grid item xs={12}>
-                    <Typography variant="h1" color={'white'}>
-                        {companyInfo?.title_banner}
-                    </Typography>
+            <Box sx={{ padding: '30px 10px' }}>
+                <Grid container alignItems="center" justifyContent="center">
+                    <Grid item xs={6}>
+                        <img src={companyInfo?.banner.url} alt="" />
+                        {/* height: 650,
+                        backgroundImage: `url($)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        width: '100%', */}
+                        {/* }} */}
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Typography variant="h4" color={'black'} textAlign={'center'}>
+                                    {companyInfo?.title_banner}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="body1" color={'black'} fontWeight="300" textAlign={'center'}>
+                                    {companyInfo?.subtitle_banner}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <ButtonsGroup />
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="h4" color={'white'} fontWeight="300">
-                        {companyInfo?.subtitle_banner}
-                    </Typography>
-                    <ButtonsGroup />
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography variant="h3" color="#555555" textAlign="center" sx={{ margin: '25px 0' }}>
+                            Como funciona
+                        </Typography>
+                        <Typography variant="h6" fontWeight="normal" textAlign={'center'} padding={'0 100px'}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </Typography>
+                        <ButtonsGroup size="small" />
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container sx={{ display: 'flex', flexDirection: 'row' }}>
-                <Grid item xs={12} sx={{ padding: '0 20px' }}>
-                    <Typography variant="h3" color="#555555" textAlign="center" sx={{ margin: '25px 0' }}>
-                        Como funciona
-                    </Typography>
-                    <Typography variant="h6" fontWeight="normal">
-                        {companyInfo?.description}
-                    </Typography>
-                    <ButtonsGroup size="small" />
+                <Grid container sx={{ backgroundColor: '#666666', padding: '60px 0 ' }}>
+                    <Grid item xs={12}>
+                        <Typography variant="h3" color="white" textAlign="center">
+                            Lorem ipsu,
+                        </Typography>
+                        <Typography variant="h6" fontWeight="300" textAlign="center" color="white">
+                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+                            velit..."
+                        </Typography>
+                    </Grid>
                 </Grid>
-                {/* <Grid item xs={6}>
-                    <img
-                        src="https://firebasestorage.googleapis.com/v0/b/ouvidor-digital-br.appspot.com/o/d302435c-c8e5-4d36-bc9c-9f5a59d540d4%2Fpublic%2FsecondarySectionBackground?alt=media&token=097f92fe-77fa-40b1-9e55-4f62cd810b78"
-                        alt=""
-                        width="100%"
-                        height="100%"
-                    />
-                </Grid> */}
-            </Grid>
-            <Grid
-                container
-                sx={{ backgroundColor: '#666666', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-            >
-                <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Image
-                        src="https://canal.ouvidordigital.com.br/images/logo-ouvidor-digital-xlg.png"
-                        alt=""
-                        width="175px"
-                        height="100%"
-                    />
-                </Grid>
-                <Grid item xs={6} sx={{ paddingBottom: '25px' }}>
-                    <Typography variant="h3" color="white" textAlign="center" sx={{ margin: '25px 0 5px 0' }}>
-                        Quem é o ouvidor digital?
-                    </Typography>
-                    <Typography variant="h6" fontWeight="300" textAlign="center" color="white">
-                        O Ouvidor Digital é uma solução para detectar casos de violação de condutas éticas
-                        descumprimento a legislação, que possam afetar o resultado financeiro, a reputação e o ambiente
-                        de trabalho da sua empresa.
-                    </Typography>
-                </Grid>
-                <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Fab
-                        variant="extended"
-                        sx={{ width: '280px', backgroundColor: '#444444', fontSize: '17px', fontWeight: '300' }}
-                    >
-                        Saiba mais
-                    </Fab>
-                </Grid>
-            </Grid>
-            <div style={{ textAlign: 'center', padding: '20px' }}>
-                <Typography>© Ouvidor Digital 2023 - Todos os direitos reservados</Typography>
-            </div>
+                <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <Typography>©2023 - Todos os direitos reservados</Typography>
+                </div>
+            </Box>
         </>
     )
 }

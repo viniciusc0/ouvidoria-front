@@ -6,7 +6,8 @@
     "private": true,
     "homepage": ".",
     "scripts": {
-        "lint": "next lint",
+        "check-types": "tsc --noemit",
+        "lint": "yarn check-types && next lint",
         "lint:es": "eslint --ext .ts,.tsx .",
         "lint:fix": "eslint --fix --ext .ts,.tsx .",
         "dev:local": "env-cmd -f .env.local next dev -p 8081",
