@@ -673,7 +673,7 @@ Escreva o máximo de detalhes possível`,
                     initialValues={initialValues}
                     submitButtonText="Enviar"
                     groups={groups}
-                    defaultExpandedGroup={false}
+                    defaultExpandedGroup={true}
                 />
             </Grid>
             <SuccessMessageModal

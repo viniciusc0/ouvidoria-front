@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab'
-import { Button, Card, Grid, TextField, Typography } from '@mui/material'
+import { Button, Card, Container, Grid, TextField, Typography } from '@mui/material'
 import ComplaintController from 'controllers/complaintController'
 import TenantController from 'controllers/tenantController'
 import { useRouter } from 'next/router'
@@ -68,43 +68,51 @@ function StatusDenunciaPage() {
     return (
         <>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
-            <Grid container paddingBottom="50px">
-                <Grid item lg={8} xs={12} sx={{ margin: '80px auto 0 auto' }}>
-                    <Card
-                        sx={{
-                            textAlign: 'center',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            rowGap: '35px',
-                            padding: '25px',
-                        }}
-                    >
-                        <Typography variant="h2">Acompanhar relato</Typography>
-                        <Typography variant="body1">
-                            Insira o número de protocolo no campo abaixo para verificar o status do relato ou enviar
-                            novas evidências para o comitê. Através do número de protocolo é possível acompanhar todo o
-                            processo de tratamento do seu relato.
-                        </Typography>
-                        <TextField
-                            label="Qual o número de protocolo do seu relato?"
-                            onChange={e => setProtocol(e.target.value)}
-                            required
-                            placeholder=""
-                            type="text"
-                            id="outlined-basic"
-                            fullWidth
-                        />
-                        <Grid display="flex" flexDirection="column" rowGap="10px">
-                            <LoadingButton loading={loadingComplaints} variant="contained" onClick={handleSubmitButton}>
-                                Consultar
-                            </LoadingButton>
-                            <Button variant="outlined" onClick={() => router.back()}>
-                                Voltar
-                            </Button>
-                        </Grid>
-                    </Card>
+            <Container>
+                <Grid container p={8}>
+                    <Grid item xs={12} sx={{ margin: '80px auto 0 auto' }}>
+                        <Card
+                            sx={{
+                                textAlign: 'center',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                rowGap: '35px',
+                                padding: '50px',
+                                boxShadow: '0 10px 50px 5px rgba(0, 0, 0, .3)',
+                            }}
+                        >
+                            <Typography variant="h4">Acompanhar relato</Typography>
+                            <Typography variant="body1">
+                                Insira o número de protocolo no campo abaixo para verificar o status do relato ou enviar
+                                novas evidências para o comitê. Através do número de protocolo é possível acompanhar
+                                todo o processo de tratamento do seu relato.
+                            </Typography>
+                            <TextField
+                                label="Qual o número de protocolo do seu relato?"
+                                onChange={e => setProtocol(e.target.value)}
+                                required
+                                placeholder=""
+                                type="text"
+                                id="outlined-basic"
+                                fullWidth
+                                autoComplete={'false'}
+                            />
+                            <Grid display="flex" flexDirection="row" gap="10px" justifyContent={'right'}>
+                                <Button variant="outlined" onClick={() => router.back()}>
+                                    Voltar
+                                </Button>
+                                <LoadingButton
+                                    loading={loadingComplaints}
+                                    variant="contained"
+                                    onClick={handleSubmitButton}
+                                >
+                                    Consultar
+                                </LoadingButton>
+                            </Grid>
+                        </Card>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Container>
             {historyOfOccurences && (
                 <HistoryofOccurencesModal history={historyOfOccurences} open={openModal} setOpen={setOpenModal} />
             )}

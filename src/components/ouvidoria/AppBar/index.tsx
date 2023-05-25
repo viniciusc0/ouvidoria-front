@@ -24,10 +24,11 @@ export default function DrawerAppBar(props: { window?: () => Window; logoUrl: st
     const { window, logoUrl } = props
     const [mobileOpen, setMobileOpen] = React.useState(false)
     const router = useRouter()
-
+    const { query } = useRouter()
     const navItems = [
         // { label: 'ACESSO DO CLIENTE', path: '/ouvidoria' },
-        { label: 'STATUS DA DENÚNCIA', path: '/ouvidoria/status-denuncia' },
+        { label: 'REGISTRAR NOVO', path: `/ouvidoria/formulario?company=${query.company}` },
+        { label: 'STATUS DA DENÚNCIA', path: `/ouvidoria/status-denuncia?company=${query.company}` },
         // { label: 'CÓDIGO DE CONDUTA', path: '/ouvidoria' },
     ]
 
@@ -35,11 +36,11 @@ export default function DrawerAppBar(props: { window?: () => Window; logoUrl: st
         setMobileOpen(prevState => !prevState)
     }
 
-    const { query } = useRouter()
-
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Grid>{logoUrl && <Image src={logoUrl} alt="logo" width="118px" height="60px" />}</Grid>
+            <Grid onClick={() => router.push(`/ouvidoria/${query.company}`)}>
+                {logoUrl && <Image src={logoUrl} alt="logo" width="118px" height="60px" />}
+            </Grid>
             <Divider />
             <List>
                 {navItems.map((item, index) => (
@@ -79,7 +80,7 @@ export default function DrawerAppBar(props: { window?: () => Window; logoUrl: st
                     </Grid>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item, index) => (
-                            <Link key={index} href={item.path + `?company=${query.company}`} passHref>
+                            <Link key={index} href={item.path} passHref>
                                 <a style={{ textDecoration: 'none', color: '#4D595A' }}>
                                     <Button>{item.label}</Button>
                                 </a>
