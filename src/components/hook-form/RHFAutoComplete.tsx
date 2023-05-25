@@ -53,9 +53,12 @@ export default function RHFAutoComplete({
                                 autoComplete: 'disabled',
                             }}
                             required={other.required}
-                            error={control._formState.submitCount > 0 && other.required}
+                            error={control._formState.submitCount > 0 && other.required && !value}
                             helperText={
-                                control._formState.submitCount > 0 && other.required && `${other.label} é obrigatório`
+                                !value &&
+                                control._formState.submitCount > 0 &&
+                                other.required &&
+                                `${other.label} é obrigatório`
                             }
                             autoComplete="false"
                         />
