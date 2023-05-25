@@ -1,8 +1,8 @@
 import { Button, Grid, Typography } from '@mui/material'
 import Cookies from 'js-cookie'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+// import TermoPrivacidadePDF from 'public/politicadeprivacidade.pdf'
 
 function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<React.SetStateAction<boolean>> }) {
     const { push, query } = useRouter()
@@ -59,9 +59,9 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                         </Typography>
                         <Typography variant="body2" fontWeight="normal">
                             Ao prosseguir, você declara estar de acordo com o{' '}
-                            <Link color="blue" href={'/'}>
+                            <a href="/assets/documents/politica-de-privacidade.pdf" rel="noreferrer" target="_blank">
                                 Termo de Uso e Políticas de Privacidade.
-                            </Link>
+                            </a>
                             <br />
                             Marque "Sim" para continuar
                         </Typography>

@@ -5,7 +5,8 @@ import Cookies from 'js-cookie'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import Loading from 'src/components/Loading'
 import ApolloForm, {
     ApolloFormSchemaComponentType,
@@ -41,6 +42,7 @@ const Form = ({ values }) => {
 
     const onSubmit = async data => {
         if (!companyInfo) return
+
         const complaintController = new ComplaintController()
 
         const formData = {
@@ -648,7 +650,19 @@ Escreva o máximo de detalhes possível`,
                 )
             },
         },
+        {
+            name: 'recaptcha',
+            label: '',
+            groupKey: 'infoRelate',
+            ui: { grid: 6 },
+            required: true,
+            renderComponent(params) {
+                return <ReCAPTCHA sitekey="6LfUXz0mAAAAAAS2ISdb89Nis4bSTwADujNivhRy" ref={captchaRef} />
+            },
+        },
     ]
+
+    const captchaRef = useRef()
 
     if (loading) return <Loading />
 

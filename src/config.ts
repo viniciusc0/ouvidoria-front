@@ -3,6 +3,8 @@ import { PATH_PAGE } from './routes/paths'
 const ENV: any = process.env.envs
 export const BASE_APP = {
     base_url: ENV.BASE_URL_BACKEND,
+    site_key: ENV.REACT_APP_SITE_KEY,
+    secret_key: ENV.REACT_APP_SECRET_KEY,
 }
 
 export const HOST_API_KEY = process.env.HOST_API_KEY || ''
