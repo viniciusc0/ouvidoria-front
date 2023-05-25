@@ -15,11 +15,18 @@ import { Imessage } from 'types/Imessage'
 export default function Register() {
     return (
         <Container
-            sx={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            sx={{
+                height: '100%',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+            }}
         >
-            <Card sx={{ maxWidth: '550px', boxShadow: '1px 1px 10px #cecece' }}>
+            <Card sx={{ maxWidth: '850px', boxShadow: '1px 1px 10px #cecece', my: 5 }}>
                 <Grid p={3}>
-                    <Stack spacing={2} sx={{ mb: 1, position: 'relative' }}>
+                    <Stack spacing={2} sx={{ mb: 1, mt: 1, position: 'relative' }}>
                         <Typography variant="h4">Cadastro</Typography>
                         <Stack direction="row" spacing={0.5}>
                             <Typography variant="body2">Já possui uma conta?</Typography>
@@ -33,7 +40,7 @@ export default function Register() {
 
                     <Typography
                         component="div"
-                        sx={{ color: 'text.secondary', mt: 3, typography: 'caption', textAlign: 'center' }}
+                        sx={{ color: 'text.secondary', mt: 2, mb: 2, typography: 'caption', textAlign: 'center' }}
                     >
                         {'By signing up, I agree to '}
                         <Link underline="always" color="text.primary">

@@ -26,10 +26,8 @@ export default function DrawerAppBar(props: { window?: () => Window; logoUrl: st
     const router = useRouter()
     const { query } = useRouter()
     const navItems = [
-        // { label: 'ACESSO DO CLIENTE', path: '/ouvidoria' },
         { label: 'REGISTRAR NOVO', path: `/ouvidoria/formulario?company=${query.company}` },
         { label: 'STATUS DA DENÚNCIA', path: `/ouvidoria/status-denuncia?company=${query.company}` },
-        // { label: 'CÓDIGO DE CONDUTA', path: '/ouvidoria' },
     ]
 
     const handleDrawerToggle = () => {

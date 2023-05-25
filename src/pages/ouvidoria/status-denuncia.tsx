@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab'
-import { Button, Card, Container, Grid, TextField, Typography } from '@mui/material'
+import { Button, Card, Grid, TextField, Typography } from '@mui/material'
 import ComplaintController from 'controllers/complaintController'
 import TenantController from 'controllers/tenantController'
 import { useRouter } from 'next/router'
@@ -68,18 +68,16 @@ function StatusDenunciaPage() {
     return (
         <>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
-            <Container>
-                <Grid container p={8}>
-                    <Grid item xs={12} sx={{ margin: '80px auto 0 auto' }}>
-                        <Card
-                            sx={{
-                                textAlign: 'center',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                rowGap: '35px',
-                                padding: '50px',
-                                boxShadow: '0 10px 50px 5px rgba(0, 0, 0, .3)',
-                            }}
+            <Grid container display="flex" alignItems="center" height="calc(100% - 84px)" justifyContent="center">
+                <Grid item xs={11} lg={8}>
+                    <Card
+                        sx={{
+                            boxShadow: '0 10px 50px 5px rgba(0, 0, 0, .3)',
+                        }}
+                    >
+                        <Grid
+                            p={3}
+                            sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', rowGap: '35px' }}
                         >
                             <Typography variant="h4">Acompanhar relato</Typography>
                             <Typography variant="body1">
@@ -109,10 +107,10 @@ function StatusDenunciaPage() {
                                     Consultar
                                 </LoadingButton>
                             </Grid>
-                        </Card>
-                    </Grid>
+                        </Grid>
+                    </Card>
                 </Grid>
-            </Container>
+            </Grid>
             {historyOfOccurences && (
                 <HistoryofOccurencesModal history={historyOfOccurences} open={openModal} setOpen={setOpenModal} />
             )}
