@@ -1,12 +1,12 @@
 import Cookies from 'js-cookie'
 import AuthService from 'services/authService'
-import { ILogin, ILoginForgotPassword, ILoginForm, INewPassword } from 'types/IAuth'
+import { ILogin, ILoginForgotPassword, ILoginForm, INewPassword, IRegisterForm } from 'types/IAuth'
 import { IUser } from 'types/IUser'
 
 class AuthController {
     keyUser = '@latlong/user'
 
-    async login(data: ILoginForm) {
+    async login(data: ILoginForm): Promise<ILogin> {
         try {
             const authService = new AuthService()
             const response = await authService.login(data)
@@ -15,8 +15,24 @@ class AuthController {
             }
             this.setUser(response)
             location.href = '/'
+            return response
         } catch (error) {
-            return error
+            throw error
+        }
+    }
+
+    async register(data: IRegisterForm): Promise<ILogin> {
+        try {
+            const authService = new AuthService()
+            const response = await authService.register(data)
+            if (!response.jwt) {
+                throw new Error('Exception: Access Token undefined')
+            }
+            this.setUser(response)
+            location.href = '/'
+            return response
+        } catch (error) {
+            throw error
         }
     }
 

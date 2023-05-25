@@ -1,13 +1,12 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Link, Stack, Typography } from '@mui/material'
+import { Alert, Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
+import AuthController from 'controllers/authController'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { RegisterProps } from 'services/requests/usersAuth/types'
-import { useAuthContext } from 'src/auth/useAuthContext'
-import LoginLayout from 'src/layouts/login'
-import * as Yup from 'yup'
+import { ApolloForm } from 'src/components'
+import { ApolloFormSchemaComponentType, ApolloFormSchemaItem } from 'src/components/apollo-form/ApolloForm.component'
+import { IRegisterForm } from 'types/IAuth'
+import { Imessage } from 'types/Imessage'
 
 //
 
@@ -15,132 +14,119 @@ import * as Yup from 'yup'
 
 export default function Register() {
     return (
-        <LoginLayout>
-            <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-                <Typography variant="h4">Cadastro</Typography>
+        <Container
+            sx={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+            <Card sx={{ maxWidth: '550px', boxShadow: '1px 1px 10px #cecece' }}>
+                <Grid p={3}>
+                    <Stack spacing={2} sx={{ mb: 1, position: 'relative' }}>
+                        <Typography variant="h4">Cadastro</Typography>
+                        <Stack direction="row" spacing={0.5}>
+                            <Typography variant="body2">Já possui uma conta?</Typography>
+                            <NextLink href={'/login'} passHref>
+                                <Link variant="subtitle2">Faça login</Link>
+                            </NextLink>
+                        </Stack>
+                    </Stack>
 
-                <Stack direction="row" spacing={0.5}>
-                    <Typography variant="body2">Já possui uma conta?</Typography>
-                    <NextLink href={'/login'} passHref>
-                        <Link variant="subtitle2">Faça login</Link>
-                    </NextLink>
-                </Stack>
-            </Stack>
+                    <AuthRegisterForm />
 
-            <AuthRegisterForm />
-
-            <Typography
-                component="div"
-                sx={{ color: 'text.secondary', mt: 3, typography: 'caption', textAlign: 'center' }}
-            >
-                {'By signing up, I agree to '}
-                <Link underline="always" color="text.primary">
-                    Terms of Service
-                </Link>
-                {' and '}
-                <Link underline="always" color="text.primary">
-                    Privacy Policy
-                </Link>
-                .
-            </Typography>
-        </LoginLayout>
+                    <Typography
+                        component="div"
+                        sx={{ color: 'text.secondary', mt: 3, typography: 'caption', textAlign: 'center' }}
+                    >
+                        {'By signing up, I agree to '}
+                        <Link underline="always" color="text.primary">
+                            Terms of Service
+                        </Link>
+                        {' and '}
+                        <Link underline="always" color="text.primary">
+                            Privacy Policy
+                        </Link>
+                        .
+                    </Typography>
+                </Grid>
+            </Card>
+        </Container>
     )
 }
 
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends RegisterProps {
-    afterSubmit?: string
-}
-
 function AuthRegisterForm() {
-    const [showPassword, setShowPassword] = useState(false)
-
-    const { registerUser } = useAuthContext()
-
-    const RegisterSchema = Yup.object().shape({
-        username: Yup.string().required('Nome de usuário é obrigatório'),
-        email: Yup.string().email('Email inválido').required('Email é obrigatório'),
-        password: Yup.string().required('Senha é obrigatória'),
-    })
-
-    const defaultValues = {
-        username: '',
-        email: '',
-    }
-
-    const methods = useForm<FormValuesProps>({
-        resolver: yupResolver(RegisterSchema),
-        defaultValues,
-    })
-
-    const {
-        reset,
-        setError,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-    } = methods
-
     const { push } = useRouter()
 
-    const onSubmit = async (data: FormValuesProps) => {
+    const [message, setMesssage] = useState<Imessage | null>(null)
+
+    const onSubmit = async (data: IRegisterForm) => {
+        const pattern = /^\S+@\S+\.\S+$/
+        if (!data.email.match(pattern)) {
+            setMesssage({ text: 'Email inválido', severity: 'error' })
+            return
+        }
+
+        if (data.password.length < 6) {
+            setMesssage({ text: 'A senha deve ter no mínimo 6 caracteres', severity: 'error' })
+            return
+        }
+
+        const authController = new AuthController()
         try {
-            registerUser(data)
-            push('/login')
+            await authController.register(data)
+            setMesssage({ text: 'Cadastro feito com sucesso!', severity: 'success' })
         } catch (error) {
-            console.error(error)
-            setError('afterSubmit', {
-                ...error,
-                message: error.message,
-            })
+            setMesssage({ text: 'Falha ao realizar cadastro', severity: 'error' })
         }
     }
 
+    const formSchema: ApolloFormSchemaItem[] = [
+        {
+            name: 'fullname',
+            label: 'Digite o seu nome completo',
+            ui: { grid: 6 },
+            required: true,
+            componenttype: ApolloFormSchemaComponentType.TEXT,
+        },
+        {
+            name: 'username',
+            label: 'Digite o seu nome de usuário',
+            ui: { grid: 6 },
+            required: true,
+            componenttype: ApolloFormSchemaComponentType.TEXT,
+        },
+        {
+            name: 'cpf',
+            label: 'Digite o seu cpf',
+            ui: { grid: 6 },
+            required: true,
+            componenttype: ApolloFormSchemaComponentType.TEXT,
+            mask: '999.999.999-99',
+        },
+        {
+            name: 'email',
+            label: 'Digite o seu email',
+            ui: { grid: 6 },
+            required: true,
+            componenttype: ApolloFormSchemaComponentType.TEXT,
+        },
+        {
+            name: 'password',
+            label: 'Digite a sua senha',
+            ui: { grid: 12 },
+            required: true,
+            componenttype: ApolloFormSchemaComponentType.PASSWORD,
+        },
+    ]
+
     return (
-        <></>
-        // <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-        //     <Stack spacing={2.5}>
-        //         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
-
-        //         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-        //             <RHFTextField name="username" label="Nome de usuário" />
-        //             <RHFTextField name="email" label="Email" />
-        //         </Stack>
-
-        //         <RHFTextField
-        //             name="password"
-        //             label="Senha"
-        //             type={showPassword ? 'text' : 'password'}
-        //             InputProps={{
-        //                 endAdornment: (
-        //                     <InputAdornment position="end">
-        //                         <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-        //                             <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-        //                         </IconButton>
-        //                     </InputAdornment>
-        //                 ),
-        //             }}
-        //         />
-
-        //         <LoadingButton
-        //             fullWidth
-        //             color="inherit"
-        //             size="large"
-        //             type="submit"
-        //             variant="contained"
-        //             loading={isSubmitting}
-        //             sx={{
-        //                 bgcolor: 'text.primary',
-        //                 color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-        //                 '&:hover': {
-        //                     bgcolor: 'text.primary',
-        //                     color: theme => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-        //                 },
-        //             }}
-        //         >
-        //             Criar conta
-        //         </LoadingButton>
-        //     </Stack>
-        // </FormProvider>
+        <>
+            <Stack spacing={3}>{message && <Alert severity={message.severity}>{message.text}</Alert>}</Stack>
+            <ApolloForm
+                schema={formSchema}
+                onSubmit={onSubmit}
+                submitButtonText="Enviar"
+                defaultExpandedGroup={false}
+            />
+        </>
     )
 }

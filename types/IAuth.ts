@@ -10,6 +10,14 @@ export type ILoginForm = {
     password: string
 }
 
+export type IRegisterForm = {
+    username: string
+    email: string
+    password: string
+    fullname: string
+    cpf: string
+}
+
 export type ILoginForgotPassword = {
     email: string
 }

@@ -151,8 +151,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     user: response,
                 },
             })
-            router.push('/')
         }
+        return response
     }
 
     async function logoutUser() {
