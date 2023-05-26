@@ -4,16 +4,44 @@ import { UserFormSchema } from 'formSchemas/userFormSchema'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
-import JsonForm, { formError } from 'src/components/JsonForm'
+import { ApolloForm, ApolloFormSchemaItem } from 'src/components'
+import { formError } from 'src/components/JsonForm'
 import Loading from 'src/components/Loading'
-import { IBusiness } from 'types/IBusiness'
-import { IBusinessEnum } from 'types/IBusinessEnum'
+import SelectWithCheckboxes from 'src/components/SelectWithCheckboxes'
+import { ISelectValue } from 'types/ISelectValue'
+
 type UserNewEditForm = {
     values?: any
 }
 
 const NewEditForm = ({ values }: UserNewEditForm) => {
     const router = useRouter()
+
+    const [selectValue, setSelectValue] = useState<string[]>([])
+    const [selectOptions, setSelectOptions] = useState<ISelectValue[]>([
+        { label: 'teste', value: '1' },
+        { label: 'teste2', value: '2' },
+    ])
+
+    const formSchema: ApolloFormSchemaItem[] = [
+        ...UserFormSchema,
+        {
+            name: 'businesses',
+            required: false,
+            label: 'Empresas',
+            ui: { grid: 6 },
+            renderComponent(params) {
+                return (
+                    <SelectWithCheckboxes
+                        label="Empresas"
+                        options={selectOptions}
+                        value={selectValue}
+                        setValue={setSelectValue}
+                    />
+                )
+            },
+        },
+    ]
 
     const { enqueueSnackbar } = useSnackbar()
 
@@ -40,26 +68,29 @@ const NewEditForm = ({ values }: UserNewEditForm) => {
     }
 
     const [loading, setLoading] = useState(false)
-    const [businesses, setBusinesses] = useState<IBusiness[]>([])
 
     const getBusinesses = async () => {
         setLoading(true)
         const businessControler = new BusinessController()
-        const businesses = await businessControler.getAll()
-        setBusinesses(businesses)
+        try {
+            const businesses = await businessControler.getAll()
+            const businessesSelectOptions = [] as ISelectValue[]
+            let obj: ISelectValue
+            businesses.map((business, index) => {
+                obj = {
+                    value: business.id!,
+                    label: business.reasonName,
+                }
+                businessesSelectOptions.push(obj)
+            })
+            setSelectOptions(businessesSelectOptions)
+        } catch (error) {
+            enqueueSnackbar('Não há empresas cadastradas', {
+                variant: 'error',
+                autoHideDuration: null,
+            })
+        }
         setLoading(false)
-
-        const businessesEnum = [] as IBusinessEnum[]
-        let obj: IBusinessEnum
-        businesses.map((business, index) => {
-            obj = {
-                id: business.id!,
-                name: business.reasonName,
-            }
-            businessesEnum.push(obj)
-        })
-        const businessSchema = UserFormSchema.find(item => item.props.items !== undefined && item.name === 'businesses')
-        UserFormSchema[UserFormSchema.indexOf(businessSchema!)].props.items.enum = businessesEnum
     }
 
     useEffect(() => {
@@ -69,11 +100,12 @@ const NewEditForm = ({ values }: UserNewEditForm) => {
     if (loading) return <Loading />
 
     return (
-        <JsonForm
-            schemaForm={UserFormSchema}
-            values={values}
+        <ApolloForm
+            schema={formSchema}
+            initialValues={values}
             onSubmit={onSubmit}
-            msgSuccess={'Oba! Salvo com sucesso'}
+            submitButtonText="Enviar"
+            defaultExpandedGroup={true}
         />
     )
 }

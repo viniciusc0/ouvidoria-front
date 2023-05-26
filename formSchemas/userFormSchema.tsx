@@ -1,57 +1,59 @@
 import { ApolloFormSchemaItem } from 'src/components'
 import { ApolloFormSchemaComponentType } from 'src/components/apollo-form/ApolloForm.component'
 
-const AddressFormSchema: ApolloFormSchemaItem[] = [
+export const UserFormSchema: ApolloFormSchemaItem[] = [
     {
-        name: 'cep',
-        required: true,
-        label: 'Cep',
-        mask: '99.999-999',
-        componenttype: ApolloFormSchemaComponentType.TEXT,
+        name: 'id',
+        required: false,
+        label: 'id',
+        componenttype: ApolloFormSchemaComponentType.HIDDEN,
         ui: { grid: 12 },
     },
     {
-        name: 'street',
+        name: 'name',
         required: true,
-        label: 'Rua',
+        label: 'Nome',
         componenttype: ApolloFormSchemaComponentType.TEXT,
         ui: { grid: 6 },
     },
     {
-        name: 'number',
+        name: 'email',
         required: true,
-        label: 'Número',
-        ui: { grid: 2 },
-        componenttype: ApolloFormSchemaComponentType.TEXT,
-    },
-    {
-        name: 'complement',
-        required: false,
-        label: 'Complemento',
-        componenttype: ApolloFormSchemaComponentType.TEXT,
-        ui: { grid: 4 },
-    },
-    {
-        name: 'district',
-        required: true,
-        label: 'Bairro',
+        label: 'Email',
         componenttype: ApolloFormSchemaComponentType.TEXT,
         ui: { grid: 6 },
     },
     {
-        name: 'city',
-        componenttype: ApolloFormSchemaComponentType.TEXT,
+        name: 'cpf',
         required: true,
-        label: 'Cidade',
+        label: 'CPF',
+        componenttype: ApolloFormSchemaComponentType.TEXT,
+        mask: '999.999.999-99',
         ui: { grid: 6 },
     },
     {
-        name: 'uf',
+        name: 'phone',
         required: true,
-        label: 'Estado U.F',
+        label: 'Telefone',
         componenttype: ApolloFormSchemaComponentType.TEXT,
+        mask: '(99) 9 9999-9999',
         ui: { grid: 6 },
     },
 ]
 
-export { AddressFormSchema }
+export const UserFiltersFormSchema: ApolloFormSchemaItem[] = [
+    {
+        name: 'name',
+        required: false,
+        label: 'Nome',
+        componenttype: ApolloFormSchemaComponentType.TEXT,
+        ui: { grid: 6 },
+    },
+    {
+        name: 'email',
+        required: false,
+        label: 'Email',
+        componenttype: ApolloFormSchemaComponentType.TEXT,
+        ui: { grid: 6 },
+    },
+]

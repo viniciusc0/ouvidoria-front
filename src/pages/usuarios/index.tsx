@@ -34,6 +34,7 @@ export default function Usuarios() {
     const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState<IDashUser[]>([
         {
+            id: '0',
             name: 'Caio',
             cpf: '2030293029399',
             phone: '34479890',

@@ -39,7 +39,7 @@ export default function Cadastro() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <NewEditForm />
+                    <NewEditForm values={[]} />
                 </Grid>
             </Container>
         </CustomCard>

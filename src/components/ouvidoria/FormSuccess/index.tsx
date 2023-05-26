@@ -1,6 +1,5 @@
 import { Grid, Typography } from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-// import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 function FormSuccess({ protocol }: { protocol: string }) {
     return (

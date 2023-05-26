@@ -2,7 +2,8 @@ import BusinessController from 'controllers/businessController'
 import { BusinessFormSchema } from 'formSchemas'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import JsonForm, { formError } from 'src/components/JsonForm'
+import { ApolloForm } from 'src/components'
+import { formError } from 'src/components/JsonForm'
 type BusinessNewEditForm = {
     values?: any
 }
@@ -30,11 +31,12 @@ const NewEditForm = ({ values }: BusinessNewEditForm) => {
     }
 
     return (
-        <JsonForm
-            schemaForm={BusinessFormSchema}
-            values={values}
+        <ApolloForm
+            schema={BusinessFormSchema}
+            initialValues={values}
             onSubmit={onSubmit}
-            msgSuccess={'Oba! Salvo com sucesso'}
+            submitButtonText="Enviar"
+            defaultExpandedGroup={true}
         />
     )
 }

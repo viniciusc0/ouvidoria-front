@@ -12,6 +12,7 @@ import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import { IDashUser } from 'types/IDashUser'
 import NewEditForm from '../form/NewEditForm'
+import { useSnackbar } from 'notistack'
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +23,7 @@ export default function Edicao() {
     const { themeStretch } = useSettingsContext()
     const { query } = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
+    const { enqueueSnackbar } = useSnackbar()
     const [initialValues, setInitialValues] = useState<IDashUser>()
 
     const loadData = async id => {
@@ -29,6 +31,7 @@ export default function Edicao() {
         const userController = new UserController()
         const user = await userController.getById(id)
         if (!user) {
+            enqueueSnackbar('Falha ao carregar dados do usuário', { variant: 'error', autoHideDuration: null })
             return
         }
         setInitialValues(user)
