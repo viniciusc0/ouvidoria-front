@@ -109,7 +109,7 @@ interface Props extends PopoverProps {
 export default function MenuPopover({ children, arrow = 'top-right', disabledArrow, sx, ...other }: Props) {
     return (
         <Popover
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             PaperProps={{
                 sx: {
