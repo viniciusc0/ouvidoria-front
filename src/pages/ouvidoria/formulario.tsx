@@ -31,7 +31,7 @@ const Form = ({ values }) => {
     const company = router.query.company
     const [companyInfo, setCompanyInfo] = useState<ICompanyInfo>()
     const [noCompany, setNoCompany] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [checkIdentification, setCheckIdentification] = useState<string>('')
     const [initialValues, setInitialValues] = useState<any>([])
     const [checkTestemunhas, setCheckTestemunhas] = useState<string>()
@@ -89,8 +89,8 @@ const Form = ({ values }) => {
 
     useEffect(() => {
         if (!router.isReady) return
-        setLoading(true)
         const getInfo = async () => {
+            setLoading(true)
             const tenantController = new TenantController()
             try {
                 if (typeof company === 'string') {
@@ -100,16 +100,15 @@ const Form = ({ values }) => {
                     throw Error('invalid company')
                 }
                 setNoCompany(false)
+                if (Cookies.get('termoAceito') === 'sim') {
+                    setTermAccepted(true)
+                }
             } catch (error) {
                 setNoCompany(true)
             }
+            setLoading(false)
         }
         getInfo()
-
-        if (Cookies.get('termoAceito') === 'sim') {
-            setTermAccepted(true)
-        }
-        setLoading(false)
     }, [router.isReady])
 
     const relateTypes = [
@@ -668,7 +667,7 @@ Escreva o máximo de detalhes possível`,
 
     if (noCompany) return <NoCompany />
 
-    if (!termAccepted) {
+    if (!termAccepted && !loading) {
         return (
             <>
                 <AppBar logoUrl={companyInfo?.logo.url as string} />
