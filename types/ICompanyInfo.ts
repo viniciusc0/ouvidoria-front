@@ -14,6 +14,7 @@ export type ICompanyInfo = {
     id: string
     description: string
     status: true
+    linkcondutecode: string
     identity: string
     title_banner: string
     subtitle_banner: string

@@ -510,7 +510,7 @@ const Form = ({ values }) => {
                                     textDecoration: 'none',
                                     color: '#5e6d9e',
                                 }}
-                                href="https://firebasestorage.googleapis.com/v0/b/ouvidor-digital-br.appspot.com/o/d302435c-c8e5-4d36-bc9c-9f5a59d540d4%2Fdocuments%2FC%C3%B3digo%20de%20%C3%A9tica%20e%20conduta%20Patrus%20Transportes%20-%202023-02-16T12%3A27%3A56.378Z?alt=media&token=fac9ec5e-6d47-4a2e-a346-c73ae8ec3db4"
+                                href={companyInfo?.linkcondutecode}
                                 target="_blank"
                                 rel="noreferrer"
                             >
