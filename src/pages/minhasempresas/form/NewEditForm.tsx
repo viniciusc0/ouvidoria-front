@@ -15,6 +15,18 @@ const NewEditForm = ({ values }: BusinessNewEditForm) => {
     const { enqueueSnackbar } = useSnackbar()
 
     const onSubmit = async data => {
+        let regex = /\d\d\.\d\d\d\.\d\d\d\/\d\d\d\d-\d\d/i
+        if (!regex.test(data.cnpj)) {
+            enqueueSnackbar('CNPJ inválido!', { variant: 'error' })
+            return
+        }
+
+        regex = /\(\d\d\)\d\d\d\d\d-\d\d\d\d/i
+        if (!regex.test(data.contactPhone)) {
+            enqueueSnackbar('Telefone inválido!', { variant: 'error' })
+            return
+        }
+
         try {
             const businessController = new BusinessController()
             if (data.id) {

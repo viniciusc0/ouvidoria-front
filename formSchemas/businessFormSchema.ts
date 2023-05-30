@@ -59,8 +59,8 @@ const BusinessFormSchema: ApolloFormSchemaItem[] = [
     {
         name: 'contactPhone',
         required: false,
-        label: 'celular de contato',
-        mask: '(99) 9 9999-9999',
+        label: 'Celular de contato',
+        mask: '(99)99999-9999',
         ui: { grid: 6 },
         componenttype: ApolloFormSchemaComponentType.TEXT,
 
