@@ -505,6 +505,7 @@ const Form = ({ values }) => {
                 return (
                     <Grid>
                         <InputLabel sx={{ paddingLeft: '5px' }}>
+                            Qual infração do código de ética ocorreu?{' '}
                             <a
                                 style={{
                                     textDecoration: 'none',
@@ -514,7 +515,7 @@ const Form = ({ values }) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                Link do Código de ética
+                                Link do código de ética
                             </a>
                         </InputLabel>
                         <TextField
@@ -524,7 +525,7 @@ const Form = ({ values }) => {
                             multiline
                             type="text"
                             sx={{ width: '100%' }}
-                            placeholder="Qual infração do código de ética ocorreu?"
+                            placeholder="Informe aqui o código de ética"
                         />
                     </Grid>
                 )
