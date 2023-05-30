@@ -14,11 +14,10 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import 'styles/Form.module.css'
 import { ISchemaForm } from 'types/ISchemaForm'
+import CustomSelect from '../CustomSelect'
+import CustomTextarea from '../CustomTextarea'
 import TextWidgetWithMask from '../TextWidgetWithMask'
 import { Container, FormWrapper } from './styles'
-import SelectWithCheckboxes from '../SelectWithCheckboxes'
-import CustomTextarea from '../CustomTextarea'
-import CustomSelect from '../CustomSelect'
 
 interface Props {
     schemaForm: ISchemaForm[]
@@ -74,7 +73,6 @@ export default function JsonForm({ schemaForm, values, onSubmit, msgSuccess, cus
 
     const widgets: RegistryWidgetsType = {
         TextWidgetWithMask: TextWidgetWithMask,
-        SelectWithCheckboxes: SelectWithCheckboxes,
         CustomTextarea: CustomTextarea,
         CustomSelect: CustomSelect,
     }

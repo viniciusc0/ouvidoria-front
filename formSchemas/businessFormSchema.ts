@@ -63,9 +63,8 @@ const BusinessFormSchema: ApolloFormSchemaItem[] = [
         mask: '(99)99999-9999',
         ui: { grid: 6 },
         componenttype: ApolloFormSchemaComponentType.TEXT,
-
-        ...AddressFormSchema,
     },
+    ...AddressFormSchema,
 ]
 
 const BusinessFilterFormSchema: ApolloFormSchemaItem[] = [

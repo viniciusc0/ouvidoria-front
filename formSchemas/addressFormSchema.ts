@@ -9,6 +9,7 @@ const AddressFormSchema: ApolloFormSchemaItem[] = [
         mask: '99.999-999',
         componenttype: ApolloFormSchemaComponentType.TEXT,
         ui: { grid: 12 },
+        onChange(e) {},
     },
     {
         name: 'street',
