@@ -42,7 +42,7 @@ export default function RHFAutoComplete({
                         [`& .${autocompleteClasses.popupIndicator}`]: {
                             transform: 'none',
                         },
-                        textTransform: 'capitalize',
+                        textTransform: 'none',
                     }}
                     renderInput={params => (
                         <TextField

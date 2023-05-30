@@ -3,40 +3,22 @@ import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import MenuItem from '@mui/material/MenuItem'
 
-import {
-    Button,
-    Dialog,
-    DialogTitle,
-    InputAdornment,
-    Typography,
-} from '@mui/material'
+import { Button, Dialog, DialogTitle, InputAdornment, Typography } from '@mui/material'
 import CurrencyFormat from 'react-currency-format'
 import { Controller, useFormContext } from 'react-hook-form'
 import Iconify from '../Iconify'
-import {
-    RHFCheckbox,
-    RHFRadioGroup,
-    RHFSelect,
-    RHFSwitch,
-    RHFTextField,
-} from '../hook-form'
+import { RHFCheckbox, RHFRadioGroup, RHFSelect, RHFSwitch, RHFTextField } from '../hook-form'
 import RHFAutoComplete from '../hook-form/RHFAutoComplete'
 import RHFDatePicker from '../hook-form/RHFDatePicker'
 import RHFDateTimePicker from '../hook-form/RHFDateTimePicker'
-import {
-    ApolloFormSchemaComponentType,
-    ApolloFormSchemaItem,
-} from './ApolloForm.component'
+import { ApolloFormSchemaComponentType, ApolloFormSchemaItem } from './ApolloForm.component'
 interface ApolloFieldProps {
     formField: ApolloFormSchemaItem
     values?: any
     isDesktop?: boolean
 }
 
-export const ApolloField: React.FC<ApolloFieldProps> = ({
-    formField,
-    isDesktop,
-}: ApolloFieldProps) => {
+export const ApolloField: React.FC<ApolloFieldProps> = ({ formField, isDesktop }: ApolloFieldProps) => {
     const [dialogOpen, setDialogOpen] = useState(false)
 
     const { setValue } = useFormContext()
@@ -70,8 +52,7 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
         if (!field) return <></>
 
         const component = components.find(
-            (component: any) =>
-                component.componenttype === fieldSchema.componenttype,
+            (component: any) => component.componenttype === fieldSchema.componenttype,
         )?.componenttype
 
         switch (component) {
@@ -95,21 +76,18 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                     <RHFSelect
                         fullWidth
                         name={field.name}
-                        label={`${fieldSchema.label}${
-                            fieldSchema.required ? ' *' : ''
-                        }`}
+                        label={`${fieldSchema.label}${fieldSchema.required ? ' *' : ''}`}
                         InputLabelProps={{ shrink: true }}
                         SelectProps={{
                             native: false,
                             sx: {
-                                textTransform: 'capitalize',
+                                textTransform: 'none',
                             },
                         }}
                         {...field}
                         onChange={(event: any) => {
                             setValue(fieldSchema.name, event.target.value)
-                            if (fieldSchema.onChange)
-                                fieldSchema.onChange(event)
+                            if (fieldSchema.onChange) fieldSchema.onChange(event)
                         }}
                         disabled={fieldSchema.disabled}
                     >
@@ -122,7 +100,7 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                                     my: 0.5,
                                     borderRadius: 0.75,
                                     typography: 'body2',
-                                    textTransform: 'capitalize',
+                                    textTransform: 'none',
                                 }}
                             >
                                 {option.label}
@@ -148,21 +126,14 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                             row={true}
                             onChange={(event: any) => {
                                 setValue(fieldSchema.name, event.target.value)
-                                if (fieldSchema.onChange)
-                                    fieldSchema.onChange(event)
+                                if (fieldSchema.onChange) fieldSchema.onChange(event)
                             }}
                             disabled={fieldSchema.disabled}
                         />
                     </>
                 )
             case ApolloFormSchemaComponentType.CHECKBOX:
-                return (
-                    <RHFCheckbox
-                        {...fieldSchema}
-                        {...field}
-                        onClick={fieldSchema.onClick}
-                    />
-                )
+                return <RHFCheckbox {...fieldSchema} {...field} onClick={fieldSchema.onClick} />
             case ApolloFormSchemaComponentType.TEXTAREA:
                 return (
                     <RHFTextField
@@ -191,18 +162,8 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                                 maxLength: fieldSchema.MaximumLength,
                             }
                         }
-                        disabled={
-                            fieldSchema.disabled &&
-                            fieldSchema.disabled === true
-                                ? true
-                                : false
-                        }
-                        onChange={(event: any) =>
-                            setValue(
-                                fieldSchema.name,
-                                Number(event.target.value),
-                            )
-                        }
+                        disabled={fieldSchema.disabled && fieldSchema.disabled === true ? true : false}
+                        onChange={(event: any) => setValue(fieldSchema.name, Number(event.target.value))}
                     />
                 )
             case ApolloFormSchemaComponentType.CURRENCY:
@@ -217,22 +178,13 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                         {...field}
                         {...fieldSchema}
                         onKeyUp={event => {
-                            if (
-                                event.key == 'Backspace' &&
-                                event.target.value == '-'
-                            ) {
+                            if (event.key == 'Backspace' && event.target.value == '-') {
                                 event.target.value = ''
                             }
                         }}
                         onChange={(event: any) => {
-                            event.target.value = event.target.value.replace(
-                                'R$ 0',
-                                'R$ ',
-                            )
-                            event.target.value = event.target.value.replace(
-                                /[^0-9,-]/g,
-                                '',
-                            )
+                            event.target.value = event.target.value.replace('R$ 0', 'R$ ')
+                            event.target.value = event.target.value.replace(/[^0-9,-]/g, '')
                             setValue(fieldSchema.name, event.target.value)
                             if (fieldSchema && fieldSchema.onChange) {
                                 fieldSchema.onChange(event.target.value)
@@ -247,10 +199,7 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                         {...field}
                         type="text"
                         onChange={(event: any) => {
-                            event.target.value = event.target.value.replace(
-                                /[^0-9,-]/g,
-                                '',
-                            )
+                            event.target.value = event.target.value.replace(/[^0-9,-]/g, '')
                             setValue(fieldSchema.name, event.target.value)
                         }}
                         InputProps={{
@@ -263,13 +212,7 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                     />
                 )
             case ApolloFormSchemaComponentType.DATE:
-                return (
-                    <RHFDatePicker
-                        {...fieldSchema}
-                        {...field}
-                        onChange={fieldSchema.onChange}
-                    />
-                )
+                return <RHFDatePicker {...fieldSchema} {...field} onChange={fieldSchema.onChange} />
             case ApolloFormSchemaComponentType.DATETIME:
                 return <RHFDateTimePicker {...fieldSchema} {...field} />
             case ApolloFormSchemaComponentType.EMAIL:
@@ -280,26 +223,13 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
                         {...fieldSchema}
                         {...field}
                         type="number"
-                        onChange={(event: any) =>
-                            setValue(
-                                fieldSchema.name,
-                                Number(event.target.value),
-                            )
-                        }
+                        onChange={(event: any) => setValue(fieldSchema.name, Number(event.target.value))}
                     />
                 )
             case ApolloFormSchemaComponentType.PASSWORD:
-                return (
-                    <RHFTextField {...fieldSchema} {...field} type="password" />
-                )
+                return <RHFTextField {...fieldSchema} {...field} type="password" />
             case ApolloFormSchemaComponentType.SWITCH:
-                return (
-                    <RHFSwitch
-                        {...fieldSchema}
-                        {...field}
-                        onClick={fieldSchema.onClick}
-                    />
-                )
+                return <RHFSwitch {...fieldSchema} {...field} onClick={fieldSchema.onClick} />
             default:
                 return <RHFTextField {...fieldSchema} {...field} />
         }
@@ -311,29 +241,15 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
             xs={isDesktop ? formField.ui.grid : 12}
             key={formField.name}
             sx={{
-                display:
-                    formField.componenttype ==
-                    ApolloFormSchemaComponentType.HIDDEN
-                        ? 'none'
-                        : 'block',
+                display: formField.componenttype == ApolloFormSchemaComponentType.HIDDEN ? 'none' : 'block',
             }}
         >
-            <Controller
-                key={formField.name}
-                render={({ field }) => renderComponent(field, formField)}
-                {...formField}
-            />
+            <Controller key={formField.name} render={({ field }) => renderComponent(field, formField)} {...formField} />
             {formField.additionalProperties?.edit && (
                 <>
-                    <Button
-                        variant="text"
-                        style={{ textAlign: 'left', top: 5 }}
-                        onClick={() => setDialogOpen(true)}
-                    >
+                    <Button variant="text" style={{ textAlign: 'left', top: 5 }} onClick={() => setDialogOpen(true)}>
                         {formField.additionalProperties?.editTextButtom ? (
-                            <>
-                                {formField.additionalProperties?.editTextButtom}
-                            </>
+                            <>{formField.additionalProperties?.editTextButtom}</>
                         ) : (
                             <>Editar {formField.label}</>
                         )}
@@ -341,18 +257,11 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
 
                     <Dialog onClose={handleCloseDialog} open={dialogOpen}>
                         <DialogTitle>Editar {formField.label}</DialogTitle>
-                        <div
-                            style={{ marginTop: '10px', marginBottom: '10px' }}
-                        >
-                            {formField.additionalProperties.editFunc &&
-                                formField.additionalProperties.editFunc()}
+                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                            {formField.additionalProperties.editFunc && formField.additionalProperties.editFunc()}
                         </div>
 
-                        <Button
-                            variant="text"
-                            style={{ textAlign: 'left' }}
-                            onClick={handleCloseDialog}
-                        >
+                        <Button variant="text" style={{ textAlign: 'left' }} onClick={handleCloseDialog}>
                             Fechar
                         </Button>
                     </Dialog>
@@ -360,27 +269,16 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({
             )}
             {formField.additionalProperties?.addable && (
                 <>
-                    <Button
-                        variant="text"
-                        style={{ textAlign: 'left' }}
-                        onClick={() => setDialogOpen(true)}
-                    >
+                    <Button variant="text" style={{ textAlign: 'left' }} onClick={() => setDialogOpen(true)}>
                         Novo {formField.label}
                     </Button>
                     <Dialog onClose={handleCloseDialog} open={dialogOpen}>
                         <DialogTitle>Novo {formField.label}</DialogTitle>
-                        <div
-                            style={{ marginTop: '10px', marginBottom: '10px' }}
-                        >
-                            {formField.additionalProperties.newFunc &&
-                                formField.additionalProperties.newFunc()}
+                        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                            {formField.additionalProperties.newFunc && formField.additionalProperties.newFunc()}
                         </div>
 
-                        <Button
-                            variant="text"
-                            style={{ textAlign: 'left' }}
-                            onClick={handleCloseDialog}
-                        >
+                        <Button variant="text" style={{ textAlign: 'left' }} onClick={handleCloseDialog}>
                             Fechar
                         </Button>
                     </Dialog>

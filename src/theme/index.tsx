@@ -1,16 +1,16 @@
 import { useMemo } from 'react'
 // @mui
 import { CssBaseline } from '@mui/material'
-import { createTheme, ThemeOptions, ThemeProvider as MUIThemeProvider } from '@mui/material/styles'
+import { ThemeProvider as MUIThemeProvider, ThemeOptions, createTheme } from '@mui/material/styles'
 // components
 import { useSettingsContext } from '../components/settings'
 //
-import palette from './palette'
-import typography from './typography'
-import shadows from './shadows'
-import componentsOverride from './overrides'
 import customShadows from './customShadows'
 import GlobalStyles from './globalStyles'
+import componentsOverride from './overrides'
+import palette from './palette'
+import shadows from './shadows'
+import typography from './typography'
 
 // ----------------------------------------------------------------------
 
@@ -30,10 +30,8 @@ export default function ThemeProvider({ children }: Props) {
             shadows: shadows(themeMode),
             customShadows: customShadows(themeMode),
             components: {
-                // Name of the component
-                MuiMenuItem: {
+                MuiSelect: {
                     defaultProps: {
-                        // The props to change the default for.
                         sx: { textTransform: 'none' },
                     },
                 },
