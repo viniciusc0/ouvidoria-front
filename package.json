@@ -82,7 +82,6 @@
         "react-currency-format": "^1.1.0",
         "react-dom": "^18.2.0",
         "react-dropzone": "^14.2.3",
-        "react-google-recaptcha": "^2.1.0",
         "react-hook-form": "^7.37.0",
         "react-i18next": "^11.18.6",
         "react-image-lightbox": "^5.1.4",

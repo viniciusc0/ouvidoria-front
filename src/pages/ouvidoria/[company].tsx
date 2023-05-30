@@ -1,5 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material'
 import TenantController from 'controllers/tenantController'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Loading from 'src/components/Loading'
@@ -43,6 +44,10 @@ function Home() {
 
     return (
         <>
+            <Head>
+                <title>Início</title>
+            </Head>
+
             <AppBar logoUrl={companyInfo?.logo.url as string} />
             <Box sx={{ padding: '30px 10px' }}>
                 <Grid container alignItems="center" justifyContent="center" rowGap={'10px'}>
@@ -72,14 +77,30 @@ function Home() {
                         <Typography variant="h3" color="#555555" textAlign="center" sx={{ margin: '25px 0' }}>
                             Como funciona
                         </Typography>
-                        <Typography variant="h6" fontWeight="normal" textAlign={'center'} paddingX={'6%'}>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum.
+                        <Typography variant="h6" fontWeight="normal" textAlign={'left'} paddingX={'6%'}>
+                            Este é um canal para que colaboradores, clientes, fornecedores, parceiros, prestadores de
+                            serviços e sociedade, com contato com a {companyInfo?.identity}, possa relatar de forma
+                            segura e se desejada, anônima, qualquer ação de que viole o Código de Ética e Conduta da
+                            Empresa.
+                            <br />O canal de denúncias é mais que um canal para atendimento a legislação, levamos a
+                            sério o compromisso com a dignidade da pessoa humana, e para tanto um pequeno canal se torna
+                            a maior ferramenta de diálogo entre empregador e colaboradores, minimizando reclamações
+                            trabalhistas, e reduzindo os custos financeiros das demandas judiciais, além de modo
+                            profissional tratar as histórias dos colaboradores para os casos de assédio moral, e sexual.
+                            <br />
+                            Incidentes relacionados a condutas inapropriadas devem ser reportadas nesse site ou pelo
+                            telefone, disponível 24 horas por dia e sete dias por semana. Algumas situações que podem
+                            ser registradas são: assédio moral/comportamento inadequado; assédio sexual; corrupção;
+                            conflito de interesses; fraude; roubos e furtos; uso indevido de informações privilegiadas
+                            ou confidenciais. As informações registradas nesse canal serão recebidas e tratadas por uma
+                            empresa independente e especializada que tem por obrigação assegurar o sigilo absoluto e o
+                            tratamento adequado das informações, sem conflito de interesses.
+                            <br />
+                            Caso prefira denunciar via Whatsapp também é possível. É comum os casos de que mulheres são
+                            vítimas de assédio sexual e moral no trabalho, tendo que esconderem a situação de sua
+                            família e colegas de trabalho, com medo de represália, e perda do emprego. Aqui, garantimos
+                            seu direito de ser ouvido, bem como, tratamento de forma profissional aos casos denunciados
+                            em nosso portal
                         </Typography>
                         <ButtonsGroup />
                     </Grid>

@@ -3,10 +3,10 @@ import ComplaintController from 'controllers/complaintController'
 import TenantController from 'controllers/tenantController'
 import Cookies from 'js-cookie'
 import moment from 'moment'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import { useEffect, useRef, useState } from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
+import { useEffect, useState } from 'react'
 import Loading from 'src/components/Loading'
 import ApolloForm, {
     ApolloFormSchemaComponentType,
@@ -24,20 +24,27 @@ const Form = ({ values }) => {
     const { enqueueSnackbar } = useSnackbar()
 
     const [fileFieldValue, setFileFieldValue] = useState<File>()
+    const [infracao, setInfracao] = useState<string>()
+    const [naoTestemunhasOcorrencia, setNaoTestemunhasOcorrencia] = useState<string>()
 
     const [termAccepted, setTermAccepted] = useState(false)
 
     const router = useRouter()
     const company = router.query.company
+
     const [companyInfo, setCompanyInfo] = useState<ICompanyInfo>()
     const [noCompany, setNoCompany] = useState(false)
+
     const [loading, setLoading] = useState(true)
-    const [checkIdentification, setCheckIdentification] = useState<string>('')
     const [initialValues, setInitialValues] = useState<any>([])
+
     const [checkTestemunhas, setCheckTestemunhas] = useState<string>()
+    const [checkIdentification, setCheckIdentification] = useState<string>('')
     const [checkTipoDenuncia, setCheckTipoDenuncia] = useState<string>()
     const [checkRelacao, setCheckRelacao] = useState<string>()
+
     const [protocol, setProtocol] = useState<string>('')
+
     const [openSuccesMessageModal, setOpenSuccessMessageModal] = useState<boolean>(false)
 
     const onSubmit = async data => {
@@ -50,6 +57,14 @@ const Form = ({ values }) => {
             'data-ocorrencia': moment(data['data-ocorrencia']).format('YYYY-MM-DD'),
         }
 
+        if (data.identificacao === 'true') {
+            const regex = /\(\d\d\)\d\d\d\d\d-\d\d\d\d/i
+            if (!regex.test(data.telefone)) {
+                enqueueSnackbar('Telefone inválido!', { variant: 'error' })
+                return
+            }
+        }
+
         if (fileFieldValue) {
             try {
                 const uploadImageResponse = await complaintController.uploadFile(fileFieldValue)
@@ -60,7 +75,11 @@ const Form = ({ values }) => {
                         tenant: companyInfo?.id,
                         email: data.email,
                         media: filesIds,
-                        response: formData,
+                        response: {
+                            ...formData,
+                            infracao: infracao,
+                            'nao-testemunhas-ocorrencia': naoTestemunhasOcorrencia,
+                        },
                     }
                     const response = await complaintController.sendComplaint(formattedData)
                     setProtocol(response.data.protocol)
@@ -76,7 +95,11 @@ const Form = ({ values }) => {
                 const formattedData: IComplaint = {
                     tenant: companyInfo?.id,
                     email: data.email,
-                    response: formData,
+                    response: {
+                        ...formData,
+                        infracao: infracao,
+                        'nao-testemunhas-ocorrencia': naoTestemunhasOcorrencia,
+                    },
                 }
                 const response = await complaintController.sendComplaint(formattedData)
                 setProtocol(response.data.protocol)
@@ -289,7 +312,7 @@ const Form = ({ values }) => {
         },
         {
             value: 'uso-de-alcool-drogas-ou-porte-e-comercio-de-armas',
-            label: 'Uso de alcool, drogas ou porte e comércio de armas',
+            label: 'Uso de álcool, drogas ou porte e comércio de armas',
             group: 'Outros',
         },
         {
@@ -386,14 +409,15 @@ const Form = ({ values }) => {
             ui: { grid: 6 },
             required: true,
             groupKey: 'personalData',
+            mask: '(99)99999-9999',
             componenttype:
                 checkIdentification == 'true'
                     ? ApolloFormSchemaComponentType.TEXT
                     : ApolloFormSchemaComponentType.HIDDEN,
         },
         {
-            name: 'email',
-            label: 'Qual o seu melhor horário para contato?',
+            name: 'horario-contato',
+            label: 'Qual o melhor horário para contato?',
             ui: { grid: 6 },
             groupKey: 'personalData',
             required: true,
@@ -433,7 +457,7 @@ const Form = ({ values }) => {
             options: [
                 {
                     value: 'colaborador',
-                    label: 'Colaborador empresa',
+                    label: 'Colaborador da empresa',
                 },
                 {
                     value: 'ex-colaborador',
@@ -477,7 +501,34 @@ const Form = ({ values }) => {
             groupKey: 'raleteInfration',
             ui: { grid: 12 },
             required: true,
-            componenttype: ApolloFormSchemaComponentType.TEXTAREA,
+            renderComponent() {
+                return (
+                    <Grid>
+                        <InputLabel sx={{ paddingLeft: '5px' }}>
+                            <a
+                                style={{
+                                    textDecoration: 'none',
+                                    color: '#5e6d9e',
+                                }}
+                                href="https://firebasestorage.googleapis.com/v0/b/ouvidor-digital-br.appspot.com/o/d302435c-c8e5-4d36-bc9c-9f5a59d540d4%2Fdocuments%2FC%C3%B3digo%20de%20%C3%A9tica%20e%20conduta%20Patrus%20Transportes%20-%202023-02-16T12%3A27%3A56.378Z?alt=media&token=fac9ec5e-6d47-4a2e-a346-c73ae8ec3db4"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Link do Código de ética
+                            </a>
+                        </InputLabel>
+                        <TextField
+                            onChange={e => setInfracao(e.target.value)}
+                            rows={2}
+                            maxRows={4}
+                            multiline
+                            type="text"
+                            sx={{ width: '100%' }}
+                            placeholder="Qual infração do código de ética ocorreu?"
+                        />
+                    </Grid>
+                )
+            },
         },
         {
             name: 'empresa',
@@ -590,15 +641,32 @@ const Form = ({ values }) => {
         },
         {
             name: 'nao-testemunhas-ocorrencia',
-            label: `Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar pertinentes. * 0/12.000 caracteres
-Escreva o máximo de detalhes possível`,
+            label: '',
             groupKey: 'infoRelate',
             ui: { grid: 12 },
             required: true,
-            componenttype:
-                checkTestemunhas && checkTestemunhas == 'nao'
-                    ? ApolloFormSchemaComponentType.TEXTAREA
-                    : ApolloFormSchemaComponentType.HIDDEN,
+            renderComponent() {
+                if (checkTestemunhas && checkTestemunhas == 'nao')
+                    return (
+                        <Grid>
+                            <InputLabel sx={{ paddingLeft: '5px', wordBreak: 'break-all', whiteSpace: 'unset' }}>
+                                Por favor, descreva com o maior nível de detalhes possível o que aconteceu, indicando
+                                o(s) nome(s) da(s) pessoa(s) envolvida(s) entre outras informações que você julgar
+                                pertinentes. * 0/12.000 caracteres. Escreva o máximo de detalhes possível
+                            </InputLabel>
+                            <TextField
+                                onChange={e => setNaoTestemunhasOcorrencia(e.target.value)}
+                                rows={2}
+                                maxRows={4}
+                                multiline
+                                type="text"
+                                sx={{ width: '100%' }}
+                                placeholder="Descreva aqui"
+                            />
+                        </Grid>
+                    )
+                else return <></>
+            },
         },
         {
             name: 'grau-de-certeza-denuncia',
@@ -649,19 +717,7 @@ Escreva o máximo de detalhes possível`,
                 )
             },
         },
-        {
-            name: 'recaptcha',
-            label: '',
-            groupKey: 'infoRelate',
-            ui: { grid: 6 },
-            required: true,
-            renderComponent(params) {
-                return <ReCAPTCHA sitekey="6LfUXz0mAAAAAAS2ISdb89Nis4bSTwADujNivhRy" ref={captchaRef} />
-            },
-        },
     ]
-
-    const captchaRef = useRef()
 
     if (loading) return <Loading />
 
@@ -670,14 +726,23 @@ Escreva o máximo de detalhes possível`,
     if (!termAccepted && !loading) {
         return (
             <>
+                <Head>
+                    <title>Termo de aceite</title>
+                </Head>
                 <AppBar logoUrl={companyInfo?.logo.url as string} />
-                <TermosAceite setTermAccepted={setTermAccepted} />
+                <TermosAceite
+                    setTermAccepted={setTermAccepted}
+                    companyName={companyInfo?.identity ? companyInfo.identity : ''}
+                />
             </>
         )
     }
 
     return (
         <>
+            <Head>
+                <title>Registro</title>
+            </Head>
             <AppBar logoUrl={companyInfo?.logo.url as string} />
             <Grid container lg={8} xs={12} sx={{ margin: '30px auto' }}>
                 <ApolloForm

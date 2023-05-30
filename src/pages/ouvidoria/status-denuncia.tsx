@@ -2,6 +2,7 @@ import { LoadingButton } from '@mui/lab'
 import { Button, Card, Grid, TextField, Typography } from '@mui/material'
 import ComplaintController from 'controllers/complaintController'
 import TenantController from 'controllers/tenantController'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
@@ -67,6 +68,10 @@ function StatusDenunciaPage() {
 
     return (
         <>
+            <Head>
+                <title>Status da denúncia</title>
+            </Head>
+
             <AppBar logoUrl={companyInfo?.logo.url as string} />
             <Grid container display="flex" alignItems="center" height="calc(100% - 84px)" justifyContent="center">
                 <Grid item xs={11} lg={8}>

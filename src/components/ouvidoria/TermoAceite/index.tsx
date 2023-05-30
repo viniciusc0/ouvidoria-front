@@ -2,10 +2,15 @@ import { Button, Grid, Typography } from '@mui/material'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import React from 'react'
-// import TermoPrivacidadePDF from 'public/politicadeprivacidade.pdf'
 
-function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const { push, query } = useRouter()
+function TermosAceite({
+    setTermAccepted,
+    companyName,
+}: {
+    setTermAccepted?: React.Dispatch<React.SetStateAction<boolean>>
+    companyName: string
+}) {
+    const { push, query, isReady } = useRouter()
 
     function handleYesButtonClick() {
         Cookies.set('termoAceito', 'sim')
@@ -50,8 +55,8 @@ function TermosAceite({ setTermAccepted }: { setTermAccepted?: React.Dispatch<Re
                     <Typography variant="subtitle1" fontWeight="normal" textAlign="center">
                         A veracidade das informações providas é de responsabilidade do relator. Este canal é exclusivo
                         para receber denúncias e não deve ser usado para dúvida, reclamação, solicitação de informação,
-                        sugestão ou elogio. Todas as denúncias serão encaminhadas para o Comitê de Ética da empresa
-                        Patrus.
+                        sugestão ou elogio. Todas as denúncias serão encaminhadas para o Comitê de Ética da empresa{' '}
+                        {companyName}.
                     </Typography>
                     <Grid>
                         <Typography variant="h6" fontWeight="normal">
