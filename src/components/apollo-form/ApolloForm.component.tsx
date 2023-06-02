@@ -312,6 +312,7 @@ const ApolloForm: React.FC<ApolloFormProps> = ({
         resolver: yupResolver(validationSchema),
         defaultValues: formInitialValues,
         mode: 'onBlur',
+        values: initialValues,
     })
     const router = useRouter()
     const {
@@ -362,7 +363,7 @@ const ApolloForm: React.FC<ApolloFormProps> = ({
 
     useEffect(() => {
         if (isEdit && initialValues) {
-            reset(formInitialValues)
+            reset(initialValues)
         }
         if (!isEdit) {
             reset(defaultValues)

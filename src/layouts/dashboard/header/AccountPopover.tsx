@@ -93,7 +93,12 @@ export default function AccountPopover() {
                 <CustomAvatar alt={user?.username} name={user?.username} />
             </IconButtonAnimate>
 
-            <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 200, p: 0 }}>
+            <MenuPopover
+                open={openPopover}
+                onClose={handleClosePopover}
+                sx={{ width: 200, p: 0 }}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
                 <Box sx={{ my: 1.5, px: 2.5 }}>
                     <Typography variant="subtitle2" noWrap>
                         {user?.username}

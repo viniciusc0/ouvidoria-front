@@ -12,8 +12,8 @@ import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
-import { businessInitialValue } from 'src/utils/initialValues'
-import { IBusiness } from 'types/IBusiness'
+import { businessFormDataInitialValue } from 'src/utils/initialValues'
+import { IBusinessFormData } from 'types/IBusiness'
 import NewEditForm from '../form/NewEditForm'
 
 // ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ export default function Edicao() {
     const { themeStretch } = useSettingsContext()
     const { query } = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
-    const [initialValues, setInitialValues] = useState<IBusiness>(businessInitialValue)
+    const [initialValues, setInitialValues] = useState<IBusinessFormData>(businessFormDataInitialValue)
 
     const loadData = async id => {
         setLoading(true)
@@ -34,7 +34,17 @@ export default function Edicao() {
         if (!business) {
             return
         }
-        setInitialValues(business)
+        const businessFormData: IBusinessFormData = {
+            ...business,
+            cep: business.address!.cep,
+            street: business.address!.street,
+            district: business.address!.district,
+            number: business.address!.number,
+            complement: business.address!.complement,
+            city: business.address!.city,
+            uf: business.address!.uf,
+        }
+        setInitialValues(businessFormData)
         setLoading(false)
     }
     useEffect(() => {

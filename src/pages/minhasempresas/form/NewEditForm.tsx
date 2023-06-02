@@ -35,6 +35,19 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
             return
         }
 
+        data = {
+            ...data,
+            address: {
+                cep: data.cep,
+                street: data.street,
+                district: data.district,
+                number: data.number,
+                complement: data.complement,
+                city: data.city,
+                uf: data.uf,
+            },
+        }
+
         try {
             const businessController = new BusinessController()
             if (data.id) {
@@ -62,9 +75,7 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
                 city: res.city,
                 uf: res.uf,
             }))
-        } catch (error) {
-            console.log(error)
-        }
+        } catch (error) {}
     }
 
     const BusinessFormSchema: ApolloFormSchemaItem[] = [
@@ -129,8 +140,9 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
             ui: { grid: 12 },
             onChange(e) {
                 const cep = e.target.value
-                if (cep.length == 10) {
-                    getAddressByCep(cep)
+                const regex = /\d\d\.\d\d\d-\d\d\d/i
+                if (regex.test(cep)) {
+                    // getAddressByCep(cep)
                 }
             },
         },
@@ -185,6 +197,7 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
             onSubmit={onSubmit}
             submitButtonText="Enviar"
             defaultExpandedGroup={true}
+            isEdit
         />
     )
 }

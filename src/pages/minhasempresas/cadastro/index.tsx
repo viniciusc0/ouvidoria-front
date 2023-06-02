@@ -19,7 +19,22 @@ Cadastro.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dash
 export default function Cadastro() {
     const { themeStretch } = useSettingsContext()
 
-    const [values, setValues] = useState()
+    const [values, setValues] = useState({
+        id: '',
+        cnpj: '',
+        reasonName: '',
+        fantasyName: '',
+        contactName: '',
+        contactEmail: '',
+        contactPhone: '',
+        cep: '',
+        street: '',
+        number: '',
+        complement: '',
+        district: '',
+        city: '',
+        uf: '',
+    })
 
     return (
         <CustomCard>

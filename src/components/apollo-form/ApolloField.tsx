@@ -67,6 +67,10 @@ export const ApolloField: React.FC<ApolloFieldProps> = ({ formField, isDesktop }
                             }
                         }
                         onBlur={fieldSchema.onBlur}
+                        onChange={(event: any) => {
+                            setValue(fieldSchema.name, event.target.value)
+                            if (fieldSchema.onChange) fieldSchema.onChange(event)
+                        }}
                     />
                 )
             case ApolloFormSchemaComponentType.HIDDEN:
