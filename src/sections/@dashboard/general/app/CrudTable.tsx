@@ -75,14 +75,14 @@ type RowProps = {
 }
 
 function GenericTableRow({ row, setTableData, tableLabels }: RowProps) {
-    const [openPopover, setOpenPopover] = useState<boolean>(false)
+    const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
     const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
-        setOpenPopover(event.currentTarget != null)
+        setOpenPopover(event.currentTarget)
     }
 
     const handleClosePopover = () => {
-        setOpenPopover(false)
+        setOpenPopover(null)
     }
 
     const handleEdit = () => {

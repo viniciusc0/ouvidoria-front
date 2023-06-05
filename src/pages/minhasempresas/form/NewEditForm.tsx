@@ -5,6 +5,7 @@ import { useSnackbar } from 'notistack'
 import { ApolloForm } from 'src/components'
 import { formError } from 'src/components/JsonForm'
 import { ApolloFormSchemaComponentType, ApolloFormSchemaItem } from 'src/components/apollo-form/ApolloForm.component'
+import { removeMask } from 'src/utils/functions'
 type BusinessNewEditForm = {
     values?: any
     setValues?: any
@@ -17,19 +18,23 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
     const { enqueueSnackbar } = useSnackbar()
 
     const onSubmit = async data => {
-        let regex = /\d\d\.\d\d\d\.\d\d\d\/\d\d\d\d-\d\d/i
+        data.cnpj = removeMask(data.cnpj)
+        data.contactPhone = removeMask(data.contactPhone)
+        data.cep = removeMask(data.cep)
+
+        let regex = /\d\d\d\d\d\d\d\d\d\d\d\d\d\d/i
         if (!regex.test(data.cnpj)) {
             enqueueSnackbar('CNPJ inválido!', { variant: 'error' })
             return
         }
 
-        regex = /\(\d\d\)\d\d\d\d\d-\d\d\d\d/i
+        regex = /\d\d\d\d\d\d\d\d\d\d\d/i
         if (!regex.test(data.contactPhone)) {
             enqueueSnackbar('Telefone inválido!', { variant: 'error' })
             return
         }
 
-        regex = /\d\d\.\d\d\d-\d\d\d/i
+        regex = /\d\d\d\d\d\d\d\d/i
         if (!regex.test(data.cep)) {
             enqueueSnackbar('CEP inválido!', { variant: 'error' })
             return

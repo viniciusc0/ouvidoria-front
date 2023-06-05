@@ -36,13 +36,13 @@ export default function Edicao() {
         }
         const businessFormData: IBusinessFormData = {
             ...business,
-            cep: business.address!.cep,
-            street: business.address!.street,
-            district: business.address!.district,
-            number: business.address!.number,
-            complement: business.address!.complement,
-            city: business.address!.city,
-            uf: business.address!.uf,
+            cep: business.address ? business.address.cep : '',
+            street: business.address ? business.address.street : '',
+            district: business.address ? business.address.district : '',
+            number: business.address ? business.address.number : '',
+            complement: business.address ? business.address.complement : '',
+            city: business.address ? business.address.city : '',
+            uf: business.address ? business.address.uf : '',
         }
         setInitialValues(businessFormData)
         setLoading(false)
