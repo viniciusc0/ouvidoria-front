@@ -2,20 +2,26 @@ import AddressController from 'controllers/addressController'
 import BusinessController from 'controllers/businessController'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
+import { useState } from 'react'
 import { ApolloForm } from 'src/components'
 import { formError } from 'src/components/JsonForm'
-import { ApolloFormSchemaComponentType, ApolloFormSchemaItem } from 'src/components/apollo-form/ApolloForm.component'
+import {
+    ApolloFormSchemaComponentType,
+    ApolloFormSchemaCustomValues,
+    ApolloFormSchemaItem,
+} from 'src/components/apollo-form/ApolloForm.component'
 import { removeMask } from 'src/utils/functions'
 type BusinessNewEditForm = {
     values?: any
-    setValues?: any
 }
 
-const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
+const NewEditForm = ({ values }: BusinessNewEditForm) => {
     const router = useRouter()
     const id = router.query.id
 
     const { enqueueSnackbar } = useSnackbar()
+
+    const [customValues, setCustomValues] = useState<ApolloFormSchemaCustomValues[]>()
 
     const onSubmit = async data => {
         data.cnpj = removeMask(data.cnpj)
@@ -72,14 +78,13 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
         try {
             const addressController = new AddressController()
             const res = await addressController.getCep(cep)
-            setValues(old => ({
-                ...old,
-                cep: res.cep,
-                street: res.street,
-                district: res.district,
-                city: res.city,
-                uf: res.uf,
-            }))
+            setCustomValues([
+                { name: 'cep', value: res.cep },
+                { name: 'street', value: res.street },
+                { name: 'district', value: res.district },
+                { name: 'city', value: res.city },
+                { name: 'uf', value: res.uf },
+            ])
         } catch (error) {}
     }
 
@@ -147,7 +152,7 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
                 const cep = e.target.value
                 const regex = /\d\d\.\d\d\d-\d\d\d/i
                 if (regex.test(cep)) {
-                    // getAddressByCep(cep)
+                    getAddressByCep(cep)
                 }
             },
         },
@@ -203,6 +208,7 @@ const NewEditForm = ({ values, setValues }: BusinessNewEditForm) => {
             submitButtonText="Enviar"
             defaultExpandedGroup={true}
             isEdit
+            customValues={customValues}
         />
     )
 }

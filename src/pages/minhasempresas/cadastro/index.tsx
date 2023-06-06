@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { Container, Grid } from '@mui/material'
 // layouts
 // components
-import React, { useState } from 'react'
+import React from 'react'
 import CustomCard from 'src/components/CustomCard'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import { useSettingsContext } from 'src/components/settings'
@@ -18,23 +18,6 @@ Cadastro.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dash
 // ----------------------------------------------------------------------
 export default function Cadastro() {
     const { themeStretch } = useSettingsContext()
-
-    const [values, setValues] = useState({
-        id: '',
-        cnpj: '',
-        reasonName: '',
-        fantasyName: '',
-        contactName: '',
-        contactEmail: '',
-        contactPhone: '',
-        cep: '',
-        street: '',
-        number: '',
-        complement: '',
-        district: '',
-        city: '',
-        uf: '',
-    })
 
     return (
         <CustomCard>
@@ -56,7 +39,7 @@ export default function Cadastro() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <NewEditForm values={values} setValues={setValues} />
+                    <NewEditForm values={{}} />
                 </Grid>
             </Container>
         </CustomCard>
