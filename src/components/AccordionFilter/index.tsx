@@ -11,8 +11,8 @@ interface Props {
 }
 
 export default function AccordionFilter({ schemaForm, setFilters, customSubmit, formData }: Props) {
-    function onSubmit(formItems: IChangeEvent) {
-        setFilters(formItems.formData)
+    function onSubmit(data: any) {
+        setFilters(data)
     }
 
     function clearFilters() {
