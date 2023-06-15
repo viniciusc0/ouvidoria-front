@@ -1,5 +1,6 @@
 import { Alert, Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import AuthController from 'controllers/authController'
+import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -24,6 +25,10 @@ export default function Register() {
                 padding: 0,
             }}
         >
+            <Head>
+                <title>Cadastro</title>
+            </Head>
+
             <Card sx={{ maxWidth: '850px', boxShadow: '1px 1px 10px #cecece', my: 5 }}>
                 <Grid p={3}>
                     <Stack spacing={2} sx={{ mb: 1, mt: 1, position: 'relative' }}>

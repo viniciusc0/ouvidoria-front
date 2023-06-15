@@ -1,5 +1,6 @@
 import { Alert, Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import AuthController from 'controllers/authController'
+import Head from 'next/head'
 import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { LoginProps } from 'services/requests/usersAuth/types'
@@ -16,6 +17,10 @@ import { Imessage } from 'types/Imessage'
 export default function Login() {
     return (
         <Container sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
+            <Head>
+                <title>Login</title>
+            </Head>
+
             <Grid container justifyContent={'center'} alignItems={'center'}>
                 <Grid item>
                     <AuthLoginForm />
