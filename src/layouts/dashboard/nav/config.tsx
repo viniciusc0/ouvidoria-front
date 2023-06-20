@@ -38,9 +38,9 @@ const navConfig = [
         subheader: 'Menu',
         items: [
             { title: 'Minhas empresas', path: PATH_PAGE.companies, icon: ICONS.dashboard },
-            { title: 'Entregadores', path: PATH_PAGE.deliverymans, icon: ICONS.ecommerce },
+            // { title: 'Entregadores', path: PATH_PAGE.deliverymans, icon: ICONS.ecommerce },
             { title: 'Usuários', path: PATH_PAGE.users, icon: ICONS.user },
-            { title: 'Pedidos', path: PATH_PAGE.orders, icon: ICONS.ecommerce },
+            // { title: 'Pedidos', path: PATH_PAGE.orders, icon: ICONS.ecommerce },
         ],
     },
 
