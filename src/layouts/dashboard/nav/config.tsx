@@ -37,6 +37,7 @@ const navConfig = [
     {
         subheader: 'Menu',
         items: [
+            { title: 'Relatórios', path: PATH_PAGE.reports, icon: ICONS.kanban },
             { title: 'Minhas empresas', path: PATH_PAGE.companies, icon: ICONS.dashboard },
             // { title: 'Entregadores', path: PATH_PAGE.deliverymans, icon: ICONS.ecommerce },
             { title: 'Usuários', path: PATH_PAGE.users, icon: ICONS.user },
