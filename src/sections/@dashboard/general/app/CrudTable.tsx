@@ -37,9 +37,18 @@ interface Props extends CardProps {
     tableData: RowArrayTypes
     setTableData: (data: any) => void
     tableLabels: ILabels[]
+    clickableRow: boolean
 }
 
-export default function CrudTable({ title, subheader, tableData, setTableData, tableLabels, ...other }: Props) {
+export default function CrudTable({
+    title,
+    subheader,
+    tableData,
+    setTableData,
+    tableLabels,
+    clickableRow,
+    ...other
+}: Props) {
     const router = useRouter()
 
     return (
@@ -50,14 +59,23 @@ export default function CrudTable({ title, subheader, tableData, setTableData, t
                         <TableHeadCustom headLabel={tableLabels} />
 
                         <TableBody>
-                            {tableData.map(row => (
-                                <GenericTableRow
-                                    key={row.id}
-                                    row={row}
-                                    setTableData={setTableData}
-                                    tableLabels={tableLabels}
-                                />
-                            ))}
+                            {clickableRow
+                                ? tableData.map(row => (
+                                      <ClickableGenericTableRow
+                                          key={row.id}
+                                          row={row}
+                                          setTableData={setTableData}
+                                          tableLabels={tableLabels}
+                                      />
+                                  ))
+                                : tableData.map(row => (
+                                      <GenericTableRow
+                                          key={row.id}
+                                          row={row}
+                                          setTableData={setTableData}
+                                          tableLabels={tableLabels}
+                                      />
+                                  ))}
                         </TableBody>
                     </Table>
                 </Scrollbar>
@@ -139,5 +157,42 @@ function GenericTableRow({ row, setTableData, tableLabels }: RowProps) {
                 </MenuItem>
             </MenuPopover>
         </>
+    )
+}
+function ClickableGenericTableRow({ row, tableLabels }: RowProps) {
+    const router = useRouter()
+
+    const formatValues = (value: any) => {
+        if (value) {
+            switch (value) {
+                case true:
+                    return 'Ativo'
+                case false:
+                    return 'Inativo'
+                default:
+                    return value.toString()
+            }
+        }
+    }
+
+    return (
+        <TableRow>
+            {Object.keys(row).map(keyRow =>
+                tableLabels.map(
+                    tl =>
+                        tl.id == keyRow && (
+                            <TableCell key={tl.id}>
+                                {' '}
+                                <div
+                                    onClick={() => router.push(`/relatos/detalhes/${row.id}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {formatValues(row[keyRow])}{' '}
+                                </div>
+                            </TableCell>
+                        ),
+                ),
+            )}
+        </TableRow>
     )
 }

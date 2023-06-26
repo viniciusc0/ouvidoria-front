@@ -1,5 +1,5 @@
 import { ICompanyInfo } from 'types/ICompanyInfo'
-import api from './requests/api'
+import api from './api'
 
 export default class TenantService {
     async getBasicInformation(companyName: string): Promise<ICompanyInfo> {

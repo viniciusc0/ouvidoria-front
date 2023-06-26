@@ -1,4 +1,4 @@
-import api from 'services/requests/api'
+import api from './api'
 import { ILogin, ILoginForgotPassword, ILoginForm, INewPassword, IRegisterForm } from 'types/IAuth'
 
 class AuthService {

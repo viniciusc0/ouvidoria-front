@@ -1,5 +1,5 @@
 import { IBusiness } from 'types/IBusiness'
-import api from './requests/api'
+import api from './api'
 
 class BusinessService {
     urlBaseService

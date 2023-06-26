@@ -1,7 +1,7 @@
 import { IComplaint } from 'types/IComplaint'
 import { IComplaintStatus } from 'types/IComplaintHistory'
 import { IImageUpload } from 'types/IImageUpload'
-import api from './requests/api'
+import api from './api'
 
 export default class ComplaintService {
     async sendComplaint(data: IComplaint) {

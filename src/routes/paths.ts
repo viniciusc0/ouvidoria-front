@@ -21,6 +21,7 @@ export const PATH_PAGE = {
     page500: '/500',
     reports: '/relatorios',
     companies: '/minhasempresas',
+    narratives: '/relatos',
     users: '/usuarios',
     deliverymans: '/entregadores',
     orders: '/pedidos',

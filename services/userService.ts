@@ -1,5 +1,5 @@
 import { IDashUser } from 'types/IDashUser'
-import api from './requests/api'
+import api from './api'
 
 class UserService {
     urlBaseService
