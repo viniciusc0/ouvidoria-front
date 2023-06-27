@@ -1,17 +1,17 @@
 // next
 import Head from 'next/head'
 // @mui
-import { Button, Card, Container, Grid } from '@mui/material'
+import { Card, Container, Grid } from '@mui/material'
 import { PostController } from 'controllers/postController'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Loading from 'src/components/Loading'
-import Iconify from 'src/components/iconify'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
 import CrudTable from 'src/sections/@dashboard/general/app/CrudTable'
 import { IPostListing } from 'types/IPostListing'
+import moment from 'moment'
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +40,13 @@ export default function ReportsListing() {
         const postController = new PostController()
         try {
             const postsData = await postController.getAll()
-            setPosts(postsData.data)
+            //tirando os que nao tem response
+            const p = postsData.data.filter(item => item.response !== 'string')
+            p.forEach(item => {
+                item.createdAt = moment(item.createdAt).format('DD/MM/YYYY')
+                console.log(moment(item.createdAt).format('DD/MM/YYYY'))
+            })
+            setPosts(p)
         } catch (error) {
             console.log(error)
         }

@@ -45,7 +45,7 @@ export function CardItem({ title, value }: { title: string; value: string }) {
     return (
         <ColumnGrid sx={{ marginY: '12px', rowGap: '5px' }}>
             <GrayTypography>{title}</GrayTypography>
-            <BlackTypography>{value}</BlackTypography>
+            <BlackTypography>{value === '' || value === undefined ? '-' : value}</BlackTypography>
         </ColumnGrid>
     )
 }

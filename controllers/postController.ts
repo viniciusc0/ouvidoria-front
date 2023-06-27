@@ -1,5 +1,4 @@
 import { PostService } from 'services/postService'
-import { IPostListing } from 'types/IPostListing'
 
 export class PostController {
     async getAll(): Promise<{ data: any }> {
@@ -7,7 +6,7 @@ export class PostController {
         return await postService.getAll()
     }
 
-    async getById(id: string): Promise<IPostListing> {
+    async getById(id: string): Promise<{ data: any }> {
         const postService = new PostService()
         return await postService.getById(id)
     }

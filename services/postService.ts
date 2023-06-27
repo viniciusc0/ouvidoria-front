@@ -1,4 +1,3 @@
-import { IPostListing } from 'types/IPostListing'
 import api from './api'
 
 export class PostService {
@@ -14,7 +13,7 @@ export class PostService {
         return await api.get(`${this.urlBaseService}`)
     }
 
-    async getById(id: string): Promise<IPostListing> {
+    async getById(id: string) {
         return await api.get(`${this.urlBaseService}/${id}`)
     }
 }
