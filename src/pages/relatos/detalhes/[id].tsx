@@ -1,23 +1,23 @@
 // next
 import Head from 'next/head'
 // @mui
-import { Container } from '@mui/material'
+import { Container, Grid, Typography } from '@mui/material'
 // layouts
 // components
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
+import ComplaintController from 'controllers/complaintController'
+import { PostController } from 'controllers/postController'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import BackButton from 'src/components/BackButton'
-import ReportHistory from 'src/components/ReportHistory'
 import Loading from 'src/components/Loading'
 import ReportDetails from 'src/components/ReportDetails'
+import ReportHistory from 'src/components/ReportHistory'
+import ReportMenu from 'src/components/ReportMenu'
 import { useSettingsContext } from 'src/components/settings'
 import DashboardLayout from 'src/layouts/dashboard'
-import ReportMenu from 'src/components/ReportMenu'
-import { PostController } from 'controllers/postController'
+import styled from 'styled-components'
 import { IPost } from 'types/IPost'
-import ComplaintController from 'controllers/complaintController'
 import { IPostHistory } from 'types/IPostHistory'
-
 // ----------------------------------------------------------------------
 
 Detalhes.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
@@ -25,7 +25,7 @@ Detalhes.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dash
 // ----------------------------------------------------------------------
 export default function Detalhes() {
     const { themeStretch } = useSettingsContext()
-    const { query } = useRouter()
+    const { query, back } = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
 
     const [page, setPage] = useState<'relato' | 'historico'>('relato')
@@ -121,7 +121,30 @@ export default function Detalhes() {
             <Head>
                 <title>Detalhes do relato</title>
             </Head>
-            <BackButton />
+            <Grid display="flex" my={3} mx={2} alignItems="center">
+                <BackButtonWrapper onClick={() => back()}>
+                    <ArrowBackIosNewOutlinedIcon
+                        sx={{
+                            fontSize: '30px',
+                            color: '#727272',
+                            '&:hover': {
+                                color: '#272727',
+                                transition: 'color 0.5s',
+                            },
+                        }}
+                    />
+                </BackButtonWrapper>
+                <Typography
+                    className="button-icon"
+                    sx={{
+                        marginLeft: '10px',
+                    }}
+                    color="#727272"
+                    variant="h5"
+                >
+                    {post.protocol} - Em andamento
+                </Typography>
+            </Grid>
             <Container maxWidth={themeStretch ? false : 'xl'}>
                 <ReportMenu page={page} setPage={setPage} />
 
@@ -133,3 +156,9 @@ export default function Detalhes() {
 function enqueueSnackbar(arg0: string, arg1: { variant: string }) {
     throw new Error('Function not implemented.')
 }
+
+const BackButtonWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+`
