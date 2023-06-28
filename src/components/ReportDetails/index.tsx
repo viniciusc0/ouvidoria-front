@@ -51,6 +51,7 @@ function ReportDetails({ post }: { post: IPost }) {
                             <CardItem title="Nome" value={post.response.nome} />
                             <CardItem title="Cargo" value={post.response.cargo} />
                             <CardItem title="Visualizações de status" value="3" />
+                            <CardItem title="Horário para contato" value={post.response['horario-contato']} />
                         </ColumnGrid>
                         <ColumnGrid>
                             <CardItem title="Organização" value={post.response.empresa} />

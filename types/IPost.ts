@@ -16,6 +16,7 @@ export type IPost = {
             value: string
         }
         'data-ocorrencia': string
+        'horario-contato': string
         'autor-ocorrencia': string
         'local-ocorrencia': string
         'recorrencia-ocorrencia': string

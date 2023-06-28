@@ -42,10 +42,14 @@ export function RowGrid({ children, ...other }: { children: ReactNode }) {
 }
 
 export function CardItem({ title, value }: { title: string; value: string }) {
+    function removeDash(str) {}
+
+    const transformedValue = removeDash(value)
+
     return (
-        <ColumnGrid sx={{ marginY: '12px', rowGap: '5px' }}>
+        <Grid sx={{ display: 'flex', flexDirection: 'column', marginY: '12px', rowGap: '5px' }}>
             <GrayTypography>{title}</GrayTypography>
-            <BlackTypography>{value === '' || value === undefined ? '-' : value}</BlackTypography>
-        </ColumnGrid>
+            <BlackTypography>{value === '' || value === undefined ? '-' : value.replaceAll('-', ' ')}</BlackTypography>
+        </Grid>
     )
 }

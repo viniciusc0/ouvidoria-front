@@ -47,6 +47,7 @@ export default function Detalhes() {
                 label: '',
                 value: '',
             },
+            'horario-contato': '',
             'data-ocorrencia': '',
             'autor-ocorrencia': '',
             'local-ocorrencia': '',

@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "sourceMap": true,
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom","ES2021.String"
+    ],
     "baseUrl": ".",
     "paths": {
       "src/*":["src/*"],
