@@ -31,7 +31,6 @@ export default function Login() {
 }
 
 function AuthLoginForm() {
-    const { dispatch } = useAuthContext()
     const [message, setMesssage] = useState<Imessage | null>(null)
 
     const onSubmit = async (data: LoginProps) => {
@@ -61,12 +60,6 @@ function AuthLoginForm() {
             required: true,
         },
     ]
-
-    useEffect(() => {
-        dispatch({
-            type: AuthTypes.LOGOUT,
-        })
-    }, [])
 
     return (
         <Card sx={{ width: '100%', height: '100%', boxShadow: '1px 1px 10px #cecece' }}>
