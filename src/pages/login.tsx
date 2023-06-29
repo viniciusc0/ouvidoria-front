@@ -2,10 +2,8 @@ import { Alert, Card, Container, Grid, Link, Stack, Typography } from '@mui/mate
 import AuthController from 'controllers/authController'
 import Head from 'next/head'
 import NextLink from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { LoginProps } from 'services/requests/usersAuth/types'
-import { AuthTypes } from 'src/auth/JwtContext'
-import { useAuthContext } from 'src/auth/useAuthContext'
 import ApolloForm, {
     ApolloFormSchemaComponentType,
     ApolloFormSchemaItem,
