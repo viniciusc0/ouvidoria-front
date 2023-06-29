@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ComplaintHistoryCard from '../ouvidoria/ComplaintHistoryCard'
-import { Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import { IPostHistory } from 'types/IPostHistory'
+import { NewCommentModal } from '../ouvidoria/NewCommentModal'
 
 const history = [
     {
@@ -31,14 +32,26 @@ const history = [
 ]
 
 function ReportHistory({ histories }: { histories: IPostHistory[] }) {
+    const [openModal, setOpenModal] = useState<boolean>(false)
+
     return (
-        <div
+        <Grid
             style={{
                 display: 'flex',
                 flexDirection: 'column',
                 rowGap: '20px',
             }}
         >
+            <Grid
+                style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                }}
+            >
+                <Button variant="contained" color="secondary" onClick={() => setOpenModal(true)}>
+                    Novo
+                </Button>
+            </Grid>
             {(histories &&
                 histories.length > 0 &&
                 histories.map((post, index) => (
@@ -55,7 +68,8 @@ function ReportHistory({ histories }: { histories: IPostHistory[] }) {
                     Ainda não existe histórico para exibir
                 </Typography>
             )}
-        </div>
+            <NewCommentModal setOpen={setOpenModal} open={openModal} />
+        </Grid>
     )
 }
 

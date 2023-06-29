@@ -20,8 +20,8 @@ function ReportMenu({
                 style={{
                     position: 'relative',
                     top: '2px',
-                    borderBottom: page === 'relato' ? '2px solid #226ba7' : '',
-                    color: page === 'relato' ? '#226ba7' : '#a7a7a7',
+                    borderBottom: page === 'relato' ? '2px solid #3366FF' : '',
+                    color: page === 'relato' ? '#3366FF' : '#a7a7a7',
                     margin: 0,
                     marginRight: '10px',
                     cursor: 'pointer',
@@ -38,8 +38,8 @@ function ReportMenu({
                     margin: 0,
                     marginLeft: '10px',
                     cursor: 'pointer',
-                    borderBottom: page === 'historico' ? '2px solid #226ba7' : '',
-                    color: page === 'historico' ? '#226ba7' : '#a7a7a7',
+                    borderBottom: page === 'historico' ? '2px solid #3366FF' : '',
+                    color: page === 'historico' ? '#3366FF' : '#a7a7a7',
                     transition: 'color 0.5s',
                 }}
             >

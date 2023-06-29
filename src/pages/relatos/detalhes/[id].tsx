@@ -18,6 +18,8 @@ import DashboardLayout from 'src/layouts/dashboard'
 import styled from 'styled-components'
 import { IPost } from 'types/IPost'
 import { IPostHistory } from 'types/IPostHistory'
+import { useSnackbar } from 'notistack'
+
 // ----------------------------------------------------------------------
 
 Detalhes.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
@@ -27,6 +29,8 @@ export default function Detalhes() {
     const { themeStretch } = useSettingsContext()
     const { query, back } = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
+
+    const { enqueueSnackbar } = useSnackbar()
 
     const [page, setPage] = useState<'relato' | 'historico'>('relato')
 
@@ -153,9 +157,6 @@ export default function Detalhes() {
             </Container>
         </>
     )
-}
-function enqueueSnackbar(arg0: string, arg1: { variant: string }) {
-    throw new Error('Function not implemented.')
 }
 
 const BackButtonWrapper = styled.div`
