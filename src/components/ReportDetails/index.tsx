@@ -50,7 +50,7 @@ function ReportDetails({ post }: { post: IPost }) {
                         <ColumnGrid>
                             <CardItem title="Nome" value={post.response.nome} />
                             <CardItem title="Cargo" value={post.response.cargo} />
-                            <CardItem title="Visualizações de status" value="3" />
+                            {/* <CardItem title="Visualizações de status" value="3" /> */}
                             <CardItem title="Horário para contato" value={post.response['horario-contato']} />
                         </ColumnGrid>
                         <ColumnGrid>
@@ -61,7 +61,7 @@ function ReportDetails({ post }: { post: IPost }) {
                         <ColumnGrid>
                             <CardItem title="Relação com a empresa" value={post.response.relacao} />
                             <CardItem title="Email" value={post.response.email} />
-                            <CardItem title="Data da última visualização" value="5 de março" />
+                            {/* <CardItem title="Data da última visualização" value="5 de março" /> */}
                         </ColumnGrid>
                     </Grid>
                 </Card>
@@ -78,7 +78,7 @@ function ReportDetails({ post }: { post: IPost }) {
                             <CardItem title="Nome do denunciado" value={post.response['autor-ocorrencia']} />
                         </ColumnGrid>
                         <ColumnGrid>
-                            <CardItem title="Membros do comitê denunciados" value="-" />
+                            <CardItem title="Membros do comitê denunciados" value="" />
                         </ColumnGrid>
                     </Grid>
                 </Card>

@@ -36,6 +36,7 @@ function ReportMenu({
                     position: 'relative',
                     top: '2px',
                     margin: 0,
+                    marginLeft: '10px',
                     cursor: 'pointer',
                     borderBottom: page === 'historico' ? '2px solid #226ba7' : '',
                     color: page === 'historico' ? '#226ba7' : '#a7a7a7',

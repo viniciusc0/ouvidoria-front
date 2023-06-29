@@ -41,10 +41,13 @@ export default function ReportsListing() {
         try {
             const postsData = await postController.getAll()
             //tirando os que nao tem response
-            const p = postsData.data.filter(item => item.response !== 'string')
+            const p: IPostListing[] = postsData.data.filter(item => item.response !== 'string' && item.tenant !== null)
             p.forEach(item => {
                 item.createdAt = moment(item.createdAt).format('DD/MM/YYYY')
-                console.log(moment(item.createdAt).format('DD/MM/YYYY'))
+            })
+            p.forEach(item => {
+                item.company = item.tenant.description
+                item.type = item.response['tipo-denuncia'].label
             })
             setPosts(p)
         } catch (error) {
@@ -94,11 +97,11 @@ export default function ReportsListing() {
                                 tableData={posts}
                                 setTableData={setPosts}
                                 tableLabels={[
-                                    { id: 'protocol', label: 'Protocolo' },
                                     { id: 'email', label: 'Email' },
                                     // { id: 'status', label: 'Status' },
                                     { id: 'createdAt', label: 'Data Criação' },
                                     // { id: '', label: 'Data Fechamento' },
+                                    { id: 'type', label: 'Tipo de denúncia' },
                                     { id: 'company', label: 'Empresa' },
                                 ]}
                             />

@@ -55,7 +55,11 @@ export default function CrudTable({
         <Card {...other} sx={{ boxShadow: '1px 1px 10px #ccc', borderRadius: 1 }}>
             <TableContainer sx={{ overflow: 'unset' }}>
                 <Scrollbar>
-                    <Table sx={{ minWidth: 720 }}>
+                    <Table
+                        sx={{
+                            minWidth: 720,
+                        }}
+                    >
                         <TableHeadCustom headLabel={tableLabels} />
 
                         <TableBody>
