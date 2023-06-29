@@ -1,9 +1,15 @@
 import { Dialog, DialogContent, DialogTitle, Grid, InputLabel, TextField } from '@mui/material'
+import AuthController from 'controllers/authController'
+import ComplaintController from 'controllers/complaintController'
+import { PostHistoriesController } from 'controllers/postHistoriesController'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useAuthContext } from 'src/auth/useAuthContext'
 import ApolloForm, {
     ApolloFormSchemaComponentType,
     ApolloFormSchemaItem,
 } from 'src/components/apollo-form/ApolloForm.component'
+import { IPostHistory } from 'types/IPostHistory'
 
 export function NewCommentModal({
     open,
@@ -17,13 +23,53 @@ export function NewCommentModal({
 
     const [fileFieldValue, setFileFieldValue] = useState<File>()
 
-    function onSubmit() {}
+    const { query } = useRouter()
+
+    const { tenantId } = useAuthContext()
+
+    async function onSubmit(formData: any) {
+        const postHistoriesController = new PostHistoriesController()
+        const authController = new AuthController()
+        const user = authController.getUser()
+
+        if (user) {
+            if (fileFieldValue) {
+                try {
+                    const complaintController = new ComplaintController()
+                    const uploadImageResponse = await complaintController.uploadFile(fileFieldValue)
+                    const filesIds = [] as string[]
+                    uploadImageResponse.map(item => filesIds.push(item.id))
+                    try {
+                        const formattedData: IPostHistory = {
+                            comment: formData.comment,
+                            user: user,
+                            media: filesIds,
+                            postId: query.id as string,
+                            tenantId: tenantId,
+                        }
+                        const response = await postHistoriesController.sendNewComment(formattedData)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                } catch (error) {}
+            } else {
+                try {
+                    const formattedData: IPostHistory = {
+                        comment: formData.comment,
+                        user: user,
+                        postId: query.id as string,
+                        tenantId: tenantId,
+                    }
+                    const response = await postHistoriesController.sendNewComment(formattedData)
+                } catch (error) {}
+            }
+        }
+    }
 
     const formSchema: ApolloFormSchemaItem[] = [
         {
             name: 'comment',
             label: 'Insira seu comentário',
-            // groupKey: 'raleteInfration',
             ui: { grid: 12 },
             required: true,
             componenttype: ApolloFormSchemaComponentType.TEXTAREA,
@@ -31,9 +77,8 @@ export function NewCommentModal({
         {
             name: 'file',
             label: '',
-            // groupKey: 'infoRelate',
             ui: { grid: 12 },
-            required: true,
+            required: false,
             renderComponent(params) {
                 return (
                     <Grid item>

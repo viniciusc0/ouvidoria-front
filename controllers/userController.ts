@@ -1,3 +1,4 @@
+import { UserInfo } from 'services/requests/user/types'
 import UserService from 'services/userService'
 import { removeMask } from 'src/utils/functions'
 import { IDashUser, IDashUserFilter } from 'types/IDashUser'
@@ -42,6 +43,11 @@ class UserController {
         const userService = new UserService()
         user = this.removeMasksAndMountBusinessesArray(user)
         return await userService.create(user)
+    }
+
+    async getCurrentUserInfo(): Promise<UserInfo> {
+        const userService = new UserService()
+        return await userService.getCurrentUserInfo()
     }
 }
 

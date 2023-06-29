@@ -1,5 +1,6 @@
 import { IDashUser } from 'types/IDashUser'
 import api from './api'
+import { UserInfo } from './requests/user/types'
 
 class UserService {
     urlBaseService
@@ -26,6 +27,10 @@ class UserService {
         return await api.put(`${this.urlBaseService}/${id}`, {
             data: user,
         })
+    }
+
+    async getCurrentUserInfo(): Promise<UserInfo> {
+        return await api.get(this.urlBaseService)
     }
 }
 

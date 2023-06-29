@@ -57,7 +57,7 @@ function ReportHistory({ histories }: { histories: IPostHistory[] }) {
                 histories.map((post, index) => (
                     <ComplaintHistoryCard
                         key={index}
-                        date={post.createdAt}
+                        date={post.createdAt!}
                         name={post.user.fullname}
                         comment={post.comment}
                         lightShadow
