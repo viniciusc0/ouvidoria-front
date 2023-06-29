@@ -8,9 +8,9 @@ function ReportDetails({ post }: { post: IPost }) {
     const formattedCreatedAt = moment(post.createdAt).format('DD/MM/YYYY HH:mm')
 
     return (
-        <Grid display="flex" justifyContent="space-between">
-            <Grid>
-                <Card sx={{ padding: '25px', width: '280px' }}>
+        <Grid display="flex" justifyContent="space-between" container>
+            <Grid xs={12} lg={3.8} item>
+                <Card sx={{ padding: '25px' }}>
                     <Grid display="flex" flexDirection="column" rowGap="20px">
                         <CardItem title="Protocolo" value={post.protocol} />
                         <Grid display="flex" flexDirection="column" rowGap="5px" marginY="12px">
@@ -37,7 +37,7 @@ function ReportDetails({ post }: { post: IPost }) {
                     </Grid>
                 </Card>
             </Grid>
-            <Grid width="70%" display="flex" flexDirection="column" rowGap="20px">
+            <Grid item xs={12} lg={8} display="flex" flexDirection="column" rowGap="20px">
                 <Card sx={{ padding: '25px' }}>
                     <TitleTypography>Manifestante</TitleTypography>
                     <Grid
@@ -46,6 +46,7 @@ function ReportDetails({ post }: { post: IPost }) {
                         flexDirection="row"
                         columnGap="30px"
                         justifyContent="space-between"
+                        flexWrap="wrap"
                     >
                         <ColumnGrid>
                             <CardItem title="Nome" value={post.response.nome} />
@@ -73,6 +74,7 @@ function ReportDetails({ post }: { post: IPost }) {
                         flexDirection="row"
                         columnGap="30px"
                         justifyContent="space-between"
+                        flexWrap="wrap"
                     >
                         <ColumnGrid>
                             <CardItem title="Nome do denunciado" value={post.response['autor-ocorrencia']} />
@@ -90,6 +92,7 @@ function ReportDetails({ post }: { post: IPost }) {
                         flexDirection="row"
                         columnGap="30px"
                         justifyContent="space-between"
+                        flexWrap="wrap"
                     >
                         <ColumnGrid>
                             <CardItem title="Tipo" value={post.response['tipo-denuncia'].label} />
