@@ -16,4 +16,8 @@ export class PostService {
     async getById(id: string) {
         return await api.get(`${this.urlBaseService}/${id}`)
     }
+
+    async editStatus(id: string) {}
+
+    async editSensivity(id: string) {}
 }

@@ -1,7 +1,7 @@
 import { Button, Card, Grid } from '@mui/material'
 import moment from 'moment'
 import { IPost } from 'types/IPost'
-import { CardItem, ColumnGrid, GrayTypography, TitleTypography } from '../CustomMuiComponents'
+import { CardItem, ColumnGrid, EditableCardItem, GrayTypography, TitleTypography } from '../CustomMuiComponents'
 
 function ReportDetails({ post }: { post: IPost }) {
     const formattedDate = moment(post.response['data-ocorrencia']).format('DD/MM/YYYY')
@@ -21,13 +21,18 @@ function ReportDetails({ post }: { post: IPost }) {
                         </Grid>
                         <CardItem title="Data de criação" value={formattedCreatedAt} />
                         <CardItem title="Status" value="Em andamento" />
+                        <EditableCardItem
+                            title="Status"
+                            value="Em andamento"
+                            selectOptions={['Concluído', 'Em andamento']}
+                        />
                         <CardItem title="Tipo" value={post.response['tipo-denuncia'].label} />
-                        <Grid display="flex" flexDirection="column" rowGap="5px" marginY="12px">
-                            <GrayTypography>Sensibilidade</GrayTypography>
-                            <Button variant="contained" color="error" sx={{ width: '50px' }}>
-                                Alta
-                            </Button>
-                        </Grid>
+                        <EditableCardItem
+                            title="Sensibilidade"
+                            value="Alta"
+                            filled
+                            selectOptions={['Alta', 'Média', 'Baixa']}
+                        />
                         <Grid display="flex" flexDirection="column" rowGap="5px" marginY="12px">
                             <GrayTypography>Canal de origem</GrayTypography>
                             <Button variant="outlined" color="secondary" sx={{ width: '50px' }}>

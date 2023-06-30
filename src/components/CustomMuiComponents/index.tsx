@@ -1,5 +1,6 @@
-import { Grid, Typography } from '@mui/material'
-import { ReactNode } from 'react'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
+import { ReactNode, useState } from 'react'
 
 export function GrayTypography({ children, ...other }: { children: ReactNode }) {
     return (
@@ -42,14 +43,87 @@ export function RowGrid({ children, ...other }: { children: ReactNode }) {
 }
 
 export function CardItem({ title, value }: { title: string; value: string }) {
-    function removeDash(str) {}
-
-    const transformedValue = removeDash(value)
-
     return (
         <Grid sx={{ display: 'flex', flexDirection: 'column', marginY: '12px', rowGap: '5px' }}>
             <GrayTypography>{title}</GrayTypography>
             <BlackTypography>{value === '' || value === undefined ? '-' : value.replaceAll('-', ' ')}</BlackTypography>
+        </Grid>
+    )
+}
+
+export function EditableCardItem({
+    title,
+    value,
+    filled,
+    selectOptions,
+}: {
+    title: string
+    value: string
+    filled?: boolean
+    selectOptions: string[]
+}) {
+    const [editMode, setEditMode] = useState(false)
+
+    const [selectedValue, setSelectedValue] = useState('')
+
+    const handleChange = (event: SelectChangeEvent) => {
+        setSelectedValue(event.target.value as string)
+    }
+
+    return (
+        <Grid sx={{ display: 'flex', flexDirection: 'column', marginY: '12px', rowGap: '5px' }}>
+            <GrayTypography>{title}</GrayTypography>
+            {!editMode ? (
+                <Grid display="flex" alignItems="center">
+                    {!filled ? (
+                        <BlackTypography>
+                            {value === '' || value === undefined ? '-' : value.replaceAll('-', ' ')}
+                        </BlackTypography>
+                    ) : (
+                        <Button variant="contained" color="error" sx={{ width: '50px' }}>
+                            {value}
+                        </Button>
+                    )}
+                    <div
+                        style={{ marginLeft: '5px', display: 'flex', alignItems: 'center' }}
+                        onClick={() => setEditMode(true)}
+                    >
+                        <ModeEditIcon sx={{ color: '#a7a7a7' }} />
+                    </div>
+                </Grid>
+            ) : (
+                <FormControl fullWidth>
+                    <InputLabel id="select-label" color="secondary">
+                        {title}
+                    </InputLabel>
+                    <Select
+                        labelId="select-label"
+                        id="select"
+                        value={selectedValue}
+                        label="Age"
+                        onChange={handleChange}
+                    >
+                        {selectOptions.map((text, index) => (
+                            <MenuItem key={index} value={text}>
+                                {text}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                    <Grid display="flex" justifyContent="space-around" mt={1}>
+                        <Button
+                            sx={{ width: '40%' }}
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => setEditMode(false)}
+                        >
+                            Cancelar
+                        </Button>
+                        <Button sx={{ width: '40%' }} variant="outlined" color="secondary">
+                            Salvar
+                        </Button>
+                    </Grid>
+                </FormControl>
+            )}
         </Grid>
     )
 }
