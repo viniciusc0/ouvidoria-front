@@ -9,7 +9,7 @@ function ComplaintHistoryCard({
     lightShadow,
     biggerPadding,
 }: {
-    date: string
+    date: string | undefined
     comment: string
     name: string
     lightShadow?: boolean

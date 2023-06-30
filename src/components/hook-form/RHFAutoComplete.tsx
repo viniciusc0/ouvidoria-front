@@ -2,7 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import { Autocomplete, autocompleteClasses, TextField, TextFieldProps } from '@mui/material'
 import { ApolloFormSchemaItem, ApolloFormSchemaOptions } from '../apollo-form/ApolloForm.component'
-import Iconify from '../Iconify'
+import Iconify from '../iconify'
 
 interface IProps {
     name: string

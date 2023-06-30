@@ -8,10 +8,10 @@ import { bgBlur } from '../../../utils/cssStyles'
 import { NAV } from '../../../config'
 //
 import Iconify from '../../iconify'
-import Scrollbar from '../../scrollbar'
+import Scrollbar from '../../Scrollbar'
 //
-import { useSettingsContext } from '../SettingsContext'
 import { defaultSettings } from '../config'
+import { useSettingsContext } from '../SettingsContext'
 import BadgeDot from './BadgeDot'
 import Block from './Block'
 import ColorPresetsOptions from './ColorPresetsOptions'

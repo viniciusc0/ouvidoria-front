@@ -1,14 +1,7 @@
 import { AnimatePresence, m } from 'framer-motion'
 import isString from 'lodash/isString'
 
-import {
-    Button,
-    IconButton,
-    List,
-    ListItem,
-    ListItemText,
-    Stack,
-} from '@mui/material'
+import { Button, IconButton, List, ListItem, ListItemText, Stack } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 import { fData } from '../../utils/formatNumber'
@@ -16,8 +9,8 @@ import { fData } from '../../utils/formatNumber'
 import { CustomFile, UploadMultiFileProps } from './type'
 //
 import { varFade } from '../animate'
-import Iconify from '../Iconify'
-import Image from '../Image'
+import Iconify from '../iconify'
+import Image from '../image'
 
 const getFileData = (file: CustomFile | string) => {
     if (typeof file === 'string') {
@@ -33,12 +26,7 @@ const getFileData = (file: CustomFile | string) => {
     }
 }
 
-export default function MultiFilePreview({
-    showPreview = false,
-    files,
-    onRemove,
-    onRemoveAll,
-}: UploadMultiFileProps) {
+export default function MultiFilePreview({ showPreview = false, files, onRemove, onRemoveAll }: UploadMultiFileProps) {
     const hasFile = files.length > 0
 
     return (
@@ -46,9 +34,7 @@ export default function MultiFilePreview({
             <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>
                 <AnimatePresence>
                     {files.map(file => {
-                        const { key, name, size, preview } = getFileData(
-                            file as CustomFile,
-                        )
+                        const { key, name, size, preview } = getFileData(file as CustomFile)
 
                         if (showPreview) {
                             return (
@@ -65,15 +51,10 @@ export default function MultiFilePreview({
                                         overflow: 'hidden',
                                         position: 'relative',
                                         display: 'inline-flex',
-                                        border: theme =>
-                                            `solid 1px ${theme.palette.divider}`,
+                                        border: theme => `solid 1px ${theme.palette.divider}`,
                                     }}
                                 >
-                                    <Image
-                                        alt="preview"
-                                        src={isString(file) ? file : preview}
-                                        ratio="1/1"
-                                    />
+                                    <Image alt="preview" src={isString(file) ? file : preview} ratio="1/1" />
                                     <IconButton
                                         size="small"
                                         onClick={() => onRemove(file)}
@@ -83,17 +64,9 @@ export default function MultiFilePreview({
                                             right: 6,
                                             position: 'absolute',
                                             color: 'common.white',
-                                            bgcolor: theme =>
-                                                alpha(
-                                                    theme.palette.grey[900],
-                                                    0.72,
-                                                ),
+                                            bgcolor: theme => alpha(theme.palette.grey[900], 0.72),
                                             '&:hover': {
-                                                bgcolor: theme =>
-                                                    alpha(
-                                                        theme.palette.grey[900],
-                                                        0.48,
-                                                    ),
+                                                bgcolor: theme => alpha(theme.palette.grey[900], 0.48),
                                             },
                                         }}
                                     >
@@ -113,8 +86,7 @@ export default function MultiFilePreview({
                                     px: 2,
                                     py: 0.75,
                                     borderRadius: 0.75,
-                                    border: theme =>
-                                        `solid 1px ${theme.palette.divider}`,
+                                    border: theme => `solid 1px ${theme.palette.divider}`,
                                 }}
                             >
                                 <Iconify
@@ -129,9 +101,7 @@ export default function MultiFilePreview({
 
                                 <ListItemText
                                     primary={isString(file) ? file : name}
-                                    secondary={
-                                        isString(file) ? '' : fData(size || 0)
-                                    }
+                                    secondary={isString(file) ? '' : fData(size || 0)}
                                     primaryTypographyProps={{
                                         variant: 'subtitle2',
                                     }}
@@ -140,11 +110,7 @@ export default function MultiFilePreview({
                                     }}
                                 />
 
-                                <IconButton
-                                    edge="end"
-                                    size="small"
-                                    onClick={() => onRemove(file)}
-                                >
+                                <IconButton edge="end" size="small" onClick={() => onRemove(file)}>
                                     <Iconify icon={'eva:close-fill'} />
                                 </IconButton>
                             </ListItem>

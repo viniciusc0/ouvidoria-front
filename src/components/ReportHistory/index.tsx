@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import ComplaintHistoryCard from '../ouvidoria/ComplaintHistoryCard'
 import { Button, Grid, Typography } from '@mui/material'
+import { useState } from 'react'
 import { IPostHistory } from 'types/IPostHistory'
+import ComplaintHistoryCard from '../ouvidoria/ComplaintHistoryCard'
 import { NewCommentModal } from '../ouvidoria/NewCommentModal'
 
 const history = [
@@ -58,7 +58,7 @@ function ReportHistory({ histories }: { histories: IPostHistory[] }) {
                     <ComplaintHistoryCard
                         key={index}
                         date={post.createdAt!}
-                        name={post.user.fullname}
+                        name={post?.user?.fullname}
                         comment={post.comment}
                         lightShadow
                         biggerPadding

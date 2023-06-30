@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material'
 //
-import Iconify from '../Iconify'
+import Iconify from '../iconify'
 import MenuPopover from '../menu-popover'
 
 type Props = {

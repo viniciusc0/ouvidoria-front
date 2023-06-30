@@ -16,7 +16,7 @@ export function HistoryofOccurencesModal({
 
     return (
         <>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleOpen}>
                 <DialogTitle id="scroll-dialog-title">
                     {history && history.length > 0 ? `Histórico` : `Sem histórico`}
                 </DialogTitle>
