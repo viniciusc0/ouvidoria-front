@@ -56,7 +56,7 @@ export function NewCommentModal({
         const postHistoriesController = new PostHistoriesController()
         const authController = new AuthController()
         const user = authController.getUser()
-
+        console.log(user)
         if (user) {
             if (fileFieldValue) {
                 try {
@@ -67,10 +67,10 @@ export function NewCommentModal({
                     try {
                         const formattedData: IPostHistory = {
                             comment: formData.comment,
-                            user: user,
+                            user: String(user.id || ''),
                             media: filesIds,
-                            postId: query.id as string,
-                            tenantId: tenantId,
+                            post: query.id as string,
+                            tenant: tenantId,
                         }
                         const response = await postHistoriesController.sendNewComment(formattedData)
                         showSnackbarMessage('success', 'Cadastro realizado com sucesso')
@@ -80,12 +80,14 @@ export function NewCommentModal({
                 } catch (error) {}
             } else {
                 try {
+                    console.log(83, user.id)
                     const formattedData: IPostHistory = {
                         comment: formData.comment,
-                        user: user,
-                        postId: query.id as string,
-                        tenantId: tenantId,
+                        user: String(user.id || ''),
+                        post: query.id as string,
+                        tenant: tenantId,
                     }
+                    console.log(formattedData)
                     const response = await postHistoriesController.sendNewComment(formattedData)
                     showSnackbarMessage('success', 'Cadastro realizado com sucesso')
                 } catch (error) {

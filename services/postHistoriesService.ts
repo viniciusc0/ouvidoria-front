@@ -8,6 +8,7 @@ export class PostHistoriesService {
     }
 
     async sendNewComment(data: IPostHistory) {
+        console.log(11, data)
         await api.post(this.urlBaseService, { data: data })
     }
 }

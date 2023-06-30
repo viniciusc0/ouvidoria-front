@@ -6,7 +6,7 @@ export type IPostHistory = {
     createdAt?: string
     updatedAt?: string
     media?: IMedia[] | string[]
-    user: { id?: string; fullname: string; email: string; username: string }
-    tenantId?: string
-    postId?: string
+    user: string
+    tenant?: string
+    post?: string
 }
