@@ -1,4 +1,14 @@
-import { Dialog, DialogContent, DialogTitle, Grid, InputLabel, TextField } from '@mui/material'
+import {
+    Alert,
+    AlertColor,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    Grid,
+    InputLabel,
+    Snackbar,
+    TextField,
+} from '@mui/material'
 import AuthController from 'controllers/authController'
 import ComplaintController from 'controllers/complaintController'
 import { PostHistoriesController } from 'controllers/postHistoriesController'
@@ -27,6 +37,21 @@ export function NewCommentModal({
 
     const { tenantId } = useAuthContext()
 
+    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false)
+    const [snackbarMessage, setSnackbarMessage] = useState<{ type: AlertColor; text: string }>({
+        type: 'error',
+        text: '',
+    })
+
+    function handleCloseSnackbar() {
+        setOpenSnackbar(false)
+    }
+
+    function showSnackbarMessage(type: AlertColor, text: string) {
+        setOpenSnackbar(true)
+        setSnackbarMessage({ type, text })
+    }
+
     async function onSubmit(formData: any) {
         const postHistoriesController = new PostHistoriesController()
         const authController = new AuthController()
@@ -48,8 +73,9 @@ export function NewCommentModal({
                             tenantId: tenantId,
                         }
                         const response = await postHistoriesController.sendNewComment(formattedData)
+                        showSnackbarMessage('success', 'Cadastro realizado com sucesso')
                     } catch (error) {
-                        console.log(error)
+                        showSnackbarMessage('error', 'Falha ao cadastrar ocorrência')
                     }
                 } catch (error) {}
             } else {
@@ -61,7 +87,10 @@ export function NewCommentModal({
                         tenantId: tenantId,
                     }
                     const response = await postHistoriesController.sendNewComment(formattedData)
-                } catch (error) {}
+                    showSnackbarMessage('success', 'Cadastro realizado com sucesso')
+                } catch (error) {
+                    showSnackbarMessage('error', 'Falha ao cadastrar ocorrência')
+                }
             }
         }
     }
@@ -127,6 +156,11 @@ export function NewCommentModal({
                             cancelButtonTitle="Fechar"
                             defaultExpandedGroup={true}
                         />
+                        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                            <Alert onClose={handleCloseSnackbar} severity={snackbarMessage.type} sx={{ width: '100%' }}>
+                                {snackbarMessage.text}
+                            </Alert>
+                        </Snackbar>
                     </Grid>
                 </DialogContent>
             </Dialog>
