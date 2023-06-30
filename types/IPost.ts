@@ -30,4 +30,7 @@ export type IPost = {
     email: string
     createdAt: string
     updatedAt: string
+    sensibilidade: string
+    status: string
+    closedate: string
 }

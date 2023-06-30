@@ -36,6 +36,9 @@ export default function Detalhes() {
 
     const [post, setPost] = useState<IPost>({
         id: '',
+        closedate: '',
+        sensibilidade: '',
+        status: '',
         response: {
             nome: '',
             cargo: '',
@@ -153,7 +156,11 @@ export default function Detalhes() {
             <Container maxWidth={themeStretch ? false : 'xl'}>
                 <ReportMenu page={page} setPage={setPage} />
 
-                {page === 'relato' ? <ReportDetails post={post} /> : <ReportHistory histories={histories} />}
+                {page === 'relato' ? (
+                    <ReportDetails post={post} setPost={setPost} />
+                ) : (
+                    <ReportHistory histories={histories} />
+                )}
             </Container>
         </>
     )

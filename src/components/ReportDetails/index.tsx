@@ -1,11 +1,65 @@
 import { Button, Card, Grid } from '@mui/material'
+import { PostController } from 'controllers/postController'
 import moment from 'moment'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
+import React, { SetStateAction } from 'react'
 import { IPost } from 'types/IPost'
+import { ISelectOption } from 'types/ISelectOption'
 import { CardItem, ColumnGrid, EditableCardItem, GrayTypography, TitleTypography } from '../CustomMuiComponents'
 
-function ReportDetails({ post }: { post: IPost }) {
+const sensivityOptions: ISelectOption[] = [
+    { label: 'Alta', value: 'alta' },
+    { label: 'Média', value: 'media' },
+    { label: 'Baixa', value: 'baixa' },
+]
+
+const statusOptions: ISelectOption[] = [
+    { value: 'em_progresso', label: 'Em progresso' },
+    { value: 'novo', label: 'Novo' },
+    { value: 'cancelado', label: 'Cancelado' },
+    { value: 'concluido', label: 'Concluido' },
+]
+
+function ReportDetails({ post, setPost }: { post: IPost; setPost: React.Dispatch<SetStateAction<IPost>> }) {
     const formattedDate = moment(post.response['data-ocorrencia']).format('DD/MM/YYYY')
     const formattedCreatedAt = moment(post.createdAt).format('DD/MM/YYYY HH:mm')
+
+    const { query } = useRouter()
+
+    const { enqueueSnackbar } = useSnackbar()
+
+    async function handleEditStatus(newStatus: string) {
+        const postController = new PostController()
+        const editedPost = {
+            ...post,
+            status: newStatus,
+        }
+        try {
+            await postController.update(editedPost, query.id as string)
+            setPost(editedPost)
+        } catch (error) {
+            enqueueSnackbar('Falha ao editar status!', {
+                variant: 'error',
+            })
+        }
+    }
+
+    async function handleEditSesivity(newSensibilidade: string) {
+        const postController = new PostController()
+        const editedPost = {
+            ...post,
+            sensibilidade: newSensibilidade,
+        }
+        try {
+            await postController.update(editedPost, query.id as string)
+            setPost(editedPost)
+        } catch (error) {
+            enqueueSnackbar('Falha ao editar sensibilidade!', {
+                variant: 'error',
+            })
+        }
+    }
 
     return (
         <Grid display="flex" justifyContent="space-between" container>
@@ -20,18 +74,19 @@ function ReportDetails({ post }: { post: IPost }) {
                             </Button>
                         </Grid>
                         <CardItem title="Data de criação" value={formattedCreatedAt} />
-                        <CardItem title="Status" value="Em andamento" />
                         <EditableCardItem
                             title="Status"
-                            value="Em andamento"
-                            selectOptions={['Concluído', 'Em andamento']}
+                            value={post.status}
+                            selectOptions={statusOptions}
+                            handleSave={handleEditStatus}
                         />
                         <CardItem title="Tipo" value={post.response['tipo-denuncia'].label} />
                         <EditableCardItem
                             title="Sensibilidade"
-                            value="Alta"
+                            value={post.sensibilidade}
                             filled
-                            selectOptions={['Alta', 'Média', 'Baixa']}
+                            selectOptions={sensivityOptions}
+                            handleSave={handleEditSesivity}
                         />
                         <Grid display="flex" flexDirection="column" rowGap="5px" marginY="12px">
                             <GrayTypography>Canal de origem</GrayTypography>

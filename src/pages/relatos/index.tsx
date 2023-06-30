@@ -32,6 +32,21 @@ export default function ReportsListing() {
     //     setBusinessFilters(data)
     // }
 
+    function convertStatusText(text) {
+        switch (text) {
+            case 'em_progresso':
+                return 'Em progresso'
+            case 'novo':
+                return 'Novo'
+            case 'concluido':
+                return 'Concluído'
+            case 'cancelado':
+                return 'Cancelado'
+            default:
+                return text
+        }
+    }
+
     const [loading, setLoading] = useState(false)
     const [posts, setPosts] = useState<IPostListing[]>([])
 
@@ -44,10 +59,9 @@ export default function ReportsListing() {
             const p: IPostListing[] = postsData.data.filter(item => item.response !== 'string' && item.tenant !== null)
             p.forEach(item => {
                 item.createdAt = moment(item.createdAt).format('DD/MM/YYYY')
-            })
-            p.forEach(item => {
                 item.company = item.tenant.description
                 item.type = item.response['tipo-denuncia'].label
+                item.status = convertStatusText(item.status)
             })
             setPosts(p)
         } catch (error) {
@@ -98,11 +112,11 @@ export default function ReportsListing() {
                                 setTableData={setPosts}
                                 tableLabels={[
                                     { id: 'email', label: 'Email' },
-                                    // { id: 'status', label: 'Status' },
                                     { id: 'createdAt', label: 'Data Criação' },
-                                    // { id: '', label: 'Data Fechamento' },
-                                    { id: 'type', label: 'Tipo de denúncia' },
+                                    { id: 'status', label: 'Status' },
+                                    { id: 'closedate', label: 'Data Fechamento' },
                                     { id: 'company', label: 'Empresa' },
+                                    { id: 'type', label: 'Tipo de denúncia' },
                                 ]}
                             />
                         </Grid>

@@ -17,7 +17,7 @@ export class PostService {
         return await api.get(`${this.urlBaseService}/${id}`)
     }
 
-    async editStatus(id: string) {}
-
-    async editSensivity(id: string) {}
+    async update(data: any, id: string) {
+        await api.put(`${this.urlBaseService}/${id}`, { data: data })
+    }
 }

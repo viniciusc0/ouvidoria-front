@@ -3,7 +3,7 @@ export type IPostListing = {
     protocol: string
     status: string
     createdAt: string
-    closingDate: string
+    closedate: string
     tenant: {
         description: string
     }

@@ -1,6 +1,7 @@
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { ReactNode, useState } from 'react'
+import { ISelectOption } from 'types/ISelectOption'
 
 export function GrayTypography({ children, ...other }: { children: ReactNode }) {
     return (
@@ -56,18 +57,46 @@ export function EditableCardItem({
     value,
     filled,
     selectOptions,
+    handleSave,
 }: {
     title: string
     value: string
     filled?: boolean
-    selectOptions: string[]
+    selectOptions: ISelectOption[]
+    handleSave: (item: string) => void
 }) {
     const [editMode, setEditMode] = useState(false)
 
-    const [selectedValue, setSelectedValue] = useState('')
+    const [selectedValue, setSelectedValue] = useState<string>('')
 
     const handleChange = (event: SelectChangeEvent) => {
         setSelectedValue(event.target.value as string)
+    }
+
+    function convertText(text: string) {
+        if (text == null) {
+            return ''
+        }
+        text.replaceAll('-', ' ')
+        switch (text) {
+            case 'novo':
+                return 'Novo'
+            case 'concluido':
+                return 'Concluído'
+            case 'cancelado':
+                return 'Cancelado'
+            case 'em_progresso':
+                return 'Em progresso'
+            case 'media':
+                return 'Media'
+            case 'baixa':
+                return 'Baixa'
+            case 'alta':
+                return 'Alta'
+
+            default:
+                return text
+        }
     }
 
     return (
@@ -77,11 +106,11 @@ export function EditableCardItem({
                 <Grid display="flex" alignItems="center">
                     {!filled ? (
                         <BlackTypography>
-                            {value === '' || value === undefined ? '-' : value.replaceAll('-', ' ')}
+                            {value === '' || value === undefined ? '-' : convertText(value)}
                         </BlackTypography>
                     ) : (
                         <Button variant="contained" color="error" sx={{ width: '50px' }}>
-                            {value}
+                            {convertText(value)}
                         </Button>
                     )}
                     <div
@@ -100,12 +129,12 @@ export function EditableCardItem({
                         labelId="select-label"
                         id="select"
                         value={selectedValue}
-                        label="Age"
+                        label={title}
                         onChange={handleChange}
                     >
-                        {selectOptions.map((text, index) => (
-                            <MenuItem key={index} value={text}>
-                                {text}
+                        {selectOptions.map((item, index) => (
+                            <MenuItem key={index} value={item.value}>
+                                {item.label}
                             </MenuItem>
                         ))}
                     </Select>
@@ -118,7 +147,12 @@ export function EditableCardItem({
                         >
                             Cancelar
                         </Button>
-                        <Button sx={{ width: '40%' }} variant="outlined" color="secondary">
+                        <Button
+                            sx={{ width: '40%' }}
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => handleSave(selectedValue)}
+                        >
                             Salvar
                         </Button>
                     </Grid>

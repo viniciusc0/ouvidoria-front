@@ -10,4 +10,9 @@ export class PostController {
         const postService = new PostService()
         return await postService.getById(id)
     }
+
+    async update(data: any, id: string) {
+        const postService = new PostService()
+        return await postService.update(data, id)
+    }
 }
