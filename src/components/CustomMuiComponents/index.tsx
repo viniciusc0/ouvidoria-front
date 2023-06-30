@@ -63,7 +63,7 @@ export function EditableCardItem({
     value: string
     filled?: boolean
     selectOptions: ISelectOption[]
-    handleSave: (item: string) => void
+    handleSave: (item: string, func: () => void) => void
 }) {
     const [editMode, setEditMode] = useState(false)
 
@@ -75,7 +75,7 @@ export function EditableCardItem({
 
     function convertText(text: string) {
         if (text == null) {
-            return ''
+            return '-'
         }
         text.replaceAll('-', ' ')
         switch (text) {
@@ -97,6 +97,10 @@ export function EditableCardItem({
             default:
                 return text
         }
+    }
+
+    function handleCloseEditMode() {
+        setEditMode(false)
     }
 
     return (
@@ -151,7 +155,7 @@ export function EditableCardItem({
                             sx={{ width: '40%' }}
                             variant="outlined"
                             color="secondary"
-                            onClick={() => handleSave(selectedValue)}
+                            onClick={() => handleSave(selectedValue, handleCloseEditMode)}
                         >
                             Salvar
                         </Button>

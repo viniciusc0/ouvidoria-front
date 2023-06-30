@@ -29,7 +29,7 @@ function ReportDetails({ post, setPost }: { post: IPost; setPost: React.Dispatch
 
     const { enqueueSnackbar } = useSnackbar()
 
-    async function handleEditStatus(newStatus: string) {
+    async function handleEditStatus(newStatus: string, handleCloseEditMode: () => void) {
         const postController = new PostController()
         const editedPost = {
             ...post,
@@ -38,6 +38,7 @@ function ReportDetails({ post, setPost }: { post: IPost; setPost: React.Dispatch
         try {
             await postController.update(editedPost, query.id as string)
             setPost(editedPost)
+            handleCloseEditMode()
         } catch (error) {
             enqueueSnackbar('Falha ao editar status!', {
                 variant: 'error',
@@ -45,7 +46,7 @@ function ReportDetails({ post, setPost }: { post: IPost; setPost: React.Dispatch
         }
     }
 
-    async function handleEditSesivity(newSensibilidade: string) {
+    async function handleEditSesivity(newSensibilidade: string, handleCloseEditMode: () => void) {
         const postController = new PostController()
         const editedPost = {
             ...post,
@@ -54,6 +55,7 @@ function ReportDetails({ post, setPost }: { post: IPost; setPost: React.Dispatch
         try {
             await postController.update(editedPost, query.id as string)
             setPost(editedPost)
+            handleCloseEditMode()
         } catch (error) {
             enqueueSnackbar('Falha ao editar sensibilidade!', {
                 variant: 'error',
